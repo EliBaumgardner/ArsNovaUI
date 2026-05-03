@@ -3,17 +3,17 @@
 //
 
 #include "CustomLookAndFeel.h"
-#include "Buttons/ModulatorButton.h"
-#include "Buttons/ResetButton.h"
-#include "Node/NodeCanvas.h"
-#include "Node/Node.h"
-#include "../Util/ValueTreeIdentifiers.h"
-#include "Titlebar.h"
+#include "../Buttons/ModulatorButton.h"
+#include "../Buttons/ResetButton.h"
+#include "../Canvas/NodeCanvas.h"
+#include "../Node/Node.h"
+#include "../../Graph/ValueTreeIdentifiers.h"
+#include "../Titlebar.h"
 #include "CustomTextEditor.h"
-#include "Node/NodeArrow.h"
-#include "Node/NodeTextEditor.h"
-#include "Node/CustomTextCaret.h"
-#include "Node/RootNode.h"
+#include "../Node/NodeArrow.h"
+#include "../Node/NodeTextEditor.h"
+#include "CustomTextCaret.h"
+#include "../Node/RootNode.h"
 
 CustomLookAndFeel::CustomLookAndFeel()
 {
@@ -47,25 +47,21 @@ juce::Colour CustomLookAndFeel::applyIntensity(juce::Colour base) const
 
 void CustomLookAndFeel::updateColours()
 {
-    darkColour1 = applyIntensity(baseDarkColour1);
-    darkColour2 = applyIntensity(baseDarkColour2);
-    lightColour1 = applyIntensity(baseLightColour1);
-    lightColour2 = applyIntensity(baseLightColour2);
-    lightColour3 = applyIntensity(baseLightColour3);
-
-    canvasColour = darkColour1;
-    barColour = darkColour2;
-    buttonColour = lightColour2;
-    editorColour = lightColour2;
-    textColour = lightColour3;
-    arrowColour = darkColour2.darker();
-    arrowHeadColour = arrowColour;
+    // darkColour1 = applyIntensity(baseDarkColour1);
+    // darkColour2 = applyIntensity(baseDarkColour2);
+    // lightColour1 = applyIntensity(baseLightColour1);
+    // lightColour2 = applyIntensity(baseLightColour2);
+    // lightColour3 = applyIntensity(baseLightColour3);
+    //
+    // //editorColour = lightColour2;
+    // //arrowColour = darkColour2.darker();
+    // arrowHeadColour = arrowColour;
 }
 
 void CustomLookAndFeel::drawEditor(juce::Graphics &g, CustomTextEditor& editor)
 {
     auto bounds = editor.getLocalBounds().toFloat();
-    g.setColour(buttonColour);
+    g.setColour(buttonBarColour);
     g.fillRoundedRectangle(bounds, paneCornerRadius);
 
     editor.setColour(juce::TextEditor::backgroundColourId, juce::Colours::transparentBlack);
@@ -87,7 +83,7 @@ void CustomLookAndFeel::drawCanvas(juce::Graphics &g, const NodeCanvas &canvas)
 
 
     const float armLen = 6.0f;
-    g.setColour(darkColour2.darker());
+    g.setColour(gridColour);
 
     float startX = ox - std::ceil((ox - bounds.getX()) / spacing) * spacing;
     float startY = oy - std::ceil((oy - bounds.getY()) / spacing) * spacing;
@@ -121,7 +117,7 @@ void CustomLookAndFeel::drawTitleBar(juce::Graphics &g, const Titlebar &titleBar
 void CustomLookAndFeel::drawButtonPane(juce::Graphics &g, const ButtonPane& selectionBar)
 {
     auto bounds = selectionBar.getLocalBounds().reduced(2.0f).toFloat();
-    g.setColour(buttonColour);
+    g.setColour(buttonBarColour);
     g.fillRoundedRectangle(bounds, paneCornerRadius);
 }
 
@@ -132,7 +128,7 @@ void CustomLookAndFeel::drawTempoDisplay(juce::Graphics &g, const TempoDisplay &
 void CustomLookAndFeel::drawDisplayMenu(juce::Graphics &g, const DisplayMenu& displaySelector)
 {
     auto bounds = displaySelector.getLocalBounds().toFloat().reduced(buttonBoundsReduction);
-    g.setColour(buttonColour);
+    g.setColour(buttonBarColour);
     g.fillRoundedRectangle(bounds, paneCornerRadius);
 }
 
@@ -140,7 +136,12 @@ void CustomLookAndFeel::drawDisplayButton(juce::Graphics &g, const DisplayButton
 {
     auto bounds = displayButton.getLocalBounds().toFloat().reduced(5.0f);
 
-    g.setColour(displayButton.isSelected ? textColour.darker() : textColour);
+    if (displayButton.isSelected) {
+        g.setColour(buttonColour.darker());
+    }
+    else {
+        g.setColour(buttonColour);
+    }
 
     float triangleHeight = bounds.getHeight() * 0.9f;
     float centerY = bounds.getCentreY();
@@ -180,15 +181,23 @@ void CustomLookAndFeel::drawNode(juce::Graphics& g, const Node& node, juce::Rect
     float velocity        = (float)(int)node.midiNoteData.getProperty(ValueTreeIdentifiers::MidiVelocity, 100);
     float brightnessFactor = juce::jmap(velocity, 0.0f, 127.0f, 0.4f, 1.6f);
 
-    juce::Colour nodeColour = applyIntensity(node.nodeColour).withMultipliedBrightness(brightnessFactor);
+    juce::Colour nodeColour = node.nodeColour;
 
     float pulseExpansion = 4.0f * std::sin(node.pulsePhase * juce::MathConstants<float>::pi);
     auto  pulsedFill     = circleFill.expanded(pulseExpansion);
 
     g.setColour(node.isHighlighted ? nodeColour.darker() : nodeColour);
+
+    if (node.isHighlighted) {
+        g.setColour(nodeColour.darker());
+    }
+    else {
+        g.setColour(nodeColour);
+    }
+
     g.fillEllipse(pulsedFill);
 
-    if (node.displayCountLimit > 1)
+    if (node.displayCountLimit >= 1)
     {
         const float twoPi      = juce::MathConstants<float>::twoPi;
         const float startAngle = -juce::MathConstants<float>::halfPi;
@@ -210,8 +219,14 @@ void CustomLookAndFeel::drawNode(juce::Graphics& g, const Node& node, juce::Rect
                        ringBounds.getWidth(), ringBounds.getHeight(),
                        angleStart, angleStart + arcAngle, true);
 
-            g.setColour(i < filled ? lightColour1 : lightColour1.withAlpha(0.15f));
-            g.strokePath(seg, juce::PathStrokeType(1.5f));
+            if (i < filled) {
+                g.setColour(baseLightColour1);
+            }
+            else {
+                g.setColour(baseLightColour1.brighter());
+            }
+
+            g.strokePath(seg, juce::PathStrokeType(1.0f));
         }
     }
 
@@ -242,7 +257,7 @@ void CustomLookAndFeel::drawRootNodeRectangle(juce::Graphics &g, const RootRecta
 
     juce::Rectangle<float> rootBounds = rootRectangle.getLocalBounds().toFloat();
 
-    g.setColour(darkColour2.darker());
+    g.setColour(baseDarkColour2.darker());
     g.fillRect(rootBounds);
 
 }
@@ -366,8 +381,7 @@ void CustomLookAndFeel::drawNodeArrow(juce::Graphics &g, const NodeArrow& nodeAr
     arrowEndX -= dirX * float(childRadius);
     arrowEndY -= dirY * float(childRadius);
 
-    bool isConnectorArrow  = a->nodeType == NodeType::Connector
-                          || b->nodeType == NodeType::Connector;
+    bool isConnectorArrow  = a->nodeType == NodeType::Connector || b->nodeType == NodeType::Connector;
     bool isRootTargetArrow = b->nodeType == NodeType::Root;
 
     juce::Path linePath;
@@ -419,7 +433,6 @@ void CustomLookAndFeel::drawNodeArrow(juce::Graphics &g, const NodeArrow& nodeAr
         float absDx = std::abs(dx);
         float absDy = std::abs(dy);
 
-        // Straight line when nodes are aligned horizontally or vertically
         if (absDx < 1.0f || absDy < 1.0f)
         {
             linePath.startNewSubPath(parentCenterX, parentCenterY);
@@ -427,19 +440,13 @@ void CustomLookAndFeel::drawNodeArrow(juce::Graphics &g, const NodeArrow& nodeAr
         }
         else
         {
-            // Gentle S-curve: a straight arrow, wiggled slightly.
-            // Perpendicular to the main direction, flipped when going left
-            // so the curve bows the same visual direction regardless of dx sign.
             float sign  = (dx >= 0.0f) ? 1.0f : -1.0f;
             float perpX = -dirY * 0.8f * sign;
             float perpY =  dirX * 0.8f * sign;
 
-            // Subtle perpendicular offset for the S-shape
             float segLen = std::sqrt(dx * dx + dy * dy);
             float offset = segLen * 0.15f;
 
-            // Control points at 1/3 and 2/3 along the line,
-            // pushed to opposite sides of the straight path
             float cp1X = parentCenterX + dx * 0.33f + perpX * offset;
             float cp1Y = parentCenterY + dy * 0.33f + perpY * offset;
             float cp2X = parentCenterX + dx * 0.67f - perpX * offset;
@@ -448,7 +455,6 @@ void CustomLookAndFeel::drawNodeArrow(juce::Graphics &g, const NodeArrow& nodeAr
             linePath.startNewSubPath(parentCenterX, parentCenterY);
             linePath.cubicTo(cp1X, cp1Y, cp2X, cp2Y, arrowEndX, arrowEndY);
 
-            // Arrowhead follows the "neck" — the tangent where the curve meets the tip
             float neckX = arrowEndX - cp2X;
             float neckY = arrowEndY - cp2Y;
             float neckLen = std::sqrt(neckX * neckX + neckY * neckY);
@@ -467,7 +473,6 @@ void CustomLookAndFeel::drawNodeArrow(juce::Graphics &g, const NodeArrow& nodeAr
         stroke.createDashedStroke(linePath, linePath, dashLengths, 2);
     }
 
-    // Subtle engraved look: thin shadow/highlight offsets around the main stroke
     juce::PathStrokeType lineStroke(2.0f);
     auto shadowPath    = linePath;
     auto highlightPath = linePath;
@@ -496,7 +501,6 @@ void CustomLookAndFeel::drawNodeArrow(juce::Graphics &g, const NodeArrow& nodeAr
         const float bodyLength        = juce::jmax(0.0f, linePathLength - arrowLength);
         const float bodyFraction      = (linePathLength > 0.0f) ? bodyLength / linePathLength : 1.0f;
         const float bodyProgressT     = juce::jmin(nodeArrow.progressT, bodyFraction);
-        const juce::Colour progressColour = lightColour1;
 
         if (bodyProgressT > 0.0f)
         {
@@ -510,10 +514,10 @@ void CustomLookAndFeel::drawNodeArrow(juce::Graphics &g, const NodeArrow& nodeAr
                                                           juce::PathStrokeType::curved,
                                                           juce::PathStrokeType::butt);
 
-                g.setColour(progressColour.withAlpha(0.25f));
+                g.setColour(arrowProgressColour.withAlpha(0.25f));
                 g.strokePath(bodyProgressPath, bodyGlowStroke);
 
-                g.setColour(progressColour);
+                g.setColour(arrowProgressColour);
                 g.strokePath(bodyProgressPath, bodyStroke);
             }
         }
@@ -553,10 +557,10 @@ void CustomLookAndFeel::drawNodeArrow(juce::Graphics &g, const NodeArrow& nodeAr
                                                       juce::PathStrokeType::curved,
                                                       juce::PathStrokeType::rounded);
 
-            g.setColour(progressColour.withAlpha(0.25f));
+            g.setColour(arrowProgressColour.withAlpha(0.25f));
             g.strokePath(headProgressPath, headGlowStroke);
 
-            g.setColour(progressColour);
+            g.setColour(arrowProgressColour);
             g.fillPath(headProgressPath);
         }
     }
@@ -602,15 +606,19 @@ void CustomLookAndFeel::drawNodeArrow(juce::Graphics &g, const NodeArrow& nodeAr
 
 void CustomLookAndFeel::drawPlayButton(juce::Graphics &g, bool isMouseOver, bool isButtonDown, const PlayButton &button)
 {
-    auto bgArea = button.getLocalBounds().toFloat().reduced(2.0f);
+    auto area = button.getLocalBounds().reduced(5);
+
     if (isMouseOver)
     {
-        g.setColour(buttonColour.withAlpha(0.45f));
-        g.fillEllipse(bgArea);
-    }
+        g.setColour(buttonColour.brighter());
 
-    auto area = button.getLocalBounds().reduced(5);
-    g.setColour(isButtonDown ? lightColour3.darker() : (isMouseOver ? lightColour3 : buttonColour));
+    }
+    else if (isButtonDown){
+        g.setColour(buttonColour.darker());
+    }
+    else {
+        g.setColour(buttonColour);
+    }
 
     if (button.isOn){
         juce::Path playButton;
@@ -640,52 +648,68 @@ void CustomLookAndFeel::drawSyncButton(juce::Graphics &g, bool isMouseOver, bool
     auto bounds = button.getLocalBounds().toFloat().reduced(2.0f);
     if (isMouseOver)
     {
-        g.setColour(textColour.withAlpha(0.15f));
-        g.fillEllipse(bounds);
+        g.setColour(buttonColour.brighter());
     }
-    g.setColour(textColour);
+    else {
+        g.setColour(buttonColour);
+    }
     g.drawEllipse(bounds, 1.0f);
 }
 
 void CustomLookAndFeel::drawNodeButton(juce::Graphics &g, const NodeButton& nodeButton)
 {
     auto bounds = nodeButton.getLocalBounds().toFloat().reduced(2.0f);
-    g.setColour(nodeButton.isSelected ? lightColour3.darker() : lightColour3);
+
+    if (nodeButton.isSelected) {
+        g.setColour(buttonColour.darker());
+    }
+    else {
+        g.setColour(buttonColour);
+    }
     g.fillEllipse(bounds);
 }
 
 void CustomLookAndFeel::drawTraverserButton(juce::Graphics& g, const ConnectorButton& traverserButton)
 {
-    auto bounds = traverserButton.getLocalBounds().toFloat().reduced(2.0f);
-    g.setColour(traverserButton.isSelected ? lightColour3.darker() : lightColour3);
-
-    juce::Path triangle;
-    triangle.startNewSubPath(bounds.getCentreX(), bounds.getY());
-    triangle.lineTo(bounds.getRight(), bounds.getBottom());
-    triangle.lineTo(bounds.getX(), bounds.getBottom());
-    triangle.closeSubPath();
-
-    g.fillPath(triangle);
+    // auto bounds = traverserButton.getLocalBounds().toFloat().reduced(2.0f);
+    // g.setColour(traverserButton.isSelected ? lightColour3.darker() : lightColour3);
+    //
+    // juce::Path triangle;
+    // triangle.startNewSubPath(bounds.getCentreX(), bounds.getY());
+    // triangle.lineTo(bounds.getRight(), bounds.getBottom());
+    // triangle.lineTo(bounds.getX(), bounds.getBottom());
+    // triangle.closeSubPath();
+    //
+    // g.fillPath(triangle);
 }
 
 void CustomLookAndFeel::drawModulatorButton(juce::Graphics &g, const ModulatorButton &modulatorButton) {
-    auto bounds = modulatorButton.getLocalBounds().toFloat().reduced(2.0f);
-    g.setColour(modulatorButton.isSelected ? lightColour3.darker() : lightColour3);
+    juce::Rectangle<float> bounds = modulatorButton.getLocalBounds().toFloat().reduced(2.0f);
 
-    auto rect = bounds;
+    if (modulatorButton.isSelected) {
+        g.setColour(buttonColour.darker());
+    }
+    else{
+        g.setColour(buttonColour);
+    }
 
-    g.fillRect(rect);
-    g.drawRect(rect, 1.0f);
+    g.fillRect(bounds);
+    g.drawRect(bounds, 1.0f);
 }
-
 
 void CustomLookAndFeel::drawUndoButton(juce::Graphics &g, const UndoButton &undoButton, bool isButtonDown)
 {
     auto area = undoButton.getLocalBounds().reduced(5);
 
-    if (isButtonDown)          { g.setColour(lightColour3.darker()); }
-    else if (undoButton.isHovered) { g.setColour(lightColour3.brighter(0.2f)); }
-    else                       { g.setColour(lightColour3);   }
+    if (isButtonDown) {
+        g.setColour(buttonColour.darker());
+    }
+    else if (undoButton.isHovered) {
+        g.setColour(buttonColour.brighter());
+    }
+    else {
+        g.setColour(buttonColour);
+    }
 
     juce::Path path;
     path.startNewSubPath((float)area.getRight(), (float)area.getY());
@@ -699,9 +723,15 @@ void CustomLookAndFeel::drawRedoButton(juce::Graphics &g, const RedoButton &redo
 {
     auto area = redoButton.getLocalBounds().reduced(5);
 
-    if (isButtonDown)          { g.setColour(lightColour3.darker()); }
-    else if (redoButton.isHovered) { g.setColour(lightColour3.brighter(0.2f)); }
-    else                       { g.setColour(lightColour3);   }
+    if (isButtonDown) {
+        g.setColour(buttonColour.darker());
+    }
+    else if (redoButton.isHovered) {
+        g.setColour(buttonColour.brighter());
+    }
+    else {
+        g.setColour(buttonColour);
+    }
 
     juce::Path path;
     path.startNewSubPath((float)area.getX(), (float)area.getY());
@@ -714,21 +744,25 @@ void CustomLookAndFeel::drawRedoButton(juce::Graphics &g, const RedoButton &redo
 void CustomLookAndFeel::drawUndoRedoPane(juce::Graphics &g,const UndoRedoPane& undoRedoPane)
 {
     auto bounds = undoRedoPane.getLocalBounds().reduced(2.0f).toFloat();
-    g.setColour(buttonColour);
+    g.setColour(buttonBarColour);
     g.fillRoundedRectangle(bounds, paneCornerRadius);
 }
 
 void CustomLookAndFeel::drawResetButton(juce::Graphics &g, const ResetButton &resetButton, bool isButtonDown)
 {
-    auto bgArea = resetButton.getLocalBounds().toFloat().reduced(2.0f);
-    if (resetButton.isHovered)
+    auto area = resetButton.getLocalBounds().toFloat().reduced(5.0f);
+
+    if (isButtonDown) {
+        g.setColour(buttonColour.darker());
+    }
+    else if (resetButton.isHovered)
     {
-        g.setColour(buttonColour.withAlpha(0.45f));
-        g.fillEllipse(bgArea);
+        g.setColour(buttonColour.brighter());
+    }
+    else {
+        g.setColour(buttonColour);
     }
 
-    auto area = resetButton.getLocalBounds().toFloat().reduced(5.0f);
-    g.setColour(isButtonDown ? lightColour3.darker() : (resetButton.isHovered ? lightColour3.brighter(0.15f) : lightColour3));
     g.fillRect(area);
 }
 
@@ -737,7 +771,7 @@ void CustomLookAndFeel::drawNodeTextEditor(juce::Graphics &g, NodeTextEditor &no
 
 juce::CaretComponent* CustomLookAndFeel::createCaretComponent(juce::Component* keyFocusOwner) {
     auto* caret = new CustomTextCaret(keyFocusOwner);
-    caret->caretColour = darkColour1;
+    caret->caretColour = baseDarkColour1;
     caret->caretWidth  = 1.0f;
     return caret;
 }

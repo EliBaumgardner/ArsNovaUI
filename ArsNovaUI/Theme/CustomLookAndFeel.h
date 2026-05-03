@@ -109,7 +109,7 @@ public:
 
 private:
 
-    float colorIntensityFactor = 1.0f;
+    float colorIntensityFactor = 0.2f;
 
     juce::Colour dropShadowColour = juce::Colours::black;
     juce::Colour baseDarkColour1      = juce::Colour::fromRGB(40,40,38);
@@ -118,19 +118,18 @@ private:
     juce::Colour baseLightColour2     = juce::Colour::fromRGB(162,150,131);
     juce::Colour baseLightColour3     = juce::Colour::fromRGB(217,217,217);
 
-    juce::Colour darkColour1;
-    juce::Colour darkColour2;
-    juce::Colour lightColour1;
-    juce::Colour lightColour2;
-    juce::Colour lightColour3;
+    juce::Colour canvasColour = baseLightColour1.darker();
 
-    juce::Colour canvasColour;
-    juce::Colour barColour;
-    juce::Colour buttonColour;
-    juce::Colour editorColour;
-    juce::Colour textColour;
-    juce::Colour arrowColour;
-    juce::Colour arrowHeadColour;
+    juce::Colour gridColour      = juce::Colour::fromRGB(15, 15, 15);
+    juce::Colour barColour       = baseDarkColour2;
+    juce::Colour buttonColour    = baseLightColour2;
+    juce::Colour buttonBarColour = baseDarkColour1;
+    juce::Colour editorColour    = baseDarkColour1;
+    juce::Colour textColour      = baseLightColour1;
+
+    juce::Colour arrowColour     = juce::Colours::black;
+    juce::Colour arrowProgressColour = baseLightColour2;
+    juce::Colour arrowHeadColour = juce::Colours::black;
 
     static constexpr float paneCornerRadius = 4.0f;
 

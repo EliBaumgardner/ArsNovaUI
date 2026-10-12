@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.22)
 
 project(ArsNovaUI VERSION 0.1.0)
 
+if(PROJECT_IS_TOP_LEVEL)
+    add_subdirectory(JUCE)
+endif()
+
 if(NOT COMMAND juce_add_binary_data)
     message(FATAL_ERROR "ArsNovaUI is added after JUCE by the project that uses it")
 endif()
@@ -95,3 +99,25 @@ target_sources(ArsNovaUI INTERFACE
 target_include_directories(ArsNovaUI INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_features(ArsNovaUI INTERFACE cxx_std_20)
 target_link_libraries(ArsNovaUI INTERFACE juce::juce_gui_basics juce::juce_gui_extra ArsNovaUIFonts ArsNovaUIIcons)
+
+if(PROJECT_IS_TOP_LEVEL)
+    juce_add_gui_app(ArsNovaUIGallery PRODUCT_NAME "ArsNovaUI Gallery")
+
+    target_sources(ArsNovaUIGallery PRIVATE
+            Gallery/GalleryApplication.cpp
+            Gallery/GalleryWindow.cpp
+            Gallery/GalleryPage.cpp
+            Gallery/GalleryCanvas.cpp
+    )
+
+    target_compile_definitions(ArsNovaUIGallery PRIVATE
+            JUCE_WEB_BROWSER=0
+            JUCE_USE_CURL=0
+            JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:ArsNovaUIGallery,JUCE_PRODUCT_NAME>"
+            JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:ArsNovaUIGallery,JUCE_VERSION>"
+    )
+
+    target_compile_options(ArsNovaUIGallery PRIVATE -Wall -Wextra -Wno-unused-parameter)
+
+    target_link_libraries(ArsNovaUIGallery PRIVATE ArsNovaUI PUBLIC juce::juce_recommended_config_flags)
+endif()

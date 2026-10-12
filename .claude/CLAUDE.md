@@ -39,7 +39,7 @@ The gallery shows every icon in its normal, hovered, selected and disabled state
 "cmake-build-debug/ArsNovaUIGallery_artefacts/Debug/ArsNovaUI Gallery.app/Contents/MacOS/ArsNovaUI Gallery" --snapshot /private/tmp/gallery.png
 ```
 
-A new component or drawing function gets a place in the gallery. A change the library's consumers depend on is then built and checked in each consumer as well, since both build from this working tree.
+A new component or drawing function gets a place in the gallery. A change the library's consumers depend on is then built and checked in each consumer as well. Consumers hold the library as a submodule pinned to a commit, so a change reaches one only once it is pushed here and that consumer moves its submodule to it; to check a change before then, point the consumer's build tree at this checkout (`-DARSNOVAUI_PATH=<this repository>`).
 
 ## Rules
 

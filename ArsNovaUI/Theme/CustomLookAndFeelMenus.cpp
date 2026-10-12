@@ -1,6 +1,6 @@
 #include "CustomLookAndFeel.h"
-#include "BinaryData.h"
-#include "IconData.h"
+#include "ArsNovaUIFonts.h"
+#include "ArsNovaUIIcons.h"
 
 #include <juce_gui_extra/juce_gui_extra.h>
 
@@ -26,47 +26,47 @@ CustomLookAndFeel::CustomLookAndFeel()
     juce::Graphics             pencilGraphics(pencilImage);
     juce::Graphics             eraserGraphics(eraserImage);
 
-    regularTypeface  = juce::Typeface::createSystemTypefaceFor(BinaryData::GeistRegular_ttf, BinaryData::GeistRegular_ttfSize);
-    semiBoldTypeface = juce::Typeface::createSystemTypefaceFor(BinaryData::GeistSemiBold_ttf, BinaryData::GeistSemiBold_ttfSize);
-    monoTypeface     = juce::Typeface::createSystemTypefaceFor(BinaryData::GeistMonoRegular_ttf, BinaryData::GeistMonoRegular_ttfSize);
+    regularTypeface  = juce::Typeface::createSystemTypefaceFor(ArsNovaUIFonts::GeistRegular_ttf, ArsNovaUIFonts::GeistRegular_ttfSize);
+    semiBoldTypeface = juce::Typeface::createSystemTypefaceFor(ArsNovaUIFonts::GeistSemiBold_ttf, ArsNovaUIFonts::GeistSemiBold_ttfSize);
+    monoTypeface     = juce::Typeface::createSystemTypefaceFor(ArsNovaUIFonts::GeistMonoRegular_ttf, ArsNovaUIFonts::GeistMonoRegular_ttfSize);
 
-    glyphs.add           = loadGlyph(IconData::Add_svg, IconData::Add_svgSize);
-    glyphs.arrow         = loadGlyph(IconData::Arrow_svg, IconData::Arrow_svgSize);
-    glyphs.boxDash       = loadGlyph(IconData::BoxDash_svg, IconData::BoxDash_svgSize);
-    glyphs.boxDots       = loadGlyph(IconData::BoxDots_svg, IconData::BoxDots_svgSize);
-    glyphs.brushHandle   = loadGlyph(IconData::BrushHandle_svg, IconData::BrushHandle_svgSize);
-    glyphs.brushTip      = loadGlyph(IconData::BrushTip_svg, IconData::BrushTip_svgSize);
-    glyphs.chevronDown   = loadGlyph(IconData::ChevronDown_svg, IconData::ChevronDown_svgSize);
-    glyphs.chevronUp     = loadGlyph(IconData::ChevronUp_svg, IconData::ChevronUp_svgSize);
-    glyphs.circle        = loadGlyph(IconData::Circle_svg, IconData::Circle_svgSize);
-    glyphs.circledH      = loadGlyph(IconData::CircledH_svg, IconData::CircledH_svgSize);
-    glyphs.code          = loadGlyph(IconData::Code_svg, IconData::Code_svgSize);
-    glyphs.dashedBox     = loadGlyph(IconData::DashedBox_svg, IconData::DashedBox_svgSize);
-    glyphs.dot           = loadGlyph(IconData::Dot_svg, IconData::Dot_svgSize);
-    glyphs.eraser        = loadGlyph(IconData::Eraser_svg, IconData::Eraser_svgSize);
-    glyphs.eye           = loadGlyph(IconData::Eye_svg, IconData::Eye_svgSize);
-    glyphs.fork          = loadGlyph(IconData::Fork_svg, IconData::Fork_svgSize);
-    glyphs.import        = loadGlyph(IconData::Import_svg, IconData::Import_svgSize);
-    glyphs.link          = loadGlyph(IconData::Link_svg, IconData::Link_svgSize);
-    glyphs.metronome     = loadGlyph(IconData::Metronome_svg, IconData::Metronome_svgSize);
-    glyphs.pause         = loadGlyph(IconData::Pause_svg, IconData::Pause_svgSize);
-    glyphs.pencil        = loadGlyph(IconData::Pencil_svg, IconData::Pencil_svgSize);
-    glyphs.play          = loadGlyph(IconData::Play_svg, IconData::Play_svgSize);
-    glyphs.quaverHead    = loadGlyph(IconData::QuaverHead_svg, IconData::QuaverHead_svgSize);
-    glyphs.quaverStem    = loadGlyph(IconData::QuaverStem_svg, IconData::QuaverStem_svgSize);
-    glyphs.redo          = loadGlyph(IconData::Redo_svg, IconData::Redo_svgSize);
-    glyphs.reload        = loadGlyph(IconData::Reload_svg, IconData::Reload_svgSize);
-    glyphs.remove        = loadGlyph(IconData::Remove_svg, IconData::Remove_svgSize);
-    glyphs.ring          = loadGlyph(IconData::Ring_svg, IconData::Ring_svgSize);
-    glyphs.roundedSquare = loadGlyph(IconData::RoundedSquare_svg, IconData::RoundedSquare_svgSize);
-    glyphs.route         = loadGlyph(IconData::Route_svg, IconData::Route_svgSize);
-    glyphs.settings      = loadGlyph(IconData::Settings_svg, IconData::Settings_svgSize);
-    glyphs.skipBar       = loadGlyph(IconData::SkipBar_svg, IconData::SkipBar_svgSize);
-    glyphs.skipTriangle  = loadGlyph(IconData::SkipTriangle_svg, IconData::SkipTriangle_svgSize);
-    glyphs.triangle      = loadGlyph(IconData::Triangle_svg, IconData::Triangle_svgSize);
-    glyphs.undo          = loadGlyph(IconData::Undo_svg, IconData::Undo_svgSize);
-    glyphs.upload        = loadGlyph(IconData::Upload_svg, IconData::Upload_svgSize);
-    glyphs.wave          = loadGlyph(IconData::Wave_svg, IconData::Wave_svgSize);
+    glyphs.add           = loadGlyph(ArsNovaUIIcons::Add_svg, ArsNovaUIIcons::Add_svgSize);
+    glyphs.arrow         = loadGlyph(ArsNovaUIIcons::Arrow_svg, ArsNovaUIIcons::Arrow_svgSize);
+    glyphs.boxDash       = loadGlyph(ArsNovaUIIcons::BoxDash_svg, ArsNovaUIIcons::BoxDash_svgSize);
+    glyphs.boxDots       = loadGlyph(ArsNovaUIIcons::BoxDots_svg, ArsNovaUIIcons::BoxDots_svgSize);
+    glyphs.brushHandle   = loadGlyph(ArsNovaUIIcons::BrushHandle_svg, ArsNovaUIIcons::BrushHandle_svgSize);
+    glyphs.brushTip      = loadGlyph(ArsNovaUIIcons::BrushTip_svg, ArsNovaUIIcons::BrushTip_svgSize);
+    glyphs.chevronDown   = loadGlyph(ArsNovaUIIcons::ChevronDown_svg, ArsNovaUIIcons::ChevronDown_svgSize);
+    glyphs.chevronUp     = loadGlyph(ArsNovaUIIcons::ChevronUp_svg, ArsNovaUIIcons::ChevronUp_svgSize);
+    glyphs.circle        = loadGlyph(ArsNovaUIIcons::Circle_svg, ArsNovaUIIcons::Circle_svgSize);
+    glyphs.circledH      = loadGlyph(ArsNovaUIIcons::CircledH_svg, ArsNovaUIIcons::CircledH_svgSize);
+    glyphs.code          = loadGlyph(ArsNovaUIIcons::Code_svg, ArsNovaUIIcons::Code_svgSize);
+    glyphs.dashedBox     = loadGlyph(ArsNovaUIIcons::DashedBox_svg, ArsNovaUIIcons::DashedBox_svgSize);
+    glyphs.dot           = loadGlyph(ArsNovaUIIcons::Dot_svg, ArsNovaUIIcons::Dot_svgSize);
+    glyphs.eraser        = loadGlyph(ArsNovaUIIcons::Eraser_svg, ArsNovaUIIcons::Eraser_svgSize);
+    glyphs.eye           = loadGlyph(ArsNovaUIIcons::Eye_svg, ArsNovaUIIcons::Eye_svgSize);
+    glyphs.fork          = loadGlyph(ArsNovaUIIcons::Fork_svg, ArsNovaUIIcons::Fork_svgSize);
+    glyphs.import        = loadGlyph(ArsNovaUIIcons::Import_svg, ArsNovaUIIcons::Import_svgSize);
+    glyphs.link          = loadGlyph(ArsNovaUIIcons::Link_svg, ArsNovaUIIcons::Link_svgSize);
+    glyphs.metronome     = loadGlyph(ArsNovaUIIcons::Metronome_svg, ArsNovaUIIcons::Metronome_svgSize);
+    glyphs.pause         = loadGlyph(ArsNovaUIIcons::Pause_svg, ArsNovaUIIcons::Pause_svgSize);
+    glyphs.pencil        = loadGlyph(ArsNovaUIIcons::Pencil_svg, ArsNovaUIIcons::Pencil_svgSize);
+    glyphs.play          = loadGlyph(ArsNovaUIIcons::Play_svg, ArsNovaUIIcons::Play_svgSize);
+    glyphs.quaverHead    = loadGlyph(ArsNovaUIIcons::QuaverHead_svg, ArsNovaUIIcons::QuaverHead_svgSize);
+    glyphs.quaverStem    = loadGlyph(ArsNovaUIIcons::QuaverStem_svg, ArsNovaUIIcons::QuaverStem_svgSize);
+    glyphs.redo          = loadGlyph(ArsNovaUIIcons::Redo_svg, ArsNovaUIIcons::Redo_svgSize);
+    glyphs.reload        = loadGlyph(ArsNovaUIIcons::Reload_svg, ArsNovaUIIcons::Reload_svgSize);
+    glyphs.remove        = loadGlyph(ArsNovaUIIcons::Remove_svg, ArsNovaUIIcons::Remove_svgSize);
+    glyphs.ring          = loadGlyph(ArsNovaUIIcons::Ring_svg, ArsNovaUIIcons::Ring_svgSize);
+    glyphs.roundedSquare = loadGlyph(ArsNovaUIIcons::RoundedSquare_svg, ArsNovaUIIcons::RoundedSquare_svgSize);
+    glyphs.route         = loadGlyph(ArsNovaUIIcons::Route_svg, ArsNovaUIIcons::Route_svgSize);
+    glyphs.settings      = loadGlyph(ArsNovaUIIcons::Settings_svg, ArsNovaUIIcons::Settings_svgSize);
+    glyphs.skipBar       = loadGlyph(ArsNovaUIIcons::SkipBar_svg, ArsNovaUIIcons::SkipBar_svgSize);
+    glyphs.skipTriangle  = loadGlyph(ArsNovaUIIcons::SkipTriangle_svg, ArsNovaUIIcons::SkipTriangle_svgSize);
+    glyphs.triangle      = loadGlyph(ArsNovaUIIcons::Triangle_svg, ArsNovaUIIcons::Triangle_svgSize);
+    glyphs.undo          = loadGlyph(ArsNovaUIIcons::Undo_svg, ArsNovaUIIcons::Undo_svgSize);
+    glyphs.upload        = loadGlyph(ArsNovaUIIcons::Upload_svg, ArsNovaUIIcons::Upload_svgSize);
+    glyphs.wave          = loadGlyph(ArsNovaUIIcons::Wave_svg, ArsNovaUIIcons::Wave_svgSize);
 
     pencilGraphics.addTransform(juce::AffineTransform::scale(cursorScale));
     pencilGraphics.setColour(windowColour);

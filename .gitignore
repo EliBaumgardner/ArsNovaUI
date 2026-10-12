@@ -1,0 +1,6 @@
+cmake-build-*/
+build/
+.idea/
+.DS_Store
+.claude/refactor.local.toml
+.claude/research.local.toml

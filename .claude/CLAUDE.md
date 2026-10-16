@@ -43,7 +43,7 @@ A new component or drawing function gets a place in the gallery. A change the li
 
 ## Rules
 
-The research-suite plugin injects the Key Design Rules at the start of every session, and they bind here as in SequenceTree. SequenceTree's Project Design Rules that concern UI code bind here too, unchanged:
+The codebox plugin injects the Key Design Rules at the start of every session, and they bind here as in SequenceTree. SequenceTree's Project Design Rules that concern UI code bind here too, unchanged:
 
 - A class's `.cpp` defines its member functions in exactly the order the header declares them. `refactor.order` puts a file into header order.
 - A header keeps one `public:` and one `private:` section, each reading constructors and destructor, `paint` and `resized`, functions grouped by return type with every `(` in a group aligned, nested types, then data members.

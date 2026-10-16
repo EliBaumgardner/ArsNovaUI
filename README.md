@@ -1,6 +1,6 @@
 # ArsNovaUI
 
-The interface layer shared by the Ars Nova tools: one look-and-feel and the components drawn with it.
+This is a library of UI components created with the JUCE Framework for C++. 
 
 - **Theme and drawing**: `Theme` (palette and metrics) and `CustomLookAndFeel`, which draws every icon, node shape, arrow, stroke symbol, menu and scrollbar. Drawing functions take JUCE types or the plain structs in `Theme/Visuals.h`.
 - **Components**: icon buttons and button panes, value sliders, context menus, item and colour selectors, a settings menu, popup windows, panel resizers, frosted or solid bars, and a zoom/pan viewport (`DynamicPort`).

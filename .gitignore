@@ -4,3 +4,9 @@ build/
 .DS_Store
 .claude/refactor.local.toml
 .claude/research.local.toml
+
+.claude/
+.analyst/
+.opencode/
+CLAUDE.md
+CLAUDE.local.md

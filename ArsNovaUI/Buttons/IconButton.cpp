@@ -14,6 +14,12 @@ void IconButton::paint(juce::Graphics& graphics)
     CustomLookAndFeel& lookAndFeel = CustomLookAndFeel::get(*this);
     auto               iconBounds  = getLocalBounds();
 
+    if (icon == nullptr && ! painter && state.text.isNotEmpty()) {
+        lookAndFeel.drawTextButton(graphics, *this);
+
+        return;
+    }
+
     if (caption.isVisible()) {
         iconBounds.removeFromBottom(captionHeight + captionGap);
 

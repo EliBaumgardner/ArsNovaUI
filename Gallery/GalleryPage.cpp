@@ -39,10 +39,6 @@ GalleryPage::GalleryPage()
 
         textButton->setText("Aa");
 
-        textButton->painter = [this](juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state) {
-            CustomLookAndFeel::get(*this).drawTextButton(graphics, bounds, state);
-        };
-
         iconButtons.add(std::make_unique<IconButton>())->painter = [this](juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state) {
             CustomLookAndFeel::get(*this).drawCodeButton(graphics, bounds, state);
         };

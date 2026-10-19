@@ -8,6 +8,9 @@
 #include <functional>
 #include <memory>
 
+namespace ArsNovaUI
+{
+
 class PopupWindow : public juce::DocumentWindow
 {
 public:
@@ -62,3 +65,5 @@ private:
     ContentFactory contentFactory;
     juce::Colour   windowBackgroundColour;
 };
+
+}

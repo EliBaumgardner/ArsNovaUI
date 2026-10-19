@@ -1,6 +1,9 @@
 #include "ContextMenu.h"
 #include "../Theme/CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 void ContextMenu::addItem(juce::String label, ItemKind kind, std::function<void()> action,
                           bool isEnabled, bool isOn)
 {
@@ -59,4 +62,6 @@ void ContextMenu::show(juce::Component& target)
             chosen.action();
         }
     });
+}
+
 }

@@ -4,6 +4,9 @@
 #include <map>
 #include <vector>
 
+namespace ArsNovaUI
+{
+
 enum class SymbolMark { None, Symbol, Missing };
 
 struct SymbolStroke
@@ -87,3 +90,5 @@ struct ArrowVisual
     bool                    ghost        = false;
     bool                    showsLabel   = false;
 };
+
+}

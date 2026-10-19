@@ -4,6 +4,9 @@
 #include "ValueEditor.h"
 #include "../Theme/Theme.h"
 
+namespace ArsNovaUI
+{
+
 class CaptionLabel : public juce::Label
 {
 public:
@@ -46,3 +49,5 @@ public:
     int labelWidth = 0;
     int gap        = 0;
 };
+
+}

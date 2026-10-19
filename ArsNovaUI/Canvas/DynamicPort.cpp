@@ -1,5 +1,8 @@
 #include "DynamicPort.h"
 
+namespace ArsNovaUI
+{
+
 DynamicPort::DynamicPort(juce::Component& content)
     : content(content)
 {
@@ -98,4 +101,6 @@ void DynamicPort::applyTransform()
     }
 
     content.repaint();
+}
+
 }

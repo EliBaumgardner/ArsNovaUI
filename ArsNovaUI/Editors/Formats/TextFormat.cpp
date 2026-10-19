@@ -1,5 +1,8 @@
 #include "ValueFormat.h"
 
+namespace ArsNovaUI
+{
+
 const juce::String TextFormat::labelCharacters {
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 _-."
 };
@@ -37,4 +40,6 @@ ParsedValue TextFormat::parse(const ValueBinding& binding, const juce::String& e
     }
 
     return { enteredText, {} };
+}
+
 }

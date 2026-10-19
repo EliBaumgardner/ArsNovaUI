@@ -1,6 +1,9 @@
 #include "Bar.h"
 #include "../Theme/CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 Bar::Bar(Orientation orientation, float contentInsetRatio)
     : orientation(orientation), contentInsetRatio(contentInsetRatio)
 {
@@ -33,4 +36,6 @@ juce::Rectangle<int> Bar::getContentBounds() const
     }
 
     return getLocalBounds().reduced(juce::roundToInt(getWidth() * contentInsetRatio));
+}
+
 }

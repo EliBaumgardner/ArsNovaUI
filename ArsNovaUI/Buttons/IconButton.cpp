@@ -1,6 +1,9 @@
 #include "IconButton.h"
 #include "../Theme/CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 IconButton::IconButton()
 {
     caption.setJustificationType(juce::Justification::centredTop);
@@ -132,4 +135,6 @@ void IconButton::mouseUp(const juce::MouseEvent& event)
     if (wasDown && onClick && getLocalBounds().contains(event.getPosition())) {
         onClick();
     }
+}
+
 }

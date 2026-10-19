@@ -1,5 +1,8 @@
 #include "ValueFormat.h"
 
+namespace ArsNovaUI
+{
+
 PitchFormat::PitchFormat() : NumberFormat(lowestPitch, highestPitch)
 {
 }
@@ -81,4 +84,6 @@ ParsedValue PitchFormat::parse(const ValueBinding& binding, const juce::String& 
     }
 
     return { juce::jlimit(lowestPitch, highestPitch, (octave + 1) * semitonesPerOctave + naturalSemitones[letterIndex] + accidental), {} };
+}
+
 }

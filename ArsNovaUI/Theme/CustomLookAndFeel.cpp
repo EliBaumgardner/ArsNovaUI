@@ -1,6 +1,9 @@
 #include "CustomLookAndFeel.h"
 #include "CustomTextCaret.h"
 
+namespace ArsNovaUI
+{
+
 void CustomLookAndFeel::drawScrollbar(juce::Graphics& graphics, juce::ScrollBar&, int x, int y, int width, int height,
                                       bool isScrollbarVertical, int thumbStartPosition, int thumbSize,
                                       bool isMouseOver, bool isMouseDown)
@@ -209,4 +212,6 @@ juce::CaretComponent* CustomLookAndFeel::createCaretComponent(juce::Component* k
     auto caret = std::make_unique<CustomTextCaret>(keyFocusOwner);
     caret->caretWidth = 1.0f;
     return caret.release();
+}
+
 }

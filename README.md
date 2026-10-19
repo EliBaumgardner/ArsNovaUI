@@ -22,6 +22,8 @@ target_link_libraries(MyApp PRIVATE ArsNovaUI)
 
 Include headers from the repository root, for example `#include <ArsNovaUI/Theme/CustomLookAndFeel.h>`.
 
-The editor (or top-level window) sets one `CustomLookAndFeel` on itself, and every child inherits it, so `CustomLookAndFeel::get(*this)` works in any component once it has a parent. A pop-up or window root sets it explicitly.
+Everything the library declares is in `namespace ArsNovaUI`. Write the name out at every use (`ArsNovaUI::Theme`, `ArsNovaUI::IconButton`) rather than `using namespace ArsNovaUI`, so it is always plain where a type comes from.
+
+The editor (or top-level window) sets one `ArsNovaUI::CustomLookAndFeel` on itself, and every child inherits it, so `ArsNovaUI::CustomLookAndFeel::get(*this)` works in any component once it has a parent. A pop-up or window root sets it explicitly.
 
 Saved-state keys the settings components write live in `InterfaceIdentifiers`.

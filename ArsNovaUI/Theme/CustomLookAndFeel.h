@@ -4,6 +4,9 @@
 #include "Theme.h"
 #include "Visuals.h"
 
+namespace ArsNovaUI
+{
+
 class FileLabel;
 
 class IconButton;
@@ -161,3 +164,5 @@ private:
     juce::Image frostedBackdrop;
     GlyphPaths  glyphs;
 };
+
+}

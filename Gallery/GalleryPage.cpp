@@ -5,21 +5,24 @@
 
 GalleryPage::GalleryPage()
     : numberEditor(undoManager), wordEditor(undoManager), pitchEditor(undoManager), letterEditor(undoManager), pairEditor(undoManager),
-      itemSelector(undoManager), colourSelector(colourPresets, undoManager), port(canvas), frostedBar(canvas, Bar::Orientation::Horizontal, barInsetRatio)
+      itemSelector(undoManager), colourSelector(colourPresets, undoManager), port(canvas), frostedBar(canvas, ArsNovaUI::Bar::Orientation::Horizontal, barInsetRatio)
 {
-    const std::vector<IconButton::Icon> icons {
-        &CustomLookAndFeel::drawForkIcon, &CustomLookAndFeel::drawRingDotIcon, &CustomLookAndFeel::drawRouteIcon, &CustomLookAndFeel::drawSettingsIcon,
-        &CustomLookAndFeel::drawPlayIcon, &CustomLookAndFeel::drawLinkIcon, &CustomLookAndFeel::drawMetronomeIcon, &CustomLookAndFeel::drawSkipBackIcon,
-        &CustomLookAndFeel::drawReloadIcon, &CustomLookAndFeel::drawUndoIcon, &CustomLookAndFeel::drawRedoIcon, &CustomLookAndFeel::drawCircleIcon,
-        &CustomLookAndFeel::drawRoundedSquareIcon, &CustomLookAndFeel::drawTriangleIcon, &CustomLookAndFeel::drawChevronDownIcon,
-        &CustomLookAndFeel::drawChevronUpIcon, &CustomLookAndFeel::drawEyeIcon, &CustomLookAndFeel::drawAddIcon, &CustomLookAndFeel::drawRemoveIcon,
-        &CustomLookAndFeel::drawImportIcon, &CustomLookAndFeel::drawBrushIcon, &CustomLookAndFeel::drawDashedBoxIcon, &CustomLookAndFeel::drawQuaverIcon,
-        &CustomLookAndFeel::drawCircledHButton, &CustomLookAndFeel::drawArrowButton, &CustomLookAndFeel::drawPencilButton,
-        &CustomLookAndFeel::drawUploadButton, &CustomLookAndFeel::drawWaveButton, &CustomLookAndFeel::drawPencilIcon, &CustomLookAndFeel::drawEraserIcon
+    const std::vector<ArsNovaUI::IconButton::Icon> icons {
+        &ArsNovaUI::CustomLookAndFeel::drawForkIcon, &ArsNovaUI::CustomLookAndFeel::drawRingDotIcon, &ArsNovaUI::CustomLookAndFeel::drawRouteIcon,
+        &ArsNovaUI::CustomLookAndFeel::drawSettingsIcon, &ArsNovaUI::CustomLookAndFeel::drawPlayIcon, &ArsNovaUI::CustomLookAndFeel::drawLinkIcon,
+        &ArsNovaUI::CustomLookAndFeel::drawMetronomeIcon, &ArsNovaUI::CustomLookAndFeel::drawSkipBackIcon, &ArsNovaUI::CustomLookAndFeel::drawReloadIcon,
+        &ArsNovaUI::CustomLookAndFeel::drawUndoIcon, &ArsNovaUI::CustomLookAndFeel::drawRedoIcon, &ArsNovaUI::CustomLookAndFeel::drawCircleIcon,
+        &ArsNovaUI::CustomLookAndFeel::drawRoundedSquareIcon, &ArsNovaUI::CustomLookAndFeel::drawTriangleIcon,
+        &ArsNovaUI::CustomLookAndFeel::drawChevronDownIcon, &ArsNovaUI::CustomLookAndFeel::drawChevronUpIcon, &ArsNovaUI::CustomLookAndFeel::drawEyeIcon,
+        &ArsNovaUI::CustomLookAndFeel::drawAddIcon, &ArsNovaUI::CustomLookAndFeel::drawRemoveIcon, &ArsNovaUI::CustomLookAndFeel::drawImportIcon,
+        &ArsNovaUI::CustomLookAndFeel::drawBrushIcon, &ArsNovaUI::CustomLookAndFeel::drawDashedBoxIcon, &ArsNovaUI::CustomLookAndFeel::drawQuaverIcon,
+        &ArsNovaUI::CustomLookAndFeel::drawCircledHButton, &ArsNovaUI::CustomLookAndFeel::drawArrowButton, &ArsNovaUI::CustomLookAndFeel::drawPencilButton,
+        &ArsNovaUI::CustomLookAndFeel::drawUploadButton, &ArsNovaUI::CustomLookAndFeel::drawWaveButton, &ArsNovaUI::CustomLookAndFeel::drawPencilIcon,
+        &ArsNovaUI::CustomLookAndFeel::drawEraserIcon
     };
 
-    const std::array<Sample, sampleCount>       samples { Sample::Normal, Sample::Hovered, Sample::Selected, Sample::Disabled };
-    const std::array<ValueEditor*, editorCount> editors { &numberEditor, &wordEditor, &pitchEditor, &letterEditor, &pairEditor };
+    const std::array<Sample, sampleCount>                  samples { Sample::Normal, Sample::Hovered, Sample::Selected, Sample::Disabled };
+    const std::array<ArsNovaUI::ValueEditor*, editorCount> editors { &numberEditor, &wordEditor, &pitchEditor, &letterEditor, &pairEditor };
 
     values.setProperty("Number", 64, nullptr);
     values.setProperty("Word", "gallery", nullptr);
@@ -31,20 +34,20 @@ GalleryPage::GalleryPage()
     for (Sample sample : samples) {
         const int rowStart = iconButtons.size();
 
-        for (IconButton::Icon icon : icons) {
-            iconButtons.add(std::make_unique<IconButton>())->icon = icon;
+        for (ArsNovaUI::IconButton::Icon icon : icons) {
+            iconButtons.add(std::make_unique<ArsNovaUI::IconButton>())->icon = icon;
         }
 
-        IconButton* const textButton = iconButtons.add(std::make_unique<IconButton>());
+        ArsNovaUI::IconButton* const textButton = iconButtons.add(std::make_unique<ArsNovaUI::IconButton>());
 
         textButton->setText("Aa");
 
-        iconButtons.add(std::make_unique<IconButton>())->painter = [this](juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state) {
-            CustomLookAndFeel::get(*this).drawCodeButton(graphics, bounds, state);
+        iconButtons.add(std::make_unique<ArsNovaUI::IconButton>())->painter = [this](juce::Graphics& graphics, juce::Rectangle<float> bounds, const ArsNovaUI::ButtonState& state) {
+            ArsNovaUI::CustomLookAndFeel::get(*this).drawCodeButton(graphics, bounds, state);
         };
 
         for (int index = rowStart; index < iconButtons.size(); ++index) {
-            IconButton& button = *iconButtons[index];
+            ArsNovaUI::IconButton& button = *iconButtons[index];
 
             button.setSelected(sample == Sample::Selected);
             button.setEnabled(sample != Sample::Disabled);
@@ -55,11 +58,11 @@ GalleryPage::GalleryPage()
         }
     }
 
-    numberEditor.setFormat(std::make_unique<NumberFormat>(0, 127));
-    wordEditor.setFormat(std::make_unique<TextFormat>(12, "abcdefghijklmnopqrstuvwxyz"));
-    pitchEditor.setFormat(std::make_unique<PitchFormat>());
-    letterEditor.setFormat(std::make_unique<GreekLetterFormat>());
-    pairEditor.setFormat(std::make_unique<DualIntFormat>(1, 99, "PairSecond"));
+    numberEditor.setFormat(std::make_unique<ArsNovaUI::NumberFormat>(0, 127));
+    wordEditor.setFormat(std::make_unique<ArsNovaUI::TextFormat>(12, "abcdefghijklmnopqrstuvwxyz"));
+    pitchEditor.setFormat(std::make_unique<ArsNovaUI::PitchFormat>());
+    letterEditor.setFormat(std::make_unique<ArsNovaUI::GreekLetterFormat>());
+    pairEditor.setFormat(std::make_unique<ArsNovaUI::DualIntFormat>(1, 99, "PairSecond"));
 
     numberEditor.bindEditor(values, "Number");
     wordEditor.bindEditor(values, "Word");
@@ -67,8 +70,8 @@ GalleryPage::GalleryPage()
     letterEditor.bindEditor(values, "Letter");
     pairEditor.bindEditor(values, "Pair");
 
-    for (ValueEditor* editor : editors) {
-        editor->backdrop = ValueEditor::Backdrop::Field;
+    for (ArsNovaUI::ValueEditor* editor : editors) {
+        editor->backdrop = ArsNovaUI::ValueEditor::Backdrop::Field;
 
         addAndMakeVisible(editor);
     }
@@ -79,23 +82,23 @@ GalleryPage::GalleryPage()
     itemSelector.setSelectedItem(1);
 
     colourSelector.colour  = juce::Colour::fromRGB(96, 150, 220);
-    menuButton.icon        = &CustomLookAndFeel::drawSettingsIcon;
+    menuButton.icon        = &ArsNovaUI::CustomLookAndFeel::drawSettingsIcon;
     port.initialViewCentre = { 340.0f, 260.0f };
 
     menuButton.onClick = [this]() {
-        menu = std::make_unique<ContextMenu>();
+        menu = std::make_unique<ArsNovaUI::ContextMenu>();
 
-        menu->addItem("Show grid", ContextMenu::ItemKind::Toggle, [this]() {
+        menu->addItem("Show grid", ArsNovaUI::ContextMenu::ItemKind::Toggle, [this]() {
             canvas.grid.visible = ! canvas.grid.visible;
 
-            CustomLookAndFeel::get(*this).frostedBackdropStale = true;
+            ArsNovaUI::CustomLookAndFeel::get(*this).frostedBackdropStale = true;
 
             canvas.repaint();
             frostedBar.repaint();
         }, true, canvas.grid.visible);
 
-        menu->addItem("Reset zoom", ContextMenu::ItemKind::Action, [this]() { port.setZoom(1.0f, port.getLocalBounds().getCentre().toFloat()); });
-        menu->addItem("Disabled action", ContextMenu::ItemKind::Action, nullptr, false);
+        menu->addItem("Reset zoom", ArsNovaUI::ContextMenu::ItemKind::Action, [this]() { port.setZoom(1.0f, port.getLocalBounds().getCentre().toFloat()); });
+        menu->addItem("Disabled action", ArsNovaUI::ContextMenu::ItemKind::Action, nullptr, false);
 
         menu->show(menuButton);
     };
@@ -104,7 +107,7 @@ GalleryPage::GalleryPage()
         canvas.grid.viewTransform  = viewTransform;
         canvas.grid.modelTransform = viewTransform.inverted();
 
-        CustomLookAndFeel::get(*this).frostedBackdropStale = true;
+        ArsNovaUI::CustomLookAndFeel::get(*this).frostedBackdropStale = true;
 
         frostedBar.repaint();
     };
@@ -118,7 +121,7 @@ GalleryPage::GalleryPage()
 
 void GalleryPage::paint(juce::Graphics& graphics)
 {
-    graphics.fillAll(CustomLookAndFeel::get(*this).windowColour);
+    graphics.fillAll(ArsNovaUI::CustomLookAndFeel::get(*this).windowColour);
 }
 
 void GalleryPage::resized()

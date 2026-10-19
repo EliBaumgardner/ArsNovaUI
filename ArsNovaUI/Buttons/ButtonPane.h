@@ -4,6 +4,9 @@
 #include <optional>
 #include "IconButton.h"
 
+namespace ArsNovaUI
+{
+
 class ButtonPane : public juce::Component
 {
 public:
@@ -38,3 +41,5 @@ private:
 
     const IconButton* selectedButton = nullptr;
 };
+
+}

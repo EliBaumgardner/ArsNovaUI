@@ -2,6 +2,9 @@
 
 #include <cmath>
 
+namespace ArsNovaUI
+{
+
 NumberFormat::NumberFormat(double lowest, double highest, int places)
 {
     minimum       = lowest;
@@ -66,4 +69,6 @@ ParsedValue NumberFormat::parse(const ValueBinding& binding, const juce::String&
     }
 
     return { static_cast<int>(clamped), {} };
+}
+
 }

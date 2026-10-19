@@ -1,5 +1,8 @@
 #include "CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 static void strokeArrowShaft(juce::Graphics& graphics, const juce::Path& shaft, bool emphasised, float alpha, juce::Colour colour)
 {
     float strokeWidth = Theme::arrowShaftThickness;
@@ -233,4 +236,6 @@ void CustomLookAndFeel::drawArrow(juce::Graphics& graphics, const ArrowVisual& v
     }
 
     drawArrowLabel(graphics, visual, *this);
+}
+
 }

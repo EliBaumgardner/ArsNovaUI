@@ -1,6 +1,9 @@
 #include "ValueSlider.h"
 #include "../Theme/CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 ValueSlider::ValueSlider()
 {
     setRepaintsOnMouseActivity(true);
@@ -42,4 +45,6 @@ void ValueSlider::mouseDrag(const juce::MouseEvent& event)
     if (onValueChange) {
         onValueChange();
     }
+}
+
 }

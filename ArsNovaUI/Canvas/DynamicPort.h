@@ -2,6 +2,9 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
+namespace ArsNovaUI
+{
+
 class DynamicPort : public juce::Component
 {
 public:
@@ -40,3 +43,5 @@ private:
 
     juce::Point<int> lastMousePosition;
 };
+
+}

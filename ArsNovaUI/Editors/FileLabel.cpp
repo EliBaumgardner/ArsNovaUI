@@ -1,6 +1,9 @@
 #include "FileLabel.h"
 #include "../Theme/CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 FileLabel::FileLabel(juce::UndoManager& undoManager)
     : fileText(undoManager)
 {
@@ -69,4 +72,6 @@ void FileLabel::setSelected(bool shouldBeSelected)
     selected = shouldBeSelected;
 
     repaint();
+}
+
 }

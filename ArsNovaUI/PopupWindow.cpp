@@ -1,5 +1,8 @@
 #include "PopupWindow.h"
 
+namespace ArsNovaUI
+{
+
 PopupWindow::PopupWindow(const juce::String& title, std::unique_ptr<juce::Component> content, juce::Component& origin, juce::Point<float> openingScale,
                          juce::Colour backgroundColour)
     : juce::DocumentWindow(title, backgroundColour, juce::DocumentWindow::closeButton, true),
@@ -92,4 +95,6 @@ void PopupWindowLauncher::presentWindow()
     window->centreWithSize(window->getWidth(), window->getHeight());
     window->setVisible(true);
     window->toFront(true);
+}
+
 }

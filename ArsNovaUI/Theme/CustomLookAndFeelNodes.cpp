@@ -1,5 +1,8 @@
 #include "CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 static void paintNodeShadow(juce::Graphics& graphics, juce::Rectangle<float> shapeBounds)
 {
     const float innerR       = shapeBounds.getWidth() * 0.5f;
@@ -127,4 +130,6 @@ juce::Rectangle<float> CustomLookAndFeel::getNodeCircleBounds(juce::Rectangle<fl
     float diameter = componentBounds.getWidth() - nodeCirclePad - nodeShadowOffsetX - nodeShadowBlur;
     return juce::Rectangle<float>(diameter, diameter)
                .withPosition(componentBounds.getX() + nodeCirclePad, componentBounds.getY() + nodeCirclePad);
+}
+
 }

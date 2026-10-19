@@ -4,6 +4,9 @@
 #include "Formats/ValueFormat.h"
 #include "../Theme/Theme.h"
 
+namespace ArsNovaUI
+{
+
 class ValueEditor : public juce::Component,
                     public juce::SettableTooltipClient,
                     public juce::TextEditor::Listener,
@@ -107,3 +110,5 @@ private:
     bool isEditing        = false;
     bool persistentEditor = false;
 };
+
+}

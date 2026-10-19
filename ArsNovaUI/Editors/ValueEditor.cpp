@@ -3,6 +3,9 @@
 
 #include <cmath>
 
+namespace ArsNovaUI
+{
+
 ValueEditor::ValueEditor(juce::UndoManager& undoManager) : undoManager(undoManager)
 {
     textEditor = std::make_unique<juce::TextEditor>();
@@ -429,4 +432,6 @@ void ValueEditor::bindSecondaryProperties()
     for (auto& value : secondaryValues) {
         value.addListener(this);
     }
+}
+
 }

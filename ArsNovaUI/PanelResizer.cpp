@@ -2,6 +2,9 @@
 
 #include "Theme/CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 PanelResizer::PanelResizer(Edge edge) : edge(edge)
 {
     setMouseCursor(juce::MouseCursor::LeftRightResizeCursor);
@@ -68,4 +71,6 @@ void PanelResizer::mouseExit(const juce::MouseEvent&)
     isHovered = false;
 
     repaint();
+}
+
 }

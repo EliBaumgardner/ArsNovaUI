@@ -2,6 +2,9 @@
 
 #include <juce_core/juce_core.h>
 
+namespace ArsNovaUI
+{
+
 class InterfaceIdentifiers
 {
 public:
@@ -13,3 +16,5 @@ public:
     static const juce::Identifier ThemeColour;
     static const juce::Identifier InterfaceZoom;
 };
+
+}

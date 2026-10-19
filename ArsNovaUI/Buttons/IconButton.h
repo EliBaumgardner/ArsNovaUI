@@ -3,6 +3,9 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 #include "../Theme/Theme.h"
 
+namespace ArsNovaUI
+{
+
 class CustomLookAndFeel;
 
 struct ButtonState
@@ -57,3 +60,5 @@ private:
 
     juce::Label caption;
 };
+
+}

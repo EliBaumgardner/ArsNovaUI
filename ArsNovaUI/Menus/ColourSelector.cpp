@@ -2,6 +2,9 @@
 #include "../Theme/InterfaceIdentifiers.h"
 #include "../Theme/CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 ColourPicker::ColourPicker(juce::ValueTree colourPresets, juce::UndoManager& undoManager)
     : colourPresets(colourPresets), undoManager(undoManager)
 {
@@ -291,4 +294,6 @@ void ColourSelector::mouseDown(const juce::MouseEvent&)
     pickerBox->setLookAndFeel(&getLookAndFeel());
 
     pickerBox->enterModalState(true);
+}
+
 }

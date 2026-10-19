@@ -1,6 +1,9 @@
 #include "ButtonPane.h"
 #include "../Theme/CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 void ButtonPane::paint(juce::Graphics& graphics)
 {
     CustomLookAndFeel::get(*this).drawPane(graphics, getLocalBounds().toFloat());
@@ -109,4 +112,6 @@ int ButtonPane::idealWidth(int height) const
     const int buttonWidth = juce::roundToInt((height - inset * 2) * Theme::buttonAspectRatio);
 
     return inset * 2 + buttons.size() * buttonWidth + juce::jmax(0, buttons.size() - 1) * Theme::buttonGap;
+}
+
 }

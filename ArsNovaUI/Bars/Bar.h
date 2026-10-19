@@ -3,6 +3,9 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 #include "../Theme/Theme.h"
 
+namespace ArsNovaUI
+{
+
 class Bar : public juce::Component
 {
 public:
@@ -32,3 +35,5 @@ private:
     Surface          surface  = Surface::Solid;
     juce::Component* backdrop = nullptr;
 };
+
+}

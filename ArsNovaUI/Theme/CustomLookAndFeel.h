@@ -6,6 +6,8 @@
 
 class FileLabel;
 
+class IconButton;
+
 class ValueSlider;
 
 struct ButtonState;
@@ -87,7 +89,7 @@ public:
     void drawStrokeSymbol(juce::Graphics& graphics, juce::Rectangle<float> bounds, const std::vector<SymbolStroke>& strokes);
     void drawSymbolMark  (juce::Graphics& graphics, juce::Rectangle<float> bounds, SymbolMark mark, const std::vector<SymbolStroke>& strokes);
 
-    void drawTextButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawTextButton(juce::Graphics& graphics, const IconButton& button);
     void drawCodeButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state, float fontHeight = labelFontHeight);
 
     void drawIncrementIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, bool pointsUp);

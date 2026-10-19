@@ -298,17 +298,18 @@ void CustomLookAndFeel::drawEraserIcon(juce::Graphics& graphics, juce::Rectangle
     drawGlyph(graphics, bounds, glyphs.eraser, GlyphPaint::Stroked);
 }
 
-void CustomLookAndFeel::drawTextButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
+void CustomLookAndFeel::drawTextButton(juce::Graphics& graphics, const IconButton& button)
 {
-    ButtonState tileState = state;
+    const juce::Rectangle<float> bounds    = button.getLocalBounds().toFloat();
+    ButtonState                  tileState = button.state;
 
     tileState.text = {};
 
     drawButtonTile(graphics, bounds, tileState);
 
-    graphics.setColour(pressableButtonColour(state));
+    graphics.setColour(pressableButtonColour(button.state));
     graphics.setFont(font(FontStyle::SemiBold, textHeight));
-    graphics.drawFittedText(state.text, bounds.toNearestInt(), juce::Justification::centred, 1);
+    graphics.drawFittedText(button.state.text, bounds.toNearestInt(), juce::Justification::centred, 1);
 }
 
 void CustomLookAndFeel::drawCodeButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state,

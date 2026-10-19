@@ -5,6 +5,9 @@
 
 #include <span>
 
+namespace ArsNovaUI
+{
+
 class LabelPanel : public juce::Component
 {
 public:
@@ -44,3 +47,5 @@ private:
 
     juce::UndoManager& undoManager;
 };
+
+}

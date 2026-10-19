@@ -2,6 +2,9 @@
 
 #include <iterator>
 
+namespace ArsNovaUI
+{
+
 static const juce::String greekLetters[] = {
     juce::String(L"α"),
     juce::String(L"β"),
@@ -44,4 +47,6 @@ juce::String GreekLetterFormat::text(const ValueBinding& binding, TextPurpose pu
     const int letter = juce::jlimit(0, greekLetterCount - 1, static_cast<int>(binding.primary.getValue()));
 
     return greekLetters[letter];
+}
+
 }

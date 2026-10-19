@@ -40,23 +40,23 @@ private:
 
     juce::UndoManager undoManager;
     juce::ValueTree   values        { "GalleryValues" };
-    juce::ValueTree   colourPresets { InterfaceIdentifiers::ColourPresets };
+    juce::ValueTree   colourPresets { ArsNovaUI::InterfaceIdentifiers::ColourPresets };
 
-    juce::OwnedArray<IconButton> iconButtons;
+    juce::OwnedArray<ArsNovaUI::IconButton> iconButtons;
 
-    ValueEditor numberEditor;
-    ValueEditor wordEditor;
-    ValueEditor pitchEditor;
-    ValueEditor letterEditor;
-    ValueEditor pairEditor;
+    ArsNovaUI::ValueEditor numberEditor;
+    ArsNovaUI::ValueEditor wordEditor;
+    ArsNovaUI::ValueEditor pitchEditor;
+    ArsNovaUI::ValueEditor letterEditor;
+    ArsNovaUI::ValueEditor pairEditor;
 
-    ItemSelector   itemSelector;
-    ColourSelector colourSelector;
-    IconButton     menuButton;
+    ArsNovaUI::ItemSelector   itemSelector;
+    ArsNovaUI::ColourSelector colourSelector;
+    ArsNovaUI::IconButton     menuButton;
 
-    std::unique_ptr<ContextMenu> menu;
+    std::unique_ptr<ArsNovaUI::ContextMenu> menu;
 
-    GalleryCanvas canvas;
-    DynamicPort   port;
-    Bar           frostedBar;
+    GalleryCanvas          canvas;
+    ArsNovaUI::DynamicPort port;
+    ArsNovaUI::Bar         frostedBar;
 };

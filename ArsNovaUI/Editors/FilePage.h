@@ -4,6 +4,9 @@
 
 #include "../Theme/Theme.h"
 
+namespace ArsNovaUI
+{
+
 class FilePage : private juce::CodeDocument,
                  public juce::CodeEditorComponent,
                  private juce::CodeDocument::Listener
@@ -41,3 +44,5 @@ private:
 
     float zoom = 1.0f;
 };
+
+}

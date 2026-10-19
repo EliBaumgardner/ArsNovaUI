@@ -2,6 +2,9 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
+namespace ArsNovaUI
+{
+
 struct Theme
 {
     enum class FontStyle;
@@ -241,3 +244,5 @@ struct Theme
     static constexpr float callOutShadowAlpha  = 0.6f;
     static constexpr int   callOutShadowRadius = 8;
 };
+
+}

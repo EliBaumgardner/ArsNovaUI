@@ -37,16 +37,16 @@ GalleryCanvas::GalleryCanvas()
     squareNodes[1].isHovered    = true;
     squareNodes[2].isSelected   = true;
 
-    arrows.push_back(makeArrow({ 40.0f, 280.0f }, { 160.0f, 280.0f }, ArrowVisual::ShaftStyle::Solid));
-    arrows.push_back(makeArrow({ 200.0f, 280.0f }, { 320.0f, 280.0f }, ArrowVisual::ShaftStyle::Dashed));
-    arrows.push_back(makeArrow({ 360.0f, 280.0f }, { 480.0f, 280.0f }, ArrowVisual::ShaftStyle::Ruler));
-    arrows.push_back(makeArrow({ 520.0f, 280.0f }, { 640.0f, 280.0f }, ArrowVisual::ShaftStyle::Solid));
-    arrows.push_back(makeArrow({ 40.0f, 370.0f }, { 160.0f, 370.0f }, ArrowVisual::ShaftStyle::Solid));
-    arrows.push_back(makeArrow({ 200.0f, 370.0f }, { 320.0f, 370.0f }, ArrowVisual::ShaftStyle::Dashed));
-    arrows.push_back(makeArrow({ 360.0f, 370.0f }, { 480.0f, 370.0f }, ArrowVisual::ShaftStyle::Solid));
-    arrows.push_back(makeArrow({ 520.0f, 370.0f }, { 640.0f, 370.0f }, ArrowVisual::ShaftStyle::Solid));
+    arrows.push_back(makeArrow({ 40.0f, 280.0f }, { 160.0f, 280.0f }, ArsNovaUI::ArrowVisual::ShaftStyle::Solid));
+    arrows.push_back(makeArrow({ 200.0f, 280.0f }, { 320.0f, 280.0f }, ArsNovaUI::ArrowVisual::ShaftStyle::Dashed));
+    arrows.push_back(makeArrow({ 360.0f, 280.0f }, { 480.0f, 280.0f }, ArsNovaUI::ArrowVisual::ShaftStyle::Ruler));
+    arrows.push_back(makeArrow({ 520.0f, 280.0f }, { 640.0f, 280.0f }, ArsNovaUI::ArrowVisual::ShaftStyle::Solid));
+    arrows.push_back(makeArrow({ 40.0f, 370.0f }, { 160.0f, 370.0f }, ArsNovaUI::ArrowVisual::ShaftStyle::Solid));
+    arrows.push_back(makeArrow({ 200.0f, 370.0f }, { 320.0f, 370.0f }, ArsNovaUI::ArrowVisual::ShaftStyle::Dashed));
+    arrows.push_back(makeArrow({ 360.0f, 370.0f }, { 480.0f, 370.0f }, ArsNovaUI::ArrowVisual::ShaftStyle::Solid));
+    arrows.push_back(makeArrow({ 520.0f, 370.0f }, { 640.0f, 370.0f }, ArsNovaUI::ArrowVisual::ShaftStyle::Solid));
 
-    arrows[3].head       = ArrowVisual::HeadStyle::Outlined;
+    arrows[3].head       = ArsNovaUI::ArrowVisual::HeadStyle::Outlined;
     arrows[4].emphasised = true;
     arrows[4].headLength = emphasisedHeadLength;
     arrows[5].ghost      = true;
@@ -54,8 +54,8 @@ GalleryCanvas::GalleryCanvas()
     arrows[6].labelText  = "1/4";
     arrows[6].label      = { { 420.0f, 370.0f }, 0.0f };
 
-    arrows[7].trails.push_back({ highlights[1], 0.75f, ArrowTrail::Stroke::Solid });
-    arrows[7].trails.push_back({ highlights[2], 0.45f, ArrowTrail::Stroke::Dashed });
+    arrows[7].trails.push_back({ highlights[1], 0.75f, ArsNovaUI::ArrowTrail::Stroke::Solid });
+    arrows[7].trails.push_back({ highlights[2], 0.45f, ArsNovaUI::ArrowTrail::Stroke::Dashed });
 
     wave.startNewSubPath(0.15f, 0.5f);
     wave.cubicTo(0.3f, 0.2f, 0.4f, 0.2f, 0.5f, 0.5f);
@@ -70,7 +70,7 @@ GalleryCanvas::GalleryCanvas()
 
 void GalleryCanvas::paint(juce::Graphics& graphics)
 {
-    CustomLookAndFeel& lookAndFeel = CustomLookAndFeel::get(*this);
+    ArsNovaUI::CustomLookAndFeel& lookAndFeel = ArsNovaUI::CustomLookAndFeel::get(*this);
 
     lookAndFeel.drawCanvas(graphics, grid);
 
@@ -78,23 +78,23 @@ void GalleryCanvas::paint(juce::Graphics& graphics)
 
     lookAndFeel.drawRaisedPanel(graphics, panelBounds);
 
-    for (const NodeVisual& visual : circleNodes) {
+    for (const ArsNovaUI::NodeVisual& visual : circleNodes) {
         lookAndFeel.drawCircleNode(graphics, visual);
     }
 
-    for (const NodeVisual& visual : squareNodes) {
+    for (const ArsNovaUI::NodeVisual& visual : squareNodes) {
         lookAndFeel.drawSquareNode(graphics, visual);
     }
 
-    for (const ArrowVisual& visual : arrows) {
+    for (const ArsNovaUI::ArrowVisual& visual : arrows) {
         lookAndFeel.drawArrow(graphics, visual);
     }
 
     graphics.setColour(lookAndFeel.textColour);
 
     lookAndFeel.drawStrokeSymbol(graphics, symbolBounds, symbol);
-    lookAndFeel.drawSymbolMark(graphics, markBounds, SymbolMark::Symbol, symbol);
-    lookAndFeel.drawSymbolMark(graphics, missingBounds, SymbolMark::Missing, symbol);
+    lookAndFeel.drawSymbolMark(graphics, markBounds, ArsNovaUI::SymbolMark::Symbol, symbol);
+    lookAndFeel.drawSymbolMark(graphics, missingBounds, ArsNovaUI::SymbolMark::Missing, symbol);
 }
 
 void GalleryCanvas::resized()
@@ -102,12 +102,12 @@ void GalleryCanvas::resized()
     grid.bounds = getLocalBounds().toFloat();
 }
 
-ArrowVisual GalleryCanvas::makeArrow(juce::Point<float> start, juce::Point<float> tip, ArrowVisual::ShaftStyle shaftStyle) const
+ArsNovaUI::ArrowVisual GalleryCanvas::makeArrow(juce::Point<float> start, juce::Point<float> tip, ArsNovaUI::ArrowVisual::ShaftStyle shaftStyle) const
 {
     const juce::Point<float> delta     = tip - start;
     const float              length    = delta.getDistanceFromOrigin();
     const juce::Point<float> direction = delta / length;
-    ArrowVisual              visual;
+    ArsNovaUI::ArrowVisual   visual;
 
     visual.geometry.centre    = start;
     visual.geometry.start     = start;
@@ -121,7 +121,7 @@ ArrowVisual GalleryCanvas::makeArrow(juce::Point<float> start, juce::Point<float
     visual.headLength         = headLength;
     visual.rulerSpacing       = rulerSpacing;
 
-    if (shaftStyle == ArrowVisual::ShaftStyle::Ruler) {
+    if (shaftStyle == ArsNovaUI::ArrowVisual::ShaftStyle::Ruler) {
         visual.rulerOpacity = 1.0f;
     }
 

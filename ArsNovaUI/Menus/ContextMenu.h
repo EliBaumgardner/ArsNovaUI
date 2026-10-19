@@ -4,6 +4,9 @@
 #include <functional>
 #include <vector>
 
+namespace ArsNovaUI
+{
+
 class ContextMenu
 {
 public:
@@ -39,3 +42,5 @@ private:
 
     std::vector<Item> items;
 };
+
+}

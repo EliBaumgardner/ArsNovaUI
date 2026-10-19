@@ -1,6 +1,9 @@
 #include "ItemSelector.h"
 #include "../Theme/CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 ItemSelector::ItemSelector(juce::UndoManager& undoManager)
     : labelEditor(undoManager)
 {
@@ -143,4 +146,6 @@ const ItemSelector::Item* ItemSelector::findItem(int itemId) const
     }
 
     return nullptr;
+}
+
 }

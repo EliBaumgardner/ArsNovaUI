@@ -4,6 +4,9 @@
 #include "ValueEditor.h"
 #include "../Buttons/IconButton.h"
 
+namespace ArsNovaUI
+{
+
 class FileLabel : public juce::Component
 {
 public:
@@ -34,3 +37,5 @@ public:
     ValueEditor fileText;
     IconButton  removeButton;
 };
+
+}

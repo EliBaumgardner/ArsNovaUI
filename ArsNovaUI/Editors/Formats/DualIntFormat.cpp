@@ -1,5 +1,8 @@
 #include "ValueFormat.h"
 
+namespace ArsNovaUI
+{
+
 DualIntFormat::DualIntFormat(double lowest, double highest, const juce::Identifier& secondaryPropertyID)
     : NumberFormat(lowest, highest)
 {
@@ -49,4 +52,6 @@ ParsedValue DualIntFormat::parse(const ValueBinding& binding, const juce::String
     const int secondaryValue = static_cast<int>(juce::jlimit(0.0,     maximum, static_cast<double>(secondaryText.getIntValue())));
 
     return { primaryValue, { secondaryValue } };
+}
+
 }

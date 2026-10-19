@@ -1,5 +1,8 @@
 #include "CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 void CustomLookAndFeel::drawStrokeSymbol(juce::Graphics& graphics, juce::Rectangle<float> bounds, const std::vector<SymbolStroke>& strokes)
 {
     const float                  side   = juce::jmin(bounds.getWidth(), bounds.getHeight());
@@ -26,4 +29,6 @@ void CustomLookAndFeel::drawSymbolMark(juce::Graphics& graphics, juce::Rectangle
         graphics.setFont(font(FontStyle::SemiBold, bounds.getHeight()));
         graphics.drawFittedText("?", bounds.toNearestInt(), juce::Justification::centred, 1);
     }
+}
+
 }

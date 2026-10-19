@@ -7,6 +7,9 @@
 #include "../Buttons/IconButton.h"
 #include "ContextMenu.h"
 
+namespace ArsNovaUI
+{
+
 class ItemSelector : public juce::Component, public juce::SettableTooltipClient
 {
 public:
@@ -57,3 +60,5 @@ private:
 
     int selectedItemId = 0;
 };
+
+}

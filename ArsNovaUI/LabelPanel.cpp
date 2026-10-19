@@ -1,6 +1,9 @@
 #include "LabelPanel.h"
 #include "Theme/CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 LabelPanel::LabelPanel(juce::UndoManager& undoManager) : undoManager(undoManager)
 {
 }
@@ -161,4 +164,6 @@ int LabelPanel::labelIndexAt(int positionY) const
     }
 
     return juce::jlimit(0, static_cast<int>(labels.size()) - 1, positionY / (labelHeight + labelGap));
+}
+
 }

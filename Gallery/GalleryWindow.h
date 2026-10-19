@@ -15,6 +15,6 @@ public:
 
 private:
 
-    CustomLookAndFeel lookAndFeel;
-    GalleryPage       page;
+    ArsNovaUI::CustomLookAndFeel lookAndFeel;
+    GalleryPage                  page;
 };

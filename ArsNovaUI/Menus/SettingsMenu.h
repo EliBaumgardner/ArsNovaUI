@@ -4,6 +4,9 @@
 #include "../Editors/LabeledEditor.h"
 #include "ColourSelector.h"
 
+namespace ArsNovaUI
+{
+
 class CustomLookAndFeel;
 class ScaledView;
 
@@ -39,3 +42,5 @@ private:
     CaptionLabel   zoomLabel;
     ValueEditor    zoomEditor;
 };
+
+}

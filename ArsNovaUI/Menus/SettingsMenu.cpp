@@ -3,6 +3,9 @@
 #include "../Theme/InterfaceIdentifiers.h"
 #include "../ScaledView.h"
 
+namespace ArsNovaUI
+{
+
 SettingsMenu::SettingsMenu(CustomLookAndFeel& lookAndFeel, juce::PropertiesFile& interfaceSettings, ScaledView& scaledView, juce::ValueTree colourPresets,
                            juce::UndoManager& undoManager)
     : lookAndFeel(lookAndFeel),
@@ -110,4 +113,6 @@ juce::Point<int> SettingsMenu::narrowestSize() const
     const int        zoomWidth  = juce::GlyphArrangement::getStringWidthInt(textFont, zoomLabel.getText()) + juce::roundToInt(rowHeight * zoomEditorWidthRatio);
 
     return { padding * 3 + juce::jmax(themeWidth, zoomWidth), padding * 2 + rowHeight * 2 };
+}
+
 }

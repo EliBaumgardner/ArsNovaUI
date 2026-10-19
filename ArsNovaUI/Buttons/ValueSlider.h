@@ -3,6 +3,9 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <functional>
 
+namespace ArsNovaUI
+{
+
 class ValueSlider : public juce::Component, public juce::SettableTooltipClient
 {
 public:
@@ -21,3 +24,5 @@ public:
     juce::String                    label;
     juce::String                    suffix;
 };
+
+}

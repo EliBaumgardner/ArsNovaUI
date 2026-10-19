@@ -2,6 +2,9 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
+namespace ArsNovaUI
+{
+
 class ColourPicker : public juce::Component
 {
 public:
@@ -79,3 +82,5 @@ public:
     ColourPicker                      picker;
     std::unique_ptr<juce::CallOutBox> pickerBox;
 };
+
+}

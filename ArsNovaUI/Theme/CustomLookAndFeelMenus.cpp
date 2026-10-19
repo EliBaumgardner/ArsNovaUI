@@ -4,6 +4,9 @@
 
 #include <juce_gui_extra/juce_gui_extra.h>
 
+namespace ArsNovaUI
+{
+
 static juce::Path loadGlyph(const char* svgData, int svgSize)
 {
     const std::unique_ptr<juce::Drawable> svg = juce::Drawable::createFromImageData(svgData, static_cast<size_t>(svgSize));
@@ -241,4 +244,6 @@ int CustomLookAndFeel::getPopupMenuBorderSize()
 juce::Font CustomLookAndFeel::getPopupMenuFont()
 {
     return font(FontStyle::Regular, labelFontHeight);
+}
+
 }

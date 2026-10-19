@@ -1,6 +1,9 @@
 #include "ScaledView.h"
 #include "Theme/InterfaceIdentifiers.h"
 
+namespace ArsNovaUI
+{
+
 ScaledView::ScaledView(juce::Component& content, juce::PropertiesFile& interfaceSettings)
     : content(content), interfaceSettings(interfaceSettings)
 {
@@ -59,4 +62,6 @@ void ScaledView::changeListenerCallback(juce::ChangeBroadcaster*)
     if (onZoomChanged) {
         onZoomChanged();
     }
+}
+
 }

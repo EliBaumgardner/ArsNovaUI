@@ -3,6 +3,9 @@
 #include "../Editors/FileLabel.h"
 #include "../Buttons/ValueSlider.h"
 
+namespace ArsNovaUI
+{
+
 enum class GlyphPaint { Stroked, Dashed, Filled, Tinted };
 
 static void drawGlyph(juce::Graphics& graphics, juce::Rectangle<float> bounds, juce::Path glyph, GlyphPaint paint)
@@ -457,4 +460,6 @@ juce::Colour CustomLookAndFeel::pressableButtonColour(const ButtonState& state) 
     }
 
     return softTextColour;
+}
+
 }

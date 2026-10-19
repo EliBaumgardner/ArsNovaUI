@@ -4,6 +4,9 @@
 #include <limits>
 #include <vector>
 
+namespace ArsNovaUI
+{
+
 struct InputRestrictions
 {
     int          maxLength = 4;
@@ -113,3 +116,5 @@ public:
     juce::String allowedCharacters;
     bool         trimsWhitespace = true;
 };
+
+}

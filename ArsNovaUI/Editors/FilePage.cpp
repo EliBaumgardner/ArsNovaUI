@@ -2,6 +2,9 @@
 
 #include "../Theme/CustomLookAndFeel.h"
 
+namespace ArsNovaUI
+{
+
 FilePage::FilePage(const Theme& theme)
     : juce::CodeEditorComponent(*this, nullptr)
 {
@@ -80,4 +83,6 @@ void FilePage::codeDocumentTextDeleted(int, int)
     if (! suppressTextChanged && onTextChanged != nullptr) {
         onTextChanged();
     }
+}
+
 }

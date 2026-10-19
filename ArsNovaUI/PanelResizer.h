@@ -3,6 +3,9 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <functional>
 
+namespace ArsNovaUI
+{
+
 class PanelResizer : public juce::Component
 {
 public:
@@ -31,3 +34,5 @@ private:
     bool isHovered      = false;
     bool isDragging     = false;
 };
+
+}

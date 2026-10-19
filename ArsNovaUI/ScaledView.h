@@ -4,6 +4,9 @@
 
 #include <functional>
 
+namespace ArsNovaUI
+{
+
 class ScaledView : public juce::Component, private juce::ChangeListener
 {
 public:
@@ -31,3 +34,5 @@ private:
 
     void changeListenerCallback(juce::ChangeBroadcaster*) override;
 };
+
+}

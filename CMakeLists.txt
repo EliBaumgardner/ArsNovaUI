@@ -94,6 +94,18 @@ target_sources(ArsNovaUI INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Editors/Formats/GreekLetterFormat.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Bars/Bar.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/DynamicPort.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasIdentifiers.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/ArrowAnimation.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasNode.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasArrow.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/EditCanvas.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/NodeManager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/ArrowManager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasHitTester.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasTreeListener.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/NodeGestures.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/ArrowGestures.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasController.cpp
 )
 
 target_include_directories(ArsNovaUI INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})

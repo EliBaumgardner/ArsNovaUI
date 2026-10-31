@@ -4,6 +4,7 @@ This is a library of UI components created with the JUCE Framework for C++.
 
 - **Theme and drawing**: `Theme` (palette and metrics) and `CustomLookAndFeel`, which draws every icon, node shape, arrow, stroke symbol, menu and scrollbar. Drawing functions take JUCE types or the plain structs in `Theme/Visuals.h`.
 - **Components**: icon buttons and button panes, value sliders, context menus, item and colour selectors, a settings menu, popup windows, panel resizers, frosted or solid bars, and a zoom/pan viewport (`DynamicPort`).
+- **Node canvas**: the framework behind a canvas of nodes joined by arrows. `CanvasNode` and `CanvasArrow` are the components an application derives from, `EditCanvas` is the component that shows a `CanvasDocument`'s tree of them (with its `NodeManager`, `ArrowManager`, `CanvasHitTester` and `CanvasTreeListener`), and `CanvasController` routes the mouse to `NodeGestures` and `ArrowGestures`. The application supplies the `CanvasDocument` that edits its data and the hooks that build its own node and arrow classes. `CanvasIdentifiers` names the tree keys the framework reads.
 - **Editors**: `ValueEditor`, which binds to a `ValueTree` property and shows it through a `ValueFormat` (numbers, text, pitch names, Greek letters, value pairs), and `FilePage`, a code editor over a `juce::CodeDocument`.
 - **Assets**: the Geist fonts and the icon SVGs, compiled in as `ArsNovaUIFonts` and `ArsNovaUIIcons`.
 

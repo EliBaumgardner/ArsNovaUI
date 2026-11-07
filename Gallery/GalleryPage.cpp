@@ -16,9 +16,9 @@ GalleryPage::GalleryPage()
         &ArsNovaUI::CustomLookAndFeel::drawChevronDownIcon, &ArsNovaUI::CustomLookAndFeel::drawChevronUpIcon, &ArsNovaUI::CustomLookAndFeel::drawEyeIcon,
         &ArsNovaUI::CustomLookAndFeel::drawAddIcon, &ArsNovaUI::CustomLookAndFeel::drawRemoveIcon, &ArsNovaUI::CustomLookAndFeel::drawImportIcon,
         &ArsNovaUI::CustomLookAndFeel::drawBrushIcon, &ArsNovaUI::CustomLookAndFeel::drawDashedBoxIcon, &ArsNovaUI::CustomLookAndFeel::drawQuaverIcon,
-        &ArsNovaUI::CustomLookAndFeel::drawCircledHButton, &ArsNovaUI::CustomLookAndFeel::drawArrowButton, &ArsNovaUI::CustomLookAndFeel::drawPencilButton,
-        &ArsNovaUI::CustomLookAndFeel::drawUploadButton, &ArsNovaUI::CustomLookAndFeel::drawWaveButton, &ArsNovaUI::CustomLookAndFeel::drawPencilIcon,
-        &ArsNovaUI::CustomLookAndFeel::drawEraserIcon
+        &ArsNovaUI::CustomLookAndFeel::drawHostNodeIcon, &ArsNovaUI::CustomLookAndFeel::drawArrowButton,
+        &ArsNovaUI::CustomLookAndFeel::drawWaveButton, &ArsNovaUI::CustomLookAndFeel::drawPencilIcon, &ArsNovaUI::CustomLookAndFeel::drawEraserIcon,
+        &ArsNovaUI::CustomLookAndFeel::drawUploadIcon
     };
 
     const std::array<Sample, sampleCount>                  samples { Sample::Normal, Sample::Hovered, Sample::Selected, Sample::Disabled };

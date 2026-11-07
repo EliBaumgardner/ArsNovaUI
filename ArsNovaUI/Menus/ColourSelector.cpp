@@ -228,6 +228,33 @@ void ColourPicker::mouseUp(const juce::MouseEvent&)
     dragTarget = DragTarget::None;
 }
 
+juce::String ColourPicker::getTooltip()
+{
+    const juce::Point<int> mousePoint = getMouseXYRelative();
+
+    if (saturationBrightnessArea.contains(mousePoint)) {
+        return "Saturation and brightness";
+    }
+
+    if (hueArea.contains(mousePoint)) {
+        return "Hue";
+    }
+
+    if (originalArea.contains(mousePoint)) {
+        return "Original colour";
+    }
+
+    if (currentArea.contains(mousePoint)) {
+        return "Current colour";
+    }
+
+    if (presetArea.contains(mousePoint)) {
+        return "Colour presets";
+    }
+
+    return {};
+}
+
 ColourSelector::ColourSelector(juce::ValueTree colourPresets, juce::UndoManager& undoManager)
     : picker(colourPresets, undoManager)
 {
@@ -282,14 +309,11 @@ void ColourSelector::paint(juce::Graphics& graphics)
 
 void ColourSelector::mouseDown(const juce::MouseEvent&)
 {
-    juce::Component* const editor      = getTopLevelComponent();
-    const int              pickerWidth = juce::roundToInt(editor->getHeight() * pickerWidthRatio);
-
-    picker.setSize(pickerWidth, juce::roundToInt(pickerWidth * ColourPicker::heightToWidthRatio));
+    picker.setSize(ColourPicker::pickerWidth, juce::roundToInt(ColourPicker::pickerWidth * ColourPicker::heightToWidthRatio));
 
     picker.showColour(colour);
 
-    pickerBox = std::make_unique<juce::CallOutBox>(picker, editor->getLocalArea(this, getLocalBounds()), editor);
+    pickerBox = std::make_unique<juce::CallOutBox>(picker, getScreenBounds(), nullptr);
 
     pickerBox->setLookAndFeel(&getLookAndFeel());
 

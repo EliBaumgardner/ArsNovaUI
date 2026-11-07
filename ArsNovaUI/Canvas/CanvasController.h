@@ -33,7 +33,7 @@ class CanvasController : public juce::MouseListener
 {
 public:
 
-    CanvasController(EditCanvas& canvas, CanvasDocument& document, juce::UndoManager& undoManager);
+    CanvasController(EditCanvas& canvas, CanvasDocument& document);
 
     void mouseDown (const juce::MouseEvent& e) override;
     void mouseUp   (const juce::MouseEvent& e) override;

@@ -5,7 +5,7 @@
 namespace ArsNovaUI
 {
 
-class ColourPicker : public juce::Component
+class ColourPicker : public juce::Component, public juce::TooltipClient
 {
 public:
 
@@ -21,8 +21,11 @@ public:
     void mouseDrag(const juce::MouseEvent& event) override;
     void mouseUp  (const juce::MouseEvent& event) override;
 
+    juce::String getTooltip() override;
+
     enum class DragTarget { None, SaturationBrightness, Hue };
 
+    static constexpr int   pickerWidth          = 220;
     static constexpr int   presetCount          = 8;
     static constexpr float heightToWidthRatio   = 1.41f;
     static constexpr float paddingRatio         = 0.05f;
@@ -75,9 +78,8 @@ public:
 
     std::function<void(juce::Colour)> onColourPicked;
 
-    juce::Colour colour           = juce::Colours::white;
-    Shape        shape            = Shape::Square;
-    float        pickerWidthRatio = 0.3f;
+    juce::Colour colour = juce::Colours::white;
+    Shape        shape  = Shape::Square;
 
     ColourPicker                      picker;
     std::unique_ptr<juce::CallOutBox> pickerBox;

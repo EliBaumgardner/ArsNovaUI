@@ -8,12 +8,12 @@
 namespace ArsNovaUI
 {
 
-CanvasController::CanvasController(EditCanvas& canvas, CanvasDocument& document, juce::UndoManager& undoManager)
-    : arrowGestures(canvas, document, undoManager),
-      nodeGestures(canvas, document, undoManager),
+CanvasController::CanvasController(EditCanvas& canvas, CanvasDocument& document)
+    : arrowGestures(canvas, document),
+      nodeGestures(canvas, document),
       canvas(canvas),
       document(document),
-      undoManager(undoManager)
+      undoManager(document.undoManager)
 {
 }
 

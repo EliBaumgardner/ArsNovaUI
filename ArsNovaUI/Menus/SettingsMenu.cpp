@@ -6,10 +6,8 @@
 namespace ArsNovaUI
 {
 
-SettingsMenu::SettingsMenu(CustomLookAndFeel& lookAndFeel, juce::PropertiesFile& interfaceSettings, ScaledView& scaledView, juce::ValueTree colourPresets,
-                           juce::UndoManager& undoManager)
+SettingsMenu::SettingsMenu(CustomLookAndFeel& lookAndFeel, ScaledView& scaledView, juce::ValueTree colourPresets, juce::UndoManager& undoManager)
     : lookAndFeel(lookAndFeel),
-      interfaceSettings(interfaceSettings),
       scaledView(scaledView),
       themeColourSelector(colourPresets, undoManager),
       zoomEditor(undoManager)
@@ -23,12 +21,8 @@ SettingsMenu::SettingsMenu(CustomLookAndFeel& lookAndFeel, juce::PropertiesFile&
     themeColourLabel.setText("Theme colour", juce::dontSendNotification);
     zoomLabel.setText("Interface zoom", juce::dontSendNotification);
 
-    themeColourSelector.colour           = lookAndFeel.accentColour;
-    themeColourSelector.pickerWidthRatio = settingsPickerWidthRatio;
-    zoomEditor.backdrop                  = ValueEditor::Backdrop::Field;
-
-    themeColourSelector.setTooltip("Colour the whole interface is tinted from");
-    zoomEditor.setTooltip("Size of every button, label and bar, from 1x to 2x");
+    themeColourSelector.colour = lookAndFeel.accentColour;
+    zoomEditor.backdrop        = ValueEditor::Backdrop::Field;
 
     zoomEditor.setFormat(std::move(zoomFormat));
 
@@ -42,7 +36,7 @@ SettingsMenu::SettingsMenu(CustomLookAndFeel& lookAndFeel, juce::PropertiesFile&
             return;
         }
 
-        this->interfaceSettings.setValue(InterfaceIdentifiers::InterfaceZoom.toString(), enteredZoom);
+        this->scaledView.interfaceSettings.setValue(InterfaceIdentifiers::InterfaceZoom.toString(), enteredZoom);
     };
 
     themeColourSelector.onColourPicked = [this](juce::Colour pickedColour) {
@@ -50,7 +44,7 @@ SettingsMenu::SettingsMenu(CustomLookAndFeel& lookAndFeel, juce::PropertiesFile&
 
         this->lookAndFeel.applyThemeColour(pickedColour);
 
-        this->interfaceSettings.setValue(InterfaceIdentifiers::ThemeColour.toString(), pickedColour.toString());
+        this->scaledView.interfaceSettings.setValue(InterfaceIdentifiers::ThemeColour.toString(), pickedColour.toString());
 
         for (int index = 0; index < desktop.getNumComponents(); ++index) {
             desktop.getComponent(index)->sendLookAndFeelChange();

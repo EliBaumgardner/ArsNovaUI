@@ -138,6 +138,17 @@ void CustomLookAndFeel::drawCircleIcon(juce::Graphics& graphics, juce::Rectangle
     drawGlyph(graphics, bounds, glyphs.circle, GlyphPaint::Stroked);
 }
 
+void CustomLookAndFeel::drawHostNodeIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
+{
+    graphics.setColour(pressableButtonColour(state));
+
+    if (state.isSelected) {
+        drawGlyph(graphics, bounds, glyphs.circledH, GlyphPaint::Tinted);
+    }
+
+    drawGlyph(graphics, bounds, glyphs.circledH, GlyphPaint::Stroked);
+}
+
 void CustomLookAndFeel::drawRoundedSquareIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
 {
     graphics.setColour(pressableButtonColour(state));
@@ -260,25 +271,11 @@ static void drawTitledButton(const CustomLookAndFeel& lookAndFeel, juce::Graphic
     graphics.drawFittedText(state.text, content.toNearestInt(), juce::Justification::centredLeft, 1);
 }
 
-void CustomLookAndFeel::drawCircledHButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    drawTitledButton(*this, graphics, bounds, state, glyphs.circledH, labelFontHeight);
-}
-
 void CustomLookAndFeel::drawArrowButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
 {
     drawTitledButton(*this, graphics, bounds, state, glyphs.arrow, labelFontHeight);
 }
 
-void CustomLookAndFeel::drawPencilButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    drawTitledButton(*this, graphics, bounds, state, glyphs.pencil, labelFontHeight);
-}
-
-void CustomLookAndFeel::drawUploadButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    drawTitledButton(*this, graphics, bounds, state, glyphs.upload, labelFontHeight);
-}
 
 void CustomLookAndFeel::drawWaveButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
 {
@@ -301,10 +298,18 @@ void CustomLookAndFeel::drawEraserIcon(juce::Graphics& graphics, juce::Rectangle
     drawGlyph(graphics, bounds, glyphs.eraser, GlyphPaint::Stroked);
 }
 
+void CustomLookAndFeel::drawUploadIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
+{
+    graphics.setColour(pressableButtonColour(state));
+
+    drawGlyph(graphics, bounds, glyphs.upload, GlyphPaint::Stroked);
+}
+
 void CustomLookAndFeel::drawTextButton(juce::Graphics& graphics, const IconButton& button)
 {
-    const juce::Rectangle<float> bounds    = button.getLocalBounds().toFloat();
-    ButtonState                  tileState = button.state;
+    const juce::Rectangle<float> bounds = button.getLocalBounds().toFloat();
+
+    ButtonState tileState = button.state;
 
     tileState.text = {};
 

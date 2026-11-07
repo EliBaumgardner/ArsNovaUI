@@ -7,7 +7,8 @@ PopupWindow::PopupWindow(const juce::String& title, std::unique_ptr<juce::Compon
                          juce::Colour backgroundColour)
     : juce::DocumentWindow(title, backgroundColour, juce::DocumentWindow::closeButton, true),
       content(std::move(content)),
-      scaledView(*this->content, origin.findParentComponentOfClass<ScaledView>()->interfaceSettings)
+      scaledView(*this->content, origin.findParentComponentOfClass<ScaledView>()->interfaceSettings),
+      tooltipWindow(this->content.get(), tooltipDelayMs)
 {
     const int                minimumWidth  = this->content->getWidth();
     const int                minimumHeight = this->content->getHeight();

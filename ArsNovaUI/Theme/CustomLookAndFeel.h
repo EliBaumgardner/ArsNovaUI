@@ -65,6 +65,7 @@ public:
     void drawRedoIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
 
     void drawCircleIcon       (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawHostNodeIcon     (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
     void drawRoundedSquareIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
     void drawTriangleIcon     (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
 
@@ -80,14 +81,12 @@ public:
     void drawDashedBoxIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
     void drawQuaverIcon   (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
 
-    void drawCircledHButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawArrowButton   (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawPencilButton  (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawUploadButton  (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawWaveButton    (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawArrowButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawWaveButton (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
 
     void drawPencilIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
     void drawEraserIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawUploadIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
 
     void drawStrokeSymbol(juce::Graphics& graphics, juce::Rectangle<float> bounds, const std::vector<SymbolStroke>& strokes);
     void drawSymbolMark  (juce::Graphics& graphics, juce::Rectangle<float> bounds, SymbolMark mark, const std::vector<SymbolStroke>& strokes);

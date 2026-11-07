@@ -32,7 +32,7 @@ class ArrowGestures
 {
 public:
 
-    ArrowGestures(EditCanvas& canvas, CanvasDocument& document, juce::UndoManager& undoManager);
+    ArrowGestures(EditCanvas& canvas, CanvasDocument& document);
 
     void beginMovingTip(CanvasArrow& danglingArrow);
     void dragTip       (juce::Point<int> cursor);

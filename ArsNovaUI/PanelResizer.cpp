@@ -8,6 +8,8 @@ namespace ArsNovaUI
 PanelResizer::PanelResizer(Edge edge) : edge(edge)
 {
     setMouseCursor(juce::MouseCursor::LeftRightResizeCursor);
+
+    setTooltip("Resize panel");
 }
 
 void PanelResizer::paint(juce::Graphics& graphics)

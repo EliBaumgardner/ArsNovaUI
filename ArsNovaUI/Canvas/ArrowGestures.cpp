@@ -7,10 +7,10 @@
 namespace ArsNovaUI
 {
 
-ArrowGestures::ArrowGestures(EditCanvas& canvas, CanvasDocument& document, juce::UndoManager& undoManager)
+ArrowGestures::ArrowGestures(EditCanvas& canvas, CanvasDocument& document)
     : canvas(canvas),
       document(document),
-      undoManager(undoManager)
+      undoManager(document.undoManager)
 {
 }
 

@@ -30,7 +30,7 @@ class NodeGestures
 {
 public:
 
-    NodeGestures(EditCanvas& canvas, CanvasDocument& document, juce::UndoManager& undoManager);
+    NodeGestures(EditCanvas& canvas, CanvasDocument& document);
 
     void createRootNode(juce::Point<float> clickPoint);
 

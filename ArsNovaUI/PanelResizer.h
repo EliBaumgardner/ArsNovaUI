@@ -6,7 +6,7 @@
 namespace ArsNovaUI
 {
 
-class PanelResizer : public juce::Component
+class PanelResizer : public juce::Component, public juce::SettableTooltipClient
 {
 public:
 

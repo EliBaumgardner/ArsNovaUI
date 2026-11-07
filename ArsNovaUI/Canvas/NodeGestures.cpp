@@ -8,10 +8,10 @@
 namespace ArsNovaUI
 {
 
-NodeGestures::NodeGestures(EditCanvas& canvas, CanvasDocument& document, juce::UndoManager& undoManager)
+NodeGestures::NodeGestures(EditCanvas& canvas, CanvasDocument& document)
     : canvas(canvas),
       document(document),
-      undoManager(undoManager)
+      undoManager(document.undoManager)
 {
 }
 

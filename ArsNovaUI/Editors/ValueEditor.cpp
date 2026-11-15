@@ -54,6 +54,8 @@ void ValueEditor::paint(juce::Graphics& graphics)
     juce::Colour inkColour    = theme.textColour;
     auto         textBounds   = getLocalBounds();
 
+    const float underlineTop = bounds.getCentreY() + fontHeight * underlineOffsetRatio;
+
     if (backdrop == Backdrop::Badge) {
         cornerRadius = bounds.getHeight() * 0.5f;
         inkColour    = theme.softTextColour;
@@ -67,17 +69,19 @@ void ValueEditor::paint(juce::Graphics& graphics)
         gaugeLevel = static_cast<float>(juce::jlimit(0.0, 1.0, (static_cast<double>(boundValue.getValue()) - format->minimum) / range));
     }
 
-    if (backdrop != Backdrop::None) {
+    if (backdrop == Backdrop::Underline) {
+        graphics.setColour(theme.borderStrongColour);
+        graphics.fillRect(bounds.withY(underlineTop).withHeight(Theme::borderThickness).withWidth(bounds.getWidth() * gaugeLevel));
+    }
+    else if (backdrop != Backdrop::None) {
         graphics.setColour(theme.raisedColour);
         graphics.fillRoundedRectangle(bounds, cornerRadius);
-    }
 
-    if (backdrop == Backdrop::Gauge) {
-        graphics.setColour(theme.accentSoftColour);
-        graphics.fillRoundedRectangle(bounds.withWidth(bounds.getWidth() * gaugeLevel), cornerRadius);
-    }
+        if (backdrop == Backdrop::Gauge) {
+            graphics.setColour(theme.accentSoftColour);
+            graphics.fillRoundedRectangle(bounds.withWidth(bounds.getWidth() * gaugeLevel), cornerRadius);
+        }
 
-    if (backdrop != Backdrop::None) {
         graphics.setColour(theme.borderStrongColour);
         graphics.drawRoundedRectangle(bounds, cornerRadius, Theme::borderThickness);
     }

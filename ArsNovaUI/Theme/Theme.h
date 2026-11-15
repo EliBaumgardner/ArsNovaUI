@@ -214,6 +214,7 @@ struct Theme
     static constexpr float frostScale      = 0.2f;
     static constexpr float frostBlurRadius = 3.0f;
     static constexpr int   frostKernelSize = 9;
+    static constexpr int   frostTileSize   = 4;
 
     static constexpr int   barHeight  = 24;
     static constexpr float textHeight = 9.0f;

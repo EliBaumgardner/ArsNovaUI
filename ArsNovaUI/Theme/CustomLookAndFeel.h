@@ -42,8 +42,10 @@ public:
 
     void drawCanvas      (juce::Graphics& graphics, const CanvasGrid& grid);
     void drawPane        (juce::Graphics& graphics, juce::Rectangle<float> bounds);
-    void drawFrostedGlass(juce::Graphics& graphics, juce::Component& surface, juce::Component& backdrop, juce::Rectangle<int> area);
-    void blurFrostedImage(juce::Image& frosted);
+
+    void drawFrostedGlass   (juce::Graphics& graphics, juce::Component& surface, juce::Component& backdrop, juce::Rectangle<int> area);
+    void blurFrostedImage   (juce::Image& frosted);
+    void repaintFrostChanges(juce::Component& backdrop, juce::Point<int> backdropOrigin);
 
     void drawCircleNode (juce::Graphics& graphics, const NodeVisual& visual);
     void drawSquareNode (juce::Graphics& graphics, const NodeVisual& visual);
@@ -69,9 +71,17 @@ public:
     void drawRoundedSquareIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
     void drawTriangleIcon     (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
 
-    void drawChevronDownIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawChevronUpIcon  (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawEyeIcon        (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawChevronDownIcon (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawChevronUpIcon   (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawChevronRightIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawEyeIcon         (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+
+    void drawCloseIcon  (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawMoreIcon   (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawOutlineIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawSearchIcon (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawSidebarIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawMarkerIcon (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
 
     void drawAddIcon   (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
     void drawRemoveIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
@@ -128,9 +138,11 @@ private:
         juce::Path brushHandle;
         juce::Path brushTip;
         juce::Path chevronDown;
+        juce::Path chevronRight;
         juce::Path chevronUp;
         juce::Path circle;
         juce::Path circledH;
+        juce::Path close;
         juce::Path code;
         juce::Path dashedBox;
         juce::Path dot;
@@ -140,6 +152,8 @@ private:
         juce::Path import;
         juce::Path link;
         juce::Path metronome;
+        juce::Path more;
+        juce::Path outline;
         juce::Path pause;
         juce::Path pencil;
         juce::Path play;
@@ -151,7 +165,9 @@ private:
         juce::Path ring;
         juce::Path roundedSquare;
         juce::Path route;
+        juce::Path search;
         juce::Path settings;
+        juce::Path sidebar;
         juce::Path skipBar;
         juce::Path skipTriangle;
         juce::Path triangle;
@@ -161,7 +177,9 @@ private:
     };
 
     juce::Image frostedBackdrop;
-    GlyphPaths  glyphs;
+    juce::Image shownFrostedBackdrop;
+
+    GlyphPaths glyphs;
 };
 
 }

@@ -16,8 +16,6 @@ public:
 
     SettingsMenu(CustomLookAndFeel& lookAndFeel, ScaledView& scaledView, juce::ValueTree colourPresets, juce::UndoManager& undoManager);
 
-    ~SettingsMenu() override;
-
     void paint(juce::Graphics& graphics) override;
     void resized() override;
 

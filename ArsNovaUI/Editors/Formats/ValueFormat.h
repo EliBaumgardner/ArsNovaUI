@@ -60,8 +60,10 @@ public:
 
     juce::String prefix;
 
-    double displayDivisor    = 1.0;
-    bool   showsPositiveSign = false;
+    double displayDivisor = 1.0;
+
+    bool showsPositiveSign  = false;
+    bool keepsTrailingZeros = false;
 };
 
 class PitchFormat : public NumberFormat
@@ -112,9 +114,12 @@ public:
     static constexpr int      labelTextLength = 64;
     static const juce::String labelCharacters;
 
-    int          maxLength;
+    int maxLength;
+
     juce::String allowedCharacters;
-    bool         trimsWhitespace = true;
+
+    bool trimsWhitespace  = true;
+    bool rejectsEmptyText = false;
 };
 
 }

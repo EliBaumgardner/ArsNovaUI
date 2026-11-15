@@ -128,6 +128,8 @@ void CustomLookAndFeel::drawFrostedGlass(juce::Graphics& graphics, juce::Compone
 
         blurFrostedImage(frostedBackdrop);
 
+        repaintFrostChanges(backdrop, backdropArea.getPosition());
+
         frostedBackdropStale = false;
     }
 
@@ -198,6 +200,58 @@ void CustomLookAndFeel::blurFrostedImage(juce::Image& frosted)
 
         for (int index = 0; index < rowLength; ++index) {
             target[index] = static_cast<juce::uint8>(juce::jmin(0xff, juce::roundToInt(columnPass[static_cast<size_t>(index)])));
+        }
+    }
+}
+
+void CustomLookAndFeel::repaintFrostChanges(juce::Component& backdrop, juce::Point<int> backdropOrigin)
+{
+    if (shownFrostedBackdrop.getBounds() != frostedBackdrop.getBounds()) {
+        shownFrostedBackdrop = juce::Image(juce::Image::ARGB, frostedBackdrop.getWidth(), frostedBackdrop.getHeight(), true, juce::SoftwareImageType());
+    }
+
+    const juce::Image::BitmapData frosted(frostedBackdrop, juce::Image::BitmapData::readOnly);
+    juce::Image::BitmapData       shown(shownFrostedBackdrop, juce::Image::BitmapData::readWrite);
+
+    const int tileColumns = (frosted.width + frostTileSize - 1) / frostTileSize;
+    const int tileRows    = (frosted.height + frostTileSize - 1) / frostTileSize;
+
+    const size_t pixelBytes = static_cast<size_t>(frosted.pixelStride);
+    const size_t rowBytes   = static_cast<size_t>(frosted.width) * pixelBytes;
+
+    std::vector<bool> changedTiles(static_cast<size_t>(tileColumns * tileRows), false);
+
+    for (int y = 0; y < frosted.height; ++y) {
+        const juce::uint8* const source = frosted.getLinePointer(y);
+        juce::uint8* const       target = shown.getLinePointer(y);
+
+        for (int x = 0; x < frosted.width; ++x) {
+            const size_t pixel = static_cast<size_t>(x) * pixelBytes;
+
+            if (std::memcmp(source + pixel, target + pixel, pixelBytes) != 0) {
+                changedTiles[static_cast<size_t>((y / frostTileSize) * tileColumns + x / frostTileSize)] = true;
+            }
+        }
+
+        std::memcpy(target, source, rowBytes);
+    }
+
+    for (int row = 0; row < tileRows; ++row) {
+        for (int column = 0; column < tileColumns; ++column) {
+            int runEnd = column;
+
+            while (runEnd < tileColumns && changedTiles[static_cast<size_t>(row * tileColumns + runEnd)]) {
+                ++runEnd;
+            }
+
+            if (runEnd > column) {
+                const juce::Rectangle<float> tiles(static_cast<float>(column * frostTileSize), static_cast<float>(row * frostTileSize),
+                                                   static_cast<float>((runEnd - column) * frostTileSize), static_cast<float>(frostTileSize));
+
+                backdrop.repaint((tiles / frostScale).getSmallestIntegerContainer() + backdropOrigin);
+
+                column = runEnd;
+            }
         }
     }
 }

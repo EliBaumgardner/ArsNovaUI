@@ -30,9 +30,11 @@ juce_add_binary_data(ArsNovaUIIcons
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/BrushHandle.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/BrushTip.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/ChevronDown.svg
+        ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/ChevronRight.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/ChevronUp.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Circle.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/CircledH.svg
+        ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Close.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Code.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/DashedBox.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Dot.svg
@@ -42,6 +44,8 @@ juce_add_binary_data(ArsNovaUIIcons
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Import.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Link.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Metronome.svg
+        ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/More.svg
+        ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Outline.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Pause.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Pencil.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Play.svg
@@ -53,7 +57,9 @@ juce_add_binary_data(ArsNovaUIIcons
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Ring.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/RoundedSquare.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Route.svg
+        ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Search.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Settings.svg
+        ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Sidebar.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/SkipBar.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/SkipTriangle.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Triangle.svg
@@ -81,9 +87,11 @@ target_sources(ArsNovaUI INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Menus/ColourSelector.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Menus/SettingsMenu.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/PopupWindow.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/PianoKeyboard.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/ScaledView.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/PanelResizer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/LabelPanel.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/RowList.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Editors/ValueEditor.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Editors/FileLabel.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Editors/FilePage.cpp
@@ -93,6 +101,7 @@ target_sources(ArsNovaUI INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Editors/Formats/PitchFormat.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Editors/Formats/GreekLetterFormat.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Bars/Bar.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Bars/TabBar.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/DynamicPort.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasIdentifiers.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/ArrowAnimation.cpp
@@ -111,25 +120,3 @@ target_sources(ArsNovaUI INTERFACE
 target_include_directories(ArsNovaUI INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_features(ArsNovaUI INTERFACE cxx_std_20)
 target_link_libraries(ArsNovaUI INTERFACE juce::juce_gui_basics juce::juce_gui_extra ArsNovaUIFonts ArsNovaUIIcons)
-
-if(PROJECT_IS_TOP_LEVEL)
-    juce_add_gui_app(ArsNovaUIGallery PRODUCT_NAME "ArsNovaUI Gallery")
-
-    target_sources(ArsNovaUIGallery PRIVATE
-            Gallery/GalleryApplication.cpp
-            Gallery/GalleryWindow.cpp
-            Gallery/GalleryPage.cpp
-            Gallery/GalleryCanvas.cpp
-    )
-
-    target_compile_definitions(ArsNovaUIGallery PRIVATE
-            JUCE_WEB_BROWSER=0
-            JUCE_USE_CURL=0
-            JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:ArsNovaUIGallery,JUCE_PRODUCT_NAME>"
-            JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:ArsNovaUIGallery,JUCE_VERSION>"
-    )
-
-    target_compile_options(ArsNovaUIGallery PRIVATE -Wall -Wextra -Wno-unused-parameter)
-
-    target_link_libraries(ArsNovaUIGallery PRIVATE ArsNovaUI PUBLIC juce::juce_recommended_config_flags)
-endif()

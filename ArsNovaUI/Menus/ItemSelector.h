@@ -27,6 +27,8 @@ public:
 
     void setSelectedItem(int itemId);
 
+    enum class Look { Pane, Header };
+
     std::function<void(int)> onItemSelected;
 
     juce::String selectedLabel;
@@ -35,7 +37,10 @@ public:
 
     IconButton::Icon leadingIcon = nullptr;
 
+    Look look = Look::Pane;
+
     static constexpr float selectorInsetRatio = 0.14f;
+    static constexpr float dividerInsetRatio  = 0.2f;
 
 private:
 

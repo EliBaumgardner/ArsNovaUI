@@ -57,11 +57,6 @@ SettingsMenu::SettingsMenu(CustomLookAndFeel& lookAndFeel, ScaledView& scaledVie
     addAndMakeVisible(zoomEditor);
 }
 
-SettingsMenu::~SettingsMenu()
-{
-    setLookAndFeel(nullptr);
-}
-
 void SettingsMenu::paint(juce::Graphics& graphics)
 {
     const Theme& theme   = CustomLookAndFeel::get(*this);

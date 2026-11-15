@@ -39,7 +39,7 @@ public:
     void valueChanged(juce::Value&) override;
 
     enum class WheelResponse { PassToParent, StepValue };
-    enum class Backdrop      { None, Badge, Field, Gauge };
+    enum class Backdrop      { None, Badge, Field, Gauge, Underline };
 
     struct TextOutlineKey
     {
@@ -60,6 +60,7 @@ public:
     static constexpr int    pixelsPerScrubStep       = 3;
     static constexpr float  fontSmoothingPerPixel    = 0.028f;
     static constexpr float  fontSmoothingLimit       = 0.8f;
+    static constexpr float  underlineOffsetRatio     = 0.55f;
 
     std::function<void()> onValueChange;
     std::function<void()> onEditFinished;

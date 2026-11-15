@@ -43,7 +43,11 @@ juce::String NumberFormat::text(const ValueBinding& binding, TextPurpose purpose
     juce::String number { static_cast<int>(scaled) };
 
     if (decimalPlaces > 0) {
-        number = juce::String(scaled, decimalPlaces).trimCharactersAtEnd("0").trimCharactersAtEnd(".");
+        number = juce::String(scaled, decimalPlaces);
+    }
+
+    if (decimalPlaces > 0 && ! keepsTrailingZeros) {
+        number = number.trimCharactersAtEnd("0").trimCharactersAtEnd(".");
     }
 
     if (purpose == TextPurpose::Editing) {

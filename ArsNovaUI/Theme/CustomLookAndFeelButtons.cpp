@@ -185,11 +185,60 @@ void CustomLookAndFeel::drawChevronUpIcon(juce::Graphics& graphics, juce::Rectan
     drawGlyph(graphics, bounds, glyphs.chevronUp, GlyphPaint::Stroked);
 }
 
+void CustomLookAndFeel::drawChevronRightIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
+{
+    graphics.setColour(pressableButtonColour(state));
+
+    drawGlyph(graphics, bounds, glyphs.chevronRight, GlyphPaint::Stroked);
+}
+
 void CustomLookAndFeel::drawEyeIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
 {
     graphics.setColour(pressableButtonColour(state));
 
     drawGlyph(graphics, bounds, glyphs.eye, GlyphPaint::Stroked);
+}
+
+void CustomLookAndFeel::drawCloseIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
+{
+    graphics.setColour(pressableButtonColour(state));
+
+    drawGlyph(graphics, bounds, glyphs.close, GlyphPaint::Stroked);
+}
+
+void CustomLookAndFeel::drawMoreIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
+{
+    graphics.setColour(pressableButtonColour(state));
+
+    drawGlyph(graphics, bounds, glyphs.more, GlyphPaint::Stroked);
+}
+
+void CustomLookAndFeel::drawOutlineIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
+{
+    graphics.setColour(pressableButtonColour(state));
+
+    drawGlyph(graphics, bounds, glyphs.outline, GlyphPaint::Stroked);
+}
+
+void CustomLookAndFeel::drawSearchIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
+{
+    graphics.setColour(pressableButtonColour(state));
+
+    drawGlyph(graphics, bounds, glyphs.search, GlyphPaint::Stroked);
+}
+
+void CustomLookAndFeel::drawSidebarIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
+{
+    graphics.setColour(pressableButtonColour(state));
+
+    drawGlyph(graphics, bounds, glyphs.sidebar, GlyphPaint::Stroked);
+}
+
+void CustomLookAndFeel::drawMarkerIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
+{
+    graphics.setColour(accentColour);
+
+    drawGlyph(graphics, bounds, glyphs.play, GlyphPaint::Filled);
 }
 
 void CustomLookAndFeel::drawAddIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)

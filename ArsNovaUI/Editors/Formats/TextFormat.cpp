@@ -35,11 +35,17 @@ juce::String TextFormat::text(const ValueBinding& binding, TextPurpose purpose) 
 
 ParsedValue TextFormat::parse(const ValueBinding& binding, const juce::String& enteredText) const
 {
+    juce::String entered = enteredText;
+
     if (trimsWhitespace) {
-        return { enteredText.trim(), {} };
+        entered = enteredText.trim();
     }
 
-    return { enteredText, {} };
+    if (rejectsEmptyText && entered.isEmpty()) {
+        return { binding.primary.getValue(), {} };
+    }
+
+    return { entered, {} };
 }
 
 }

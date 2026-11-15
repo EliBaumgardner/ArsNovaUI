@@ -40,9 +40,11 @@ CustomLookAndFeel::CustomLookAndFeel()
     glyphs.brushHandle   = loadGlyph(ArsNovaUIIcons::BrushHandle_svg, ArsNovaUIIcons::BrushHandle_svgSize);
     glyphs.brushTip      = loadGlyph(ArsNovaUIIcons::BrushTip_svg, ArsNovaUIIcons::BrushTip_svgSize);
     glyphs.chevronDown   = loadGlyph(ArsNovaUIIcons::ChevronDown_svg, ArsNovaUIIcons::ChevronDown_svgSize);
+    glyphs.chevronRight  = loadGlyph(ArsNovaUIIcons::ChevronRight_svg, ArsNovaUIIcons::ChevronRight_svgSize);
     glyphs.chevronUp     = loadGlyph(ArsNovaUIIcons::ChevronUp_svg, ArsNovaUIIcons::ChevronUp_svgSize);
     glyphs.circle        = loadGlyph(ArsNovaUIIcons::Circle_svg, ArsNovaUIIcons::Circle_svgSize);
     glyphs.circledH      = loadGlyph(ArsNovaUIIcons::CircledH_svg, ArsNovaUIIcons::CircledH_svgSize);
+    glyphs.close         = loadGlyph(ArsNovaUIIcons::Close_svg, ArsNovaUIIcons::Close_svgSize);
     glyphs.code          = loadGlyph(ArsNovaUIIcons::Code_svg, ArsNovaUIIcons::Code_svgSize);
     glyphs.dashedBox     = loadGlyph(ArsNovaUIIcons::DashedBox_svg, ArsNovaUIIcons::DashedBox_svgSize);
     glyphs.dot           = loadGlyph(ArsNovaUIIcons::Dot_svg, ArsNovaUIIcons::Dot_svgSize);
@@ -52,6 +54,8 @@ CustomLookAndFeel::CustomLookAndFeel()
     glyphs.import        = loadGlyph(ArsNovaUIIcons::Import_svg, ArsNovaUIIcons::Import_svgSize);
     glyphs.link          = loadGlyph(ArsNovaUIIcons::Link_svg, ArsNovaUIIcons::Link_svgSize);
     glyphs.metronome     = loadGlyph(ArsNovaUIIcons::Metronome_svg, ArsNovaUIIcons::Metronome_svgSize);
+    glyphs.more          = loadGlyph(ArsNovaUIIcons::More_svg, ArsNovaUIIcons::More_svgSize);
+    glyphs.outline       = loadGlyph(ArsNovaUIIcons::Outline_svg, ArsNovaUIIcons::Outline_svgSize);
     glyphs.pause         = loadGlyph(ArsNovaUIIcons::Pause_svg, ArsNovaUIIcons::Pause_svgSize);
     glyphs.pencil        = loadGlyph(ArsNovaUIIcons::Pencil_svg, ArsNovaUIIcons::Pencil_svgSize);
     glyphs.play          = loadGlyph(ArsNovaUIIcons::Play_svg, ArsNovaUIIcons::Play_svgSize);
@@ -63,7 +67,9 @@ CustomLookAndFeel::CustomLookAndFeel()
     glyphs.ring          = loadGlyph(ArsNovaUIIcons::Ring_svg, ArsNovaUIIcons::Ring_svgSize);
     glyphs.roundedSquare = loadGlyph(ArsNovaUIIcons::RoundedSquare_svg, ArsNovaUIIcons::RoundedSquare_svgSize);
     glyphs.route         = loadGlyph(ArsNovaUIIcons::Route_svg, ArsNovaUIIcons::Route_svgSize);
+    glyphs.search        = loadGlyph(ArsNovaUIIcons::Search_svg, ArsNovaUIIcons::Search_svgSize);
     glyphs.settings      = loadGlyph(ArsNovaUIIcons::Settings_svg, ArsNovaUIIcons::Settings_svgSize);
+    glyphs.sidebar       = loadGlyph(ArsNovaUIIcons::Sidebar_svg, ArsNovaUIIcons::Sidebar_svgSize);
     glyphs.skipBar       = loadGlyph(ArsNovaUIIcons::SkipBar_svg, ArsNovaUIIcons::SkipBar_svgSize);
     glyphs.skipTriangle  = loadGlyph(ArsNovaUIIcons::SkipTriangle_svg, ArsNovaUIIcons::SkipTriangle_svgSize);
     glyphs.triangle      = loadGlyph(ArsNovaUIIcons::Triangle_svg, ArsNovaUIIcons::Triangle_svgSize);

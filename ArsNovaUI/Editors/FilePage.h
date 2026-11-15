@@ -21,7 +21,10 @@ public:
     void mouseWheelMove(const juce::MouseEvent& event, const juce::MouseWheelDetails& wheel) override;
     void mouseMagnify  (const juce::MouseEvent& event, float scaleFactor) override;
 
+    void caretPositionMoved() override;
+
     std::function<void()> onTextChanged;
+    std::function<void()> onCaretMoved;
 
     std::vector<int> errorLines;
 

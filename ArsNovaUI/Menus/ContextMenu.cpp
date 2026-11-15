@@ -15,6 +15,11 @@ void ContextMenu::addComponent(juce::Component& component, int idealWidth, int i
     items.push_back({ {}, ItemKind::Component, nullptr, true, false, &component, idealWidth, idealHeight });
 }
 
+void ContextMenu::addSeparator()
+{
+    items.push_back({ {}, ItemKind::Separator, nullptr, false, false });
+}
+
 void ContextMenu::show(juce::Component& target)
 {
     juce::PopupMenu                               menu;
@@ -35,6 +40,10 @@ void ContextMenu::show(juce::Component& target)
             }
             case ItemKind::Component: {
                 menu.addCustomItem(itemId, *item.component, item.idealWidth, item.idealHeight, false);
+                break;
+            }
+            case ItemKind::Separator: {
+                menu.addSeparator();
                 break;
             }
         }

@@ -58,6 +58,13 @@ void FilePage::mouseMagnify(const juce::MouseEvent&, float scaleFactor)
     setZoom(zoom * scaleFactor);
 }
 
+void FilePage::caretPositionMoved()
+{
+    if (onCaretMoved != nullptr) {
+        onCaretMoved();
+    }
+}
+
 void FilePage::setZoom(float newZoom)
 {
     const float clamped = juce::jlimit(minZoom, maxZoom, newZoom);

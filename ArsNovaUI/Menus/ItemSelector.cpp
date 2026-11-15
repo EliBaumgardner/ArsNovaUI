@@ -27,10 +27,21 @@ ItemSelector::ItemSelector(juce::UndoManager& undoManager)
 
 void ItemSelector::paint(juce::Graphics& graphics)
 {
-    CustomLookAndFeel& lookAndFeel   = CustomLookAndFeel::get(*this);
-    const auto         contentBounds = getLocalBounds().reduced(juce::roundToInt(getHeight() * selectorInsetRatio));
+    CustomLookAndFeel& lookAndFeel = CustomLookAndFeel::get(*this);
 
-    lookAndFeel.drawPane(graphics, getLocalBounds().toFloat());
+    const float dividerX = button.getX() - Theme::borderThickness * 2.0f;
+
+    const auto contentBounds = getLocalBounds().reduced(juce::roundToInt(getHeight() * selectorInsetRatio));
+    const auto divider       = button.getBounds().toFloat().reduced(0.0f, button.getHeight() * dividerInsetRatio).withX(dividerX).withWidth(Theme::borderThickness);
+
+    if (look == Look::Pane) {
+        lookAndFeel.drawPane(graphics, getLocalBounds().toFloat());
+    }
+
+    if (look == Look::Header) {
+        graphics.setColour(lookAndFeel.borderColour);
+        graphics.fillRect(divider);
+    }
 
     if (leadingIcon != nullptr) {
         (lookAndFeel.*leadingIcon)(graphics, contentBounds.withWidth(contentBounds.getHeight()).toFloat(), ButtonState {});
@@ -41,11 +52,17 @@ void ItemSelector::resized()
 {
     auto contentBounds = getLocalBounds().reduced(juce::roundToInt(getHeight() * selectorInsetRatio));
 
-    if (leadingIcon != nullptr) {
-        contentBounds.removeFromLeft(contentBounds.getHeight());
+    const int buttonSide = contentBounds.getHeight();
+
+    button.setBounds(contentBounds.removeFromRight(buttonSide));
+
+    if (leadingIcon != nullptr || look == Look::Header) {
+        contentBounds.removeFromLeft(buttonSide);
     }
 
-    button.setBounds(contentBounds.removeFromRight(contentBounds.getHeight()));
+    if (look == Look::Header) {
+        labelEditor.setJustification(juce::Justification::centred);
+    }
 
     labelEditor.setBounds(contentBounds);
     labelEditor.commitText(selectedLabel);

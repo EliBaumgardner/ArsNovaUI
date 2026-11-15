@@ -212,8 +212,8 @@ struct Theme
     static constexpr int windowGutter     = 8;
 
     static constexpr float frostScale      = 0.2f;
-    static constexpr float frostBlurRadius = 3.0f;
-    static constexpr int   frostKernelSize = 9;
+    static constexpr float frostBlurRadius = 1.5f;
+    static constexpr int   frostKernelSize = 2 * static_cast<int>(3.0f * frostBlurRadius + 0.5f) + 1;
     static constexpr int   frostTileSize   = 4;
 
     static constexpr int   barHeight  = 24;

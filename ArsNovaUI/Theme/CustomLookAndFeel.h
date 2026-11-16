@@ -1,6 +1,7 @@
 #pragma once
 
 #include <juce_gui_basics/juce_gui_basics.h>
+#include "Icon.h"
 #include "Theme.h"
 #include "Visuals.h"
 
@@ -53,51 +54,9 @@ public:
     void drawRaisedPanel(juce::Graphics& graphics, juce::Rectangle<float> bounds);
     void drawArrow      (juce::Graphics& graphics, const ArrowVisual& visual);
 
-    void drawForkIcon    (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawRingDotIcon (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawRouteIcon   (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawSettingsIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-
-    void drawPlayIcon     (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawLinkIcon     (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawMetronomeIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawSkipBackIcon (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawReloadIcon   (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-
-    void drawUndoIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawRedoIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-
-    void drawCircleIcon       (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawHostNodeIcon     (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawRoundedSquareIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawTriangleIcon     (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-
-    void drawChevronDownIcon (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawChevronUpIcon   (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawChevronRightIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawEyeIcon         (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-
-    void drawCloseIcon  (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawMoreIcon   (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawOutlineIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawSearchIcon (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawSidebarIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawMarkerIcon (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-
-    void drawAddIcon   (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawRemoveIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawImportIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-
-    void drawBrushIcon    (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawDashedBoxIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawQuaverIcon   (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
+    void drawIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const Icon& icon, const ButtonState& state);
 
     void drawArrowButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawWaveButton (juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-
-    void drawPencilIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawEraserIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
-    void drawUploadIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state);
 
     void drawStrokeSymbol(juce::Graphics& graphics, juce::Rectangle<float> bounds, const std::vector<SymbolStroke>& strokes);
     void drawSymbolMark  (juce::Graphics& graphics, juce::Rectangle<float> bounds, SymbolMark mark, const std::vector<SymbolStroke>& strokes);
@@ -130,57 +89,9 @@ public:
 
 private:
 
-    struct GlyphPaths
-    {
-        juce::Path add;
-        juce::Path arrow;
-        juce::Path boxDash;
-        juce::Path boxDots;
-        juce::Path brushHandle;
-        juce::Path brushTip;
-        juce::Path chevronDown;
-        juce::Path chevronRight;
-        juce::Path chevronUp;
-        juce::Path circle;
-        juce::Path circledH;
-        juce::Path close;
-        juce::Path code;
-        juce::Path dashedBox;
-        juce::Path dot;
-        juce::Path eraser;
-        juce::Path eye;
-        juce::Path fork;
-        juce::Path import;
-        juce::Path link;
-        juce::Path metronome;
-        juce::Path more;
-        juce::Path outline;
-        juce::Path pause;
-        juce::Path pencil;
-        juce::Path play;
-        juce::Path quaverHead;
-        juce::Path quaverStem;
-        juce::Path redo;
-        juce::Path reload;
-        juce::Path remove;
-        juce::Path ring;
-        juce::Path roundedSquare;
-        juce::Path route;
-        juce::Path search;
-        juce::Path settings;
-        juce::Path sidebar;
-        juce::Path skipBar;
-        juce::Path skipTriangle;
-        juce::Path triangle;
-        juce::Path undo;
-        juce::Path upload;
-        juce::Path wave;
-    };
 
     juce::Image frostedBackdrop;
     juce::Image shownFrostedBackdrop;
-
-    GlyphPaths glyphs;
 };
 
 }

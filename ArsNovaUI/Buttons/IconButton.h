@@ -1,6 +1,7 @@
 #pragma once
 
 #include <juce_gui_basics/juce_gui_basics.h>
+#include "../Theme/Icon.h"
 #include "../Theme/Theme.h"
 
 namespace ArsNovaUI
@@ -43,7 +44,6 @@ public:
     void mouseUp   (const juce::MouseEvent& event) override;
 
     using Painter = std::function<void(juce::Graphics&, juce::Rectangle<float>, const ButtonState&)>;
-    using Icon    = void (CustomLookAndFeel::*)(juce::Graphics&, juce::Rectangle<float>, const ButtonState&);
 
     static constexpr int captionHeight = 12;
     static constexpr int captionGap    = 2;
@@ -52,7 +52,8 @@ public:
     std::function<void()> onRightClick;
 
     Painter painter;
-    Icon    icon = nullptr;
+
+    const Icon* icon = nullptr;
 
     ButtonState state;
 

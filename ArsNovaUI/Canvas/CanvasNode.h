@@ -73,9 +73,9 @@ public:
     bool takesArrows         = false;
     bool takesArrowHeads     = true;
     bool connectsByDrag      = false;
-    bool isEncapsulated      = false;
-    bool isEncapsulationExit = false;
-    bool isAlternativeNode   = false;
+    bool isCollapsed         = false;
+    bool isCollapsedExit     = false;
+    bool arrowPointsToParent = false;
 
 protected:
 

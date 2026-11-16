@@ -19,9 +19,23 @@ EditCanvas::EditCanvas(CanvasDocument& document)
 
 void EditCanvas::paint(juce::Graphics& graphics)
 {
+    CustomLookAndFeel& lookAndFeel = CustomLookAndFeel::get(*this);
+
     const CanvasGrid grid { getLocalBounds().toFloat(), modelTransform, viewTransform, gridOrigin, gridSpacing, gridVisible, gridOriginSet };
 
-    CustomLookAndFeel::get(*this).drawCanvas(graphics, grid);
+    lookAndFeel.drawCanvas(graphics, grid);
+
+    if (selectionBounds.isEmpty()) {
+        return;
+    }
+
+    graphics.addTransform(viewTransform);
+
+    graphics.setColour(lookAndFeel.selectionBoxColour.withAlpha(selectionFillAlpha));
+    graphics.fillRect(selectionBounds);
+
+    graphics.setColour(lookAndFeel.selectionBoxColour);
+    graphics.drawRect(selectionBounds, 1);
 }
 
 void EditCanvas::clearCanvas()
@@ -126,8 +140,6 @@ void EditCanvas::handleAsyncUpdate()
                 break;
 
             case AsyncUpdateType::ValueChanged:
-
-            case AsyncUpdateType::ArrowDurationChanged:
                 if (CanvasNode* const changedNode = nodeManager.find(nodeId)) {
                     arrowManager.refreshFor(changedNode);
                 }
@@ -149,9 +161,7 @@ void EditCanvas::handleAsyncUpdate()
                 arrowManager.handleArrowInfoChanged(nodeId, asyncUpdate.childNodeId);
                 break;
 
-            case AsyncUpdateType::NodeColourChanged:
-
-            case AsyncUpdateType::NodeMarkChanged:
+            case AsyncUpdateType::PropertyChanged:
 
             case AsyncUpdateType::None:
                 break;

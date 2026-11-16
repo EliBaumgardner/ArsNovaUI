@@ -60,7 +60,7 @@ CanvasArrow* ArrowManager::connectParentToChild(CanvasNode* parentNode, CanvasNo
     CanvasNode* startNode = parentNode;
     CanvasNode* endNode   = childNode;
 
-    if (childNode->isAlternativeNode) {
+    if (childNode->arrowPointsToParent) {
         startNode = childNode;
         endNode   = parentNode;
     }
@@ -144,7 +144,7 @@ void ArrowManager::rebuildDanglingForNode(int nodeId)
         canvas.addAndMakeVisible(*arrow);
 
         arrow->toBack();
-        arrow->setVisible(! node->isEncapsulated || node->isEncapsulationExit);
+        arrow->setVisible(! node->isCollapsed || node->isCollapsedExit);
         arrow->setArrowBounds();
 
         adopt(std::move(arrow));
@@ -162,7 +162,7 @@ void ArrowManager::endNodeDrag()
     }
 }
 
-void ArrowManager::refreshEncapsulatedArrows()
+void ArrowManager::refreshCollapsedArrows()
 {
     for (CanvasArrow* const arrow : arrows) {
         if (arrow->startNode == nullptr) {
@@ -170,12 +170,12 @@ void ArrowManager::refreshEncapsulatedArrows()
         }
 
         if (arrow->isDangling()) {
-            arrow->setVisible(! arrow->startNode->isEncapsulated
-                              || arrow->startNode->isEncapsulationExit);
+            arrow->setVisible(! arrow->startNode->isCollapsed
+                              || arrow->startNode->isCollapsedExit);
             continue;
         }
 
-        arrow->setVisible(! (arrow->startNode->isEncapsulated && arrow->endNode->isEncapsulated));
+        arrow->setVisible(! (arrow->startNode->isCollapsed && arrow->endNode->isCollapsed));
     }
 }
 

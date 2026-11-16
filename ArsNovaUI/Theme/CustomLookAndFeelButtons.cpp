@@ -1,12 +1,11 @@
 #include "CustomLookAndFeel.h"
+#include "IconLibrary.h"
 #include "../Buttons/IconButton.h"
 #include "../Editors/FileLabel.h"
 #include "../Buttons/ValueSlider.h"
 
 namespace ArsNovaUI
 {
-
-enum class GlyphPaint { Stroked, Dashed, Filled, Tinted };
 
 static void drawGlyph(juce::Graphics& graphics, juce::Rectangle<float> bounds, juce::Path glyph, GlyphPaint paint)
 {
@@ -42,254 +41,36 @@ static void drawGlyph(juce::Graphics& graphics, juce::Rectangle<float> bounds, j
     }
 }
 
-void CustomLookAndFeel::drawForkIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
+static void drawLayers(juce::Graphics& graphics, juce::Rectangle<float> bounds, const std::vector<IconLayer>& layers)
 {
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.fork, GlyphPaint::Stroked);
+    for (const IconLayer& layer : layers) {
+        drawGlyph(graphics, bounds, layer.path, layer.paint);
+    }
 }
 
-void CustomLookAndFeel::drawRingDotIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
+void CustomLookAndFeel::drawIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const Icon& icon, const ButtonState& state)
 {
-    graphics.setColour(pressableButtonColour(state));
+    const bool usesSelectedLayers = state.isSelected && ! icon.selectedLayers.empty();
 
-    drawGlyph(graphics, bounds, glyphs.ring, GlyphPaint::Stroked);
-    drawGlyph(graphics, bounds, glyphs.dot, GlyphPaint::Filled);
-}
+    juce::Colour colour = pressableButtonColour(state);
 
-void CustomLookAndFeel::drawRouteIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
+    if (icon.colour == IconColour::Accent) {
+        colour = accentColour;
+    }
 
-    drawGlyph(graphics, bounds, glyphs.route, GlyphPaint::Stroked);
-}
+    graphics.setColour(colour);
 
-void CustomLookAndFeel::drawSettingsIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.settings, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawPlayIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    if (state.isSelected) {
-        drawGlyph(graphics, bounds, glyphs.pause, GlyphPaint::Filled);
+    if (usesSelectedLayers) {
+        drawLayers(graphics, bounds, icon.selectedLayers);
 
         return;
     }
 
-    drawGlyph(graphics, bounds, glyphs.play, GlyphPaint::Filled);
-}
-
-void CustomLookAndFeel::drawLinkIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.link, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawMetronomeIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.metronome, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawSkipBackIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.skipBar, GlyphPaint::Stroked);
-    drawGlyph(graphics, bounds, glyphs.skipTriangle, GlyphPaint::Filled);
-}
-
-void CustomLookAndFeel::drawReloadIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.reload, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawUndoIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.undo, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawRedoIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.redo, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawCircleIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    if (state.isSelected) {
-        drawGlyph(graphics, bounds, glyphs.circle, GlyphPaint::Tinted);
-    }
-
-    drawGlyph(graphics, bounds, glyphs.circle, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawHostNodeIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    if (state.isSelected) {
-        drawGlyph(graphics, bounds, glyphs.circledH, GlyphPaint::Tinted);
-    }
-
-    drawGlyph(graphics, bounds, glyphs.circledH, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawRoundedSquareIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    if (state.isSelected) {
-        drawGlyph(graphics, bounds, glyphs.roundedSquare, GlyphPaint::Tinted);
-    }
-
-    drawGlyph(graphics, bounds, glyphs.roundedSquare, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawTriangleIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    if (state.isSelected) {
-        drawGlyph(graphics, bounds, glyphs.triangle, GlyphPaint::Tinted);
-    }
-
-    drawGlyph(graphics, bounds, glyphs.triangle, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawChevronDownIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.chevronDown, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawChevronUpIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.chevronUp, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawChevronRightIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.chevronRight, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawEyeIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.eye, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawCloseIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.close, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawMoreIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.more, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawOutlineIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.outline, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawSearchIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.search, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawSidebarIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.sidebar, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawMarkerIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(accentColour);
-
-    drawGlyph(graphics, bounds, glyphs.play, GlyphPaint::Filled);
-}
-
-void CustomLookAndFeel::drawAddIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.add, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawRemoveIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.remove, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawImportIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.import, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawBrushIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.brushTip, GlyphPaint::Tinted);
-    drawGlyph(graphics, bounds, glyphs.brushTip, GlyphPaint::Stroked);
-    drawGlyph(graphics, bounds, glyphs.brushHandle, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawDashedBoxIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.dashedBox, GlyphPaint::Dashed);
-    drawGlyph(graphics, bounds, glyphs.boxDots, GlyphPaint::Filled);
-    drawGlyph(graphics, bounds, glyphs.boxDash, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawQuaverIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.quaverHead, GlyphPaint::Filled);
-    drawGlyph(graphics, bounds, glyphs.quaverStem, GlyphPaint::Stroked);
+    drawLayers(graphics, bounds, icon.layers);
 }
 
 static void drawTitledButton(const CustomLookAndFeel& lookAndFeel, juce::Graphics& graphics, juce::Rectangle<float> bounds,
-                             const ButtonState& state, const juce::Path& glyph, float fontHeight)
+                             const ButtonState& state, const Icon& icon, float fontHeight)
 {
     const auto       area       = bounds.reduced(lookAndFeel.borderThickness * 0.5f);
     const juce::Font labelFont  = lookAndFeel.font(Theme::FontStyle::Regular, fontHeight);
@@ -312,7 +93,7 @@ static void drawTitledButton(const CustomLookAndFeel& lookAndFeel, juce::Graphic
 
     graphics.setColour(lookAndFeel.textColour);
 
-    drawGlyph(graphics, glyphSlot.withSizeKeepingCentre(area.getHeight(), area.getHeight()), glyph, GlyphPaint::Stroked);
+    drawLayers(graphics, glyphSlot.withSizeKeepingCentre(area.getHeight(), area.getHeight()), icon.layers);
 
     content.removeFromLeft(gap);
 
@@ -322,36 +103,7 @@ static void drawTitledButton(const CustomLookAndFeel& lookAndFeel, juce::Graphic
 
 void CustomLookAndFeel::drawArrowButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
 {
-    drawTitledButton(*this, graphics, bounds, state, glyphs.arrow, labelFontHeight);
-}
-
-
-void CustomLookAndFeel::drawWaveButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.wave, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawPencilIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.pencil, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawEraserIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.eraser, GlyphPaint::Stroked);
-}
-
-void CustomLookAndFeel::drawUploadIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state)
-{
-    graphics.setColour(pressableButtonColour(state));
-
-    drawGlyph(graphics, bounds, glyphs.upload, GlyphPaint::Stroked);
+    drawTitledButton(*this, graphics, bounds, state, IconLibrary::get().arrow, labelFontHeight);
 }
 
 void CustomLookAndFeel::drawTextButton(juce::Graphics& graphics, const IconButton& button)
@@ -372,21 +124,23 @@ void CustomLookAndFeel::drawTextButton(juce::Graphics& graphics, const IconButto
 void CustomLookAndFeel::drawCodeButton(juce::Graphics& graphics, juce::Rectangle<float> bounds, const ButtonState& state,
                                         float fontHeight)
 {
-    drawTitledButton(*this, graphics, bounds, state, glyphs.code, fontHeight);
+    drawTitledButton(*this, graphics, bounds, state, IconLibrary::get().code, fontHeight);
 }
 
 void CustomLookAndFeel::drawIncrementIcon(juce::Graphics& graphics, juce::Rectangle<float> bounds, bool pointsUp)
 {
-    const float glyphSide = bounds.getHeight() * incrementGlyphScale;
-    juce::Path  chevron   = glyphs.chevronDown;
-
-    if (pointsUp) {
-        chevron = glyphs.chevronUp;
-    }
+    const float                  glyphSide   = bounds.getHeight() * incrementGlyphScale;
+    const juce::Rectangle<float> glyphBounds = bounds.withSizeKeepingCentre(glyphSide, glyphSide);
 
     graphics.setColour(dimTextColour);
 
-    drawGlyph(graphics, bounds.withSizeKeepingCentre(glyphSide, glyphSide), chevron, GlyphPaint::Stroked);
+    if (pointsUp) {
+        drawLayers(graphics, glyphBounds, IconLibrary::get().chevronUp.layers);
+
+        return;
+    }
+
+    drawLayers(graphics, glyphBounds, IconLibrary::get().chevronDown.layers);
 }
 
 void CustomLookAndFeel::drawValueSlider(juce::Graphics& graphics, const ValueSlider& slider)

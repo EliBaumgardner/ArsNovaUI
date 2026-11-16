@@ -35,7 +35,7 @@ public:
 
     ValueEditor labelEditor;
 
-    IconButton::Icon leadingIcon = nullptr;
+    const Icon* leadingIcon = nullptr;
 
     Look look = Look::Pane;
 

@@ -12,8 +12,8 @@
     index), so the program that uses the canvas can find it.
 
     connect and connectParentToChild create the component for a connection through
-    EditCanvas::makeArrow, and an alternative child gets the arrow drawn from the child to its
-    parent. refreshFor re-lays-out every arrow of a node that moved or changed, and
+    EditCanvas::makeArrow, and a child whose arrowPointsToParent is set gets the arrow drawn from
+    the child to its parent. refreshFor re-lays-out every arrow of a node that moved or changed, and
     rebuildDanglingForNode rebuilds a node's dangling arrows from its tree, set up by
     EditCanvas::prepareArrow. updatePreview shows the arrow being drawn and commitPreview writes it
     into the document as a dangling arrow. The snap-ghost functions show and remove the arrow that
@@ -51,7 +51,7 @@ public:
     void refreshFor            (const CanvasNode* movedNode);
     void rebuildDanglingForNode(int nodeId);
     void endNodeDrag ();
-    void refreshEncapsulatedArrows ();
+    void refreshCollapsedArrows ();
 
     void remove        (CanvasArrow* arrow);
     void removeForNode (const CanvasNode* node);

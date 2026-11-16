@@ -1,5 +1,6 @@
 #include "FileLabel.h"
 #include "../Theme/CustomLookAndFeel.h"
+#include "../Theme/IconLibrary.h"
 
 namespace ArsNovaUI
 {
@@ -7,7 +8,7 @@ namespace ArsNovaUI
 FileLabel::FileLabel(juce::UndoManager& undoManager)
     : fileText(undoManager)
 {
-    removeButton.icon = &CustomLookAndFeel::drawRemoveIcon;
+    removeButton.icon = &IconLibrary::get().remove;
 
     fileText.autoFitText = true;
     fileText.editable    = false;

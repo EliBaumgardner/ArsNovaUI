@@ -32,7 +32,7 @@ void CanvasArrow::resized()
         const juce::Point<int> editorCentre = (label.centre - getPosition().toFloat()).roundToInt()
                                             - juce::Point<int>(0, valueEditorHeight / 2);
 
-        durationEditor->setBounds(juce::Rectangle<int>(0, 0, valueEditorWidth, valueEditorHeight).withCentre(editorCentre));
+        labelEditor->setBounds(juce::Rectangle<int>(0, 0, valueEditorWidth, valueEditorHeight).withCentre(editorCentre));
     }
 }
 
@@ -141,9 +141,23 @@ void CanvasArrow::initHoverState(bool visibleNow)
     setVisible(visibleNow);
 }
 
+void CanvasArrow::beginLabelEdit()
+{
+}
+
 bool CanvasArrow::advanceExtraAnimation()
 {
     return false;
+}
+
+bool CanvasArrow::hasLabel() const
+{
+    return false;
+}
+
+juce::String CanvasArrow::getLabelText() const
+{
+    return {};
 }
 
 ArrowGeometry CanvasArrow::getGeometry(float animationProgress) const
@@ -329,19 +343,19 @@ juce::Point<float> CanvasArrow::getHeadAnchor() const
 
 void CanvasArrow::buildDurationEditor(juce::UndoManager& undoManager)
 {
-    durationEditor = std::make_unique<ValueEditor>(undoManager);
+    labelEditor = std::make_unique<ValueEditor>(undoManager);
 
-    durationEditor->setInterceptsMouseClicks(true, false);
-    durationEditor->setTooltip("Arrow Duration");
+    labelEditor->setInterceptsMouseClicks(true, false);
+    labelEditor->setTooltip("Arrow Duration");
 
-    durationEditor->onEditFinished = [this] {
+    labelEditor->onEditFinished = [this] {
         editingDuration = false;
 
-        durationEditor->setVisible(false);
+        labelEditor->setVisible(false);
         repaint();
     };
 
-    addChildComponent(*durationEditor);
+    addChildComponent(*labelEditor);
 }
 
 }

@@ -1,5 +1,6 @@
 #include "RowList.h"
 #include "Theme/CustomLookAndFeel.h"
+#include "Theme/IconLibrary.h"
 
 namespace ArsNovaUI
 {
@@ -139,7 +140,7 @@ void RowList::paintRowContent(juce::Graphics& graphics, int index) const
     }
 
     if (row.icon != nullptr) {
-        (lookAndFeel.*row.icon)(graphics, leading.toFloat(), glyphState);
+        lookAndFeel.drawIcon(graphics, leading.toFloat(), *row.icon, glyphState);
     }
 
     if (row.badge.isNotEmpty()) {
@@ -154,7 +155,9 @@ void RowList::paintRowContent(juce::Graphics& graphics, int index) const
     }
 
     if (row.marked) {
-        lookAndFeel.drawMarkerIcon(graphics, content.removeFromRight(markWidth).toFloat(), glyphState);
+        const juce::Rectangle<float> markBounds = content.removeFromRight(markWidth).toFloat();
+
+        lookAndFeel.drawIcon(graphics, markBounds, IconLibrary::get().marker, glyphState);
     }
 
     if (row.detail.isNotEmpty()) {

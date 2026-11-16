@@ -32,7 +32,7 @@ void IconButton::paint(juce::Graphics& graphics)
     if (icon != nullptr) {
         const juce::Rectangle<float> glyphBounds = lookAndFeel.drawButtonTile(graphics, iconBounds.toFloat(), state);
 
-        (lookAndFeel.*icon)(graphics, glyphBounds, state);
+        lookAndFeel.drawIcon(graphics, glyphBounds, *icon, state);
     }
 
     if (painter) {

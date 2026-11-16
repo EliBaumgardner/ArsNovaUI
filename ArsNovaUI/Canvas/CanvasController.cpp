@@ -9,11 +9,12 @@ namespace ArsNovaUI
 {
 
 CanvasController::CanvasController(EditCanvas& canvas, CanvasDocument& document)
-    : arrowGestures(canvas, document),
-      nodeGestures(canvas, document),
-      canvas(canvas),
-      document(document),
-      undoManager(document.undoManager)
+    : arrowGestures       (canvas, document),
+      nodeGestures        (canvas, document),
+      boxSelectionGestures(canvas),
+      canvas              (canvas),
+      document            (document),
+      undoManager         (document.undoManager)
 {
 }
 
@@ -138,7 +139,7 @@ void CanvasController::handleCanvasMouseDown(const juce::MouseEvent& e)
         if (CanvasArrow* labelArrow = canvas.hitTester.arrowLabelNear(clickPoint, ArrowGestures::arrowLabelGrabRadius)) {
             gesture = Gesture::EditingValue;
 
-            labelArrow->beginDurationEdit();
+            labelArrow->beginLabelEdit();
             return;
         }
 

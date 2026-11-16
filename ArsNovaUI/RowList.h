@@ -35,7 +35,7 @@ public:
 
         BadgeTone badgeTone = BadgeTone::Accent;
 
-        IconButton::Icon icon = nullptr;
+        const Icon* icon = nullptr;
 
         juce::String text;
         juce::String detail;

@@ -1,23 +1,12 @@
 #pragma once
 
 #include <juce_gui_basics/juce_gui_basics.h>
+#include "CaptionLabel.h"
 #include "ValueEditor.h"
-#include "../Theme/Theme.h"
 
 namespace ArsNovaUI
 {
 
-class CaptionLabel : public juce::Label
-{
-public:
-
-    CaptionLabel()
-    {
-        setJustificationType(juce::Justification::centredLeft);
-        setBorderSize({});
-        setMinimumHorizontalScale(1.0f);
-    }
-};
 
 class LabeledEditor : public juce::Component
 {

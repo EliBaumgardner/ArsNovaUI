@@ -52,11 +52,11 @@ void ButtonPane::resized()
     }
 }
 
-IconButton& ButtonPane::addButton(IconButton::Icon icon, const juce::String& tooltip, std::function<void()> onClick)
+IconButton& ButtonPane::addButton(const Icon& icon, const juce::String& tooltip, std::function<void()> onClick)
 {
     auto* const button = buttons.add(new IconButton());
 
-    button->icon = icon;
+    button->icon = &icon;
 
     button->setTooltip(tooltip);
 

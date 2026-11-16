@@ -5,12 +5,16 @@ namespace ArsNovaUI
 {
 
 ScaledView::ScaledView(juce::Component& content, juce::PropertiesFile& interfaceSettings)
-    : content(content), interfaceSettings(interfaceSettings)
+    : content(content),
+      interfaceSettings(interfaceSettings),
+      tooltipWindow(&content, tooltipDelayMs)
 {
     const float savedZoom = static_cast<float>(interfaceSettings.getDoubleValue(InterfaceIdentifiers::InterfaceZoom.toString(), 1.0));
 
     zoom         = juce::jlimit(minimumZoom, maximumZoom, savedZoom);
     previousZoom = zoom;
+
+    tooltipWindow.setOpaque(false);
 
     interfaceSettings.addChangeListener(this);
 
@@ -44,6 +48,14 @@ bool ScaledView::zoomFits(float candidateZoom) const
 
     return juce::roundToInt(minimumContentSize.x * candidateZoom) + chromeWidth <= display->userArea.getWidth()
            && juce::roundToInt(minimumContentSize.y * candidateZoom) + chromeHeight <= display->userArea.getHeight();
+}
+
+juce::Point<int> ScaledView::scaledMinimumSize() const
+{
+    const int width  = juce::roundToInt(minimumContentSize.x * zoom);
+    const int height = juce::roundToInt(minimumContentSize.y * zoom);
+
+    return { width, height };
 }
 
 void ScaledView::changeListenerCallback(juce::ChangeBroadcaster*)

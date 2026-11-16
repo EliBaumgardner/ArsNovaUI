@@ -2,6 +2,8 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
+#include "PanZoom.h"
+
 namespace ArsNovaUI
 {
 
@@ -20,24 +22,20 @@ public:
 
     void setZoom(float newZoom, juce::Point<float> pivot);
 
-    static constexpr float minimumZoom         = 0.1f;
-    static constexpr float maximumZoom         = 5.0f;
-    static constexpr float wheelZoomStep       = 0.15f;
-    static constexpr float wheelScrollDistance = 100.0f;
+    static constexpr float minimumZoom = 0.1f;
+    static constexpr float maximumZoom = 5.0f;
 
     std::function<void(const juce::AffineTransform& viewTransform, float zoom)> onTransformChanged;
 
+    PanZoom view { minimumZoom, maximumZoom };
+
     juce::Point<float> initialViewCentre { 1500.0f, 1500.0f };
-    float              zoom = 1.0f;
 
 private:
 
     void applyTransform();
 
     juce::Component& content;
-
-    float translateX = 0.0f;
-    float translateY = 0.0f;
 
     bool centeredOnce = false;
 

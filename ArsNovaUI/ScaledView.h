@@ -18,14 +18,20 @@ public:
 
     bool zoomFits(float candidateZoom) const;
 
+    juce::Point<int> scaledMinimumSize() const;
+
     static constexpr float minimumZoom = 1.0f;
     static constexpr float maximumZoom = 2.0f;
+
+    static constexpr int tooltipDelayMs = 400;
 
     std::function<void()> onZoomChanged;
 
     juce::Component&      content;
     juce::PropertiesFile& interfaceSettings;
     juce::Point<int>      minimumContentSize;
+
+    juce::TooltipWindow tooltipWindow;
 
     float zoom         = 1.0f;
     float previousZoom = 1.0f;

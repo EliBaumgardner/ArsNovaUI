@@ -1,5 +1,6 @@
 #include "ItemSelector.h"
 #include "../Theme/CustomLookAndFeel.h"
+#include "../Theme/IconLibrary.h"
 
 namespace ArsNovaUI
 {
@@ -7,7 +8,7 @@ namespace ArsNovaUI
 ItemSelector::ItemSelector(juce::UndoManager& undoManager)
     : labelEditor(undoManager)
 {
-    button.icon = &CustomLookAndFeel::drawChevronDownIcon;
+    button.icon = &IconLibrary::get().chevronDown;
 
     labelEditor.autoFitText = true;
     labelEditor.editable    = false;
@@ -44,7 +45,9 @@ void ItemSelector::paint(juce::Graphics& graphics)
     }
 
     if (leadingIcon != nullptr) {
-        (lookAndFeel.*leadingIcon)(graphics, contentBounds.withWidth(contentBounds.getHeight()).toFloat(), ButtonState {});
+        const juce::Rectangle<float> leadingBounds = contentBounds.withWidth(contentBounds.getHeight()).toFloat();
+
+        lookAndFeel.drawIcon(graphics, leadingBounds, *leadingIcon, ButtonState {});
     }
 }
 

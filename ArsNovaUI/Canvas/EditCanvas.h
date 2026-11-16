@@ -13,8 +13,9 @@
     children and keeps them in step with it. It holds what every canvas shares: the view and
     model transforms of the pan and zoom (every child is drawn through viewTransform), the snap
     grid (gridOrigin, gridSpacing, whether it is shown, and whether it shows only during a drag or
-    always), and the queue of AsyncUpdates its tree listener adds for each change to the
-    document's tree. Its parts are NodeManager and ArrowManager for the components and
+    always), the selection rectangle it draws over the canvas while selectionBounds is not empty
+    (BoxSelectionGestures sets it), and the queue of AsyncUpdates its tree listener adds for each
+    change to the document's tree. Its parts are NodeManager and ArrowManager for the components and
     CanvasHitTester for picking.
 
     handleAsyncUpdate applies the queued updates, rebuildFromNodeMap builds every component from a
@@ -26,7 +27,10 @@
     prepareArrow and connectionCreated add the subclass's own setup and clean-up, drawnPosition
     says where a node is drawn when that is not where it is stored, treePropertyChanged turns a
     change to a property the shared code does not know into updates, and updateApplied reacts to
-    the updates the shared code leaves alone. No hook is called from a constructor or destructor.
+    the updates the shared code leaves alone. A PropertyChanged update carries the identifier of
+    the property in property and the id of the node it belongs to, and the shared code does
+    nothing with it, so updateApplied is where a program turns it into a redraw. No hook is
+    called from a constructor or destructor.
 */
 
 namespace ArsNovaUI
@@ -83,9 +87,7 @@ public:
         ArrowAdded,
         ArrowRemoved,
         ArrowInfoChanged,
-        ArrowDurationChanged,
-        NodeColourChanged,
-        NodeMarkChanged
+        PropertyChanged
     };
 
     enum class GridDisplay { WhileDragging, Always };
@@ -96,6 +98,8 @@ public:
 
         int nodeId      = -1;
         int childNodeId = -1;
+
+        juce::Identifier property;
     };
 
     struct NodePair
@@ -108,6 +112,10 @@ public:
 
     juce::AffineTransform viewTransform;
     juce::AffineTransform modelTransform;
+
+    juce::Rectangle<int> selectionBounds;
+
+    static constexpr float selectionFillAlpha = 0.15f;
 
     bool gridVisible   = false;
     bool gridOriginSet = false;

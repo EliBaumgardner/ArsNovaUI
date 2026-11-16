@@ -65,6 +65,10 @@ struct Theme
         arrowColour                  = shifted(base.arrowColour);
         arrowHeadColour              = shifted(base.arrowHeadColour);
         defaultNodeColour            = shifted(base.defaultNodeColour);
+        whiteKeyColour               = shifted(base.whiteKeyColour);
+        whiteKeyHoverColour          = shifted(base.whiteKeyHoverColour);
+        blackKeyColour               = shifted(base.blackKeyColour);
+        blackKeyHoverColour          = shifted(base.blackKeyHoverColour);
 
         accentColour        = themeColour.withAlpha(1.0f);
         accentSoftColour    = accentColour.withAlpha(base.accentSoftColour.getFloatAlpha());
@@ -128,6 +132,11 @@ struct Theme
     juce::Colour arrowHeadColour = arrowColour;
 
     juce::Colour defaultNodeColour = juce::Colour::fromRGB(31, 36, 44);
+
+    juce::Colour whiteKeyColour      = juce::Colour::fromRGB(222, 226, 234);
+    juce::Colour whiteKeyHoverColour = juce::Colour::fromRGB(242, 245, 250);
+    juce::Colour blackKeyColour      = juce::Colour::fromRGB(24, 28, 35);
+    juce::Colour blackKeyHoverColour = juce::Colour::fromRGB(44, 50, 62);
 
     juce::Typeface::Ptr regularTypeface;
     juce::Typeface::Ptr semiBoldTypeface;

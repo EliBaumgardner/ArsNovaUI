@@ -2,6 +2,7 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 #include "ArrowGestures.h"
+#include "BoxSelectionGestures.h"
 #include "NodeGestures.h"
 
 /*
@@ -17,7 +18,9 @@
     grows a child (NodeGestures). A plain click opens the node's editor. It also keeps node and
     arrow hover.
 
-    The features are the members it owns, nodeGestures and arrowGestures. The program that uses
+    The features are the members it owns, nodeGestures, arrowGestures and boxSelectionGestures.
+    The last is not started by any press here: the program that uses the canvas decides which
+    press begins a selection rectangle and calls begin, update and finish. The program that uses
     the canvas derives from it: each controller handles its own presses first and passes the rest
     to these functions.
 */
@@ -44,8 +47,9 @@ public:
 
     enum class Gesture { Idle, EditingValue, MovingArrowHead, ArrowSelected, MovingDanglingTip, DrawingArrow };
 
-    ArrowGestures arrowGestures;
-    NodeGestures  nodeGestures;
+    ArrowGestures        arrowGestures;
+    NodeGestures         nodeGestures;
+    BoxSelectionGestures boxSelectionGestures;
 
     Gesture gesture = Gesture::Idle;
 

@@ -1,6 +1,7 @@
 #include "TabBar.h"
 #include "../Buttons/IconButton.h"
 #include "../Theme/CustomLookAndFeel.h"
+#include "../Theme/IconLibrary.h"
 
 namespace ArsNovaUI
 {
@@ -49,11 +50,15 @@ void TabBar::paint(juce::Graphics& graphics)
         if (isActive || isHovered) {
             closeState.isHovered = isHovered && closeHovered;
 
-            lookAndFeel.drawCloseIcon(graphics, closeAreas[static_cast<size_t>(index)].toFloat(), closeState);
+            const juce::Rectangle<float> closeBounds = closeAreas[static_cast<size_t>(index)].toFloat();
+
+            lookAndFeel.drawIcon(graphics, closeBounds, IconLibrary::get().close, closeState);
         }
 
         if (tab.marked) {
-            lookAndFeel.drawMarkerIcon(graphics, content.removeFromLeft(markWidth).toFloat(), closeState);
+            const juce::Rectangle<float> markBounds = content.removeFromLeft(markWidth).toFloat();
+
+            lookAndFeel.drawIcon(graphics, markBounds, IconLibrary::get().marker, closeState);
         }
 
         graphics.setColour(textColour);

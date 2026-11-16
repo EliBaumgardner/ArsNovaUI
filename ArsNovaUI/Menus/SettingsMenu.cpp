@@ -2,44 +2,24 @@
 #include "../Theme/CustomLookAndFeel.h"
 #include "../Theme/InterfaceIdentifiers.h"
 #include "../ScaledView.h"
+#include "ColourSelector.h"
 
 namespace ArsNovaUI
 {
 
 SettingsMenu::SettingsMenu(CustomLookAndFeel& lookAndFeel, ScaledView& scaledView, juce::ValueTree colourPresets, juce::UndoManager& undoManager)
-    : lookAndFeel(lookAndFeel),
-      scaledView(scaledView),
-      themeColourSelector(colourPresets, undoManager),
-      zoomEditor(undoManager)
+    : lookAndFeel (lookAndFeel),
+      scaledView  (scaledView),
+      undoManager (undoManager)
 {
-    auto zoomFormat = std::make_unique<NumberFormat>(ScaledView::minimumZoom, ScaledView::maximumZoom, ValueFormat::editableDecimalPlaces);
+    auto themeColourSelector = std::make_unique<ColourSelector>(colourPresets, undoManager);
+    auto zoomFormat          = std::make_unique<NumberFormat>(ScaledView::minimumZoom, ScaledView::maximumZoom, ValueFormat::editableDecimalPlaces);
 
     zoomFormat->suffix = "x";
 
-    setLookAndFeel(&lookAndFeel);
+    themeColourSelector->colour = lookAndFeel.accentColour;
 
-    themeColourLabel.setText("Theme colour", juce::dontSendNotification);
-    zoomLabel.setText("Interface zoom", juce::dontSendNotification);
-
-    themeColourSelector.colour = lookAndFeel.accentColour;
-    zoomEditor.backdrop        = ValueEditor::Backdrop::Field;
-
-    zoomEditor.setFormat(std::move(zoomFormat));
-
-    zoomEditor.boundValue = static_cast<double>(scaledView.zoom);
-
-    zoomEditor.onEditFinished = [this]() {
-        const double enteredZoom = zoomEditor.boundValue.getValue();
-
-        if (! this->scaledView.zoomFits(static_cast<float>(enteredZoom))) {
-            zoomEditor.boundValue = static_cast<double>(this->scaledView.zoom);
-            return;
-        }
-
-        this->scaledView.interfaceSettings.setValue(InterfaceIdentifiers::InterfaceZoom.toString(), enteredZoom);
-    };
-
-    themeColourSelector.onColourPicked = [this](juce::Colour pickedColour) {
+    themeColourSelector->onColourPicked = [this](juce::Colour pickedColour) {
         juce::Desktop& desktop = juce::Desktop::getInstance();
 
         this->lookAndFeel.applyThemeColour(pickedColour);
@@ -51,57 +31,112 @@ SettingsMenu::SettingsMenu(CustomLookAndFeel& lookAndFeel, ScaledView& scaledVie
         }
     };
 
-    addAndMakeVisible(themeColourLabel);
-    addAndMakeVisible(themeColourSelector);
-    addAndMakeVisible(zoomLabel);
-    addAndMakeVisible(zoomEditor);
+    setLookAndFeel(&lookAndFeel);
+
+    addRow("Theme colour", std::move(themeColourSelector), selectorWidthRatio);
+
+    ValueEditor& zoomEditor = addEditorRow("Interface zoom", std::move(zoomFormat));
+
+    zoomEditor.boundValue = static_cast<double>(scaledView.zoom);
+
+    zoomEditor.onEditFinished = [this, &zoomEditor]() {
+        const double enteredZoom = zoomEditor.boundValue.getValue();
+
+        if (! this->scaledView.zoomFits(static_cast<float>(enteredZoom))) {
+            zoomEditor.boundValue = static_cast<double>(this->scaledView.zoom);
+            return;
+        }
+
+        this->scaledView.interfaceSettings.setValue(InterfaceIdentifiers::InterfaceZoom.toString(), enteredZoom);
+    };
 }
 
 void SettingsMenu::paint(juce::Graphics& graphics)
 {
-    const Theme& theme   = CustomLookAndFeel::get(*this);
-    const int    padding = juce::roundToInt(Theme::barHeight * Theme::menuSpacingRatio);
-    const auto   divider = juce::Rectangle<int>(padding, themeColourLabel.getBottom(), getWidth() - padding * 2, 1);
+    const Theme& theme        = CustomLookAndFeel::get(*this);
+    const int    padding      = juce::roundToInt(Theme::barHeight * Theme::menuSpacingRatio);
+    const int    dividerCount = static_cast<int>(rows.size()) - 1;
 
     graphics.fillAll(theme.surfaceColour);
 
     graphics.setColour(theme.borderColour);
-    graphics.fillRect(divider);
+
+    for (int index = 0; index < dividerCount; ++index) {
+        const juce::Rectangle<int> divider(padding, rows[static_cast<size_t>(index)]->caption.getBottom(), getWidth() - padding * 2, 1);
+
+        graphics.fillRect(divider);
+    }
 }
 
 void SettingsMenu::resized()
 {
-    const Theme& theme      = CustomLookAndFeel::get(*this);
-    const int    padding    = juce::roundToInt(Theme::barHeight * Theme::menuSpacingRatio);
-    const int    rowHeight  = juce::roundToInt(Theme::barHeight * Theme::menuRowHeightRatio);
-    const int    rowInset   = juce::roundToInt(rowHeight * selectorInsetRatio);
-    const float  textHeight = Theme::textHeight;
-    auto         rows       = getLocalBounds().reduced(padding);
-    auto         themeRow   = rows.removeFromTop(rowHeight);
-    auto         zoomRow    = rows.removeFromTop(rowHeight);
-    auto         swatch     = themeRow.removeFromRight(juce::roundToInt(rowHeight * selectorWidthRatio));
-    auto         zoomBox    = zoomRow.removeFromRight(juce::roundToInt(rowHeight * zoomEditorWidthRatio));
+    const int padding   = juce::roundToInt(Theme::barHeight * Theme::menuSpacingRatio);
+    const int rowHeight = juce::roundToInt(Theme::barHeight * Theme::menuRowHeightRatio);
+    const int rowInset  = juce::roundToInt(rowHeight * selectorInsetRatio);
 
-    themeColourLabel.setFont(theme.font(Theme::FontStyle::Regular, textHeight));
-    zoomLabel.setFont(theme.font(Theme::FontStyle::Regular, textHeight));
+    juce::Rectangle<int> area = getLocalBounds().reduced(padding);
 
-    zoomEditor.setFontHeight(textHeight);
+    for (const std::unique_ptr<Row>& row : rows) {
+        const int controlWidth = juce::roundToInt(rowHeight * row->controlWidthRatio);
 
-    themeColourLabel.setBounds(themeRow);
-    themeColourSelector.setBounds(swatch.reduced(0, rowInset));
-    zoomLabel.setBounds(zoomRow);
-    zoomEditor.setBounds(zoomBox.reduced(0, rowInset));
+        juce::Rectangle<int> rowArea     = area.removeFromTop(rowHeight);
+        juce::Rectangle<int> controlArea = rowArea.removeFromRight(controlWidth);
+
+        row->caption.setBounds(rowArea);
+        row->control->setBounds(controlArea.reduced(0, rowInset));
+    }
+}
+
+void SettingsMenu::addRow(const juce::String& caption, std::unique_ptr<juce::Component> control, float controlWidthRatio)
+{
+    std::unique_ptr<Row> row = std::make_unique<Row>();
+
+    row->control           = std::move(control);
+    row->controlWidthRatio = controlWidthRatio;
+
+    row->caption.setText(caption, juce::dontSendNotification);
+
+    addAndMakeVisible(row->caption);
+    addAndMakeVisible(*row->control);
+
+    rows.push_back(std::move(row));
+}
+
+ValueEditor& SettingsMenu::addEditorRow(const juce::String& caption, std::unique_ptr<ValueFormat> format)
+{
+    std::unique_ptr<ValueEditor> editor      = std::make_unique<ValueEditor>(undoManager);
+    ValueEditor&                 addedEditor = *editor;
+
+    editor->backdrop = ValueEditor::Backdrop::Field;
+
+    editor->setFormat(std::move(format));
+    editor->setFontHeight(Theme::textHeight);
+
+    addRow(caption, std::move(editor), editorWidthRatio);
+
+    return addedEditor;
 }
 
 juce::Point<int> SettingsMenu::narrowestSize() const
 {
-    const int        padding    = juce::roundToInt(Theme::barHeight * Theme::menuSpacingRatio);
-    const int        rowHeight  = juce::roundToInt(Theme::barHeight * Theme::menuRowHeightRatio);
-    const juce::Font textFont   = lookAndFeel.font(Theme::FontStyle::Regular, Theme::textHeight);
-    const int        themeWidth = juce::GlyphArrangement::getStringWidthInt(textFont, themeColourLabel.getText()) + juce::roundToInt(rowHeight * selectorWidthRatio);
-    const int        zoomWidth  = juce::GlyphArrangement::getStringWidthInt(textFont, zoomLabel.getText()) + juce::roundToInt(rowHeight * zoomEditorWidthRatio);
+    const juce::Font textFont  = lookAndFeel.font(Theme::FontStyle::Regular, Theme::textHeight);
+    const int        padding   = juce::roundToInt(Theme::barHeight * Theme::menuSpacingRatio);
+    const int        rowHeight = juce::roundToInt(Theme::barHeight * Theme::menuRowHeightRatio);
+    const int        rowCount  = static_cast<int>(rows.size());
 
-    return { padding * 3 + juce::jmax(themeWidth, zoomWidth), padding * 2 + rowHeight * 2 };
+    int widestRow = 0;
+
+    for (const std::unique_ptr<Row>& row : rows) {
+        const int captionWidth = juce::GlyphArrangement::getStringWidthInt(textFont, row->caption.getText());
+        const int controlWidth = juce::roundToInt(rowHeight * row->controlWidthRatio);
+
+        widestRow = juce::jmax(widestRow, captionWidth + controlWidth);
+    }
+
+    const int contentWidth  = padding * horizontalPaddingCount + widestRow;
+    const int contentHeight = padding * 2 + rowHeight * rowCount;
+
+    return { contentWidth, contentHeight };
 }
 
 }

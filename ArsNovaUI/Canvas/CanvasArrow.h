@@ -17,10 +17,11 @@
 
     It also holds how the arrow looks right now: hovered, selected, being dragged, a ghost, and the
     ArrowAnimation of its snap and fade, which advanceAnimation moves on each display frame while
-    anything is moving. durationEditor is the editor for the number shown on the shaft.
+    anything is moving. labelEditor is the editor for the number shown on the shaft.
 
-    The program that uses the canvas derives from it, draws it, and says through the pure
-    virtuals what the label shows, whether it shows one and how the label is edited.
+    The program that uses the canvas derives from it, draws it, and says through the virtuals
+    what the label shows (getLabelText), whether it shows one (hasLabel) and how the label is
+    edited (beginLabelEdit); an arrow with no label leaves them as they are.
     advanceExtraAnimation lets the subclass animate more on the same frames. ArrowManager creates
     every arrow through EditCanvas::makeArrow or makeDanglingArrow, and CanvasHitTester and
     ArrowGestures find and drag it.
@@ -50,13 +51,12 @@ public:
     void setHoverFade  (bool shouldBeVisible);
     void initHoverState(bool visibleNow);
 
-    virtual void beginDurationEdit() = 0;
+    virtual void beginLabelEdit();
 
     virtual bool advanceExtraAnimation();
+    virtual bool hasLabel () const;
 
-    virtual bool showsDurationLabel() const = 0;
-
-    virtual juce::String getDurationLabel() const = 0;
+    virtual juce::String getLabelText() const;
 
     bool isDangling() const
     {
@@ -94,7 +94,7 @@ public:
 
     int danglingIndex = -1;
 
-    std::unique_ptr<ValueEditor> durationEditor;
+    std::unique_ptr<ValueEditor> labelEditor;
 
     juce::ValueTree arrowTree;
 

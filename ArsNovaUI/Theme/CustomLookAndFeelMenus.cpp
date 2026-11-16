@@ -1,29 +1,19 @@
 #include "CustomLookAndFeel.h"
 #include "ArsNovaUIFonts.h"
-#include "ArsNovaUIIcons.h"
+#include "IconLibrary.h"
 
 #include <juce_gui_extra/juce_gui_extra.h>
 
 namespace ArsNovaUI
 {
 
-static juce::Path loadGlyph(const char* svgData, int svgSize)
-{
-    const std::unique_ptr<juce::Drawable> svg = juce::Drawable::createFromImageData(svgData, static_cast<size_t>(svgSize));
-    juce::Path                            glyph;
-
-    for (juce::Component* shape : svg->getChildren()) {
-        glyph.addPath(static_cast<juce::DrawablePath*>(shape)->getPath());
-    }
-
-    return glyph;
-}
-
 CustomLookAndFeel::CustomLookAndFeel()
 {
     const int                  cursorPixels = static_cast<int>(glyphGridSize * cursorScale);
     const juce::PathStrokeType cursorInk(glyphGridSize * glyphStrokeRatio, juce::PathStrokeType::curved, juce::PathStrokeType::rounded);
     const juce::PathStrokeType cursorHalo(cursorHaloWidth, juce::PathStrokeType::curved, juce::PathStrokeType::rounded);
+    const juce::Path&          pencilGlyph  = IconLibrary::get().pencil.layers.front().path;
+    const juce::Path&          eraserGlyph  = IconLibrary::get().eraser.layers.front().path;
     juce::Image                pencilImage(juce::Image::ARGB, cursorPixels, cursorPixels, true, juce::SoftwareImageType());
     juce::Image                eraserImage(juce::Image::ARGB, cursorPixels, cursorPixels, true, juce::SoftwareImageType());
     juce::Graphics             pencilGraphics(pencilImage);
@@ -33,61 +23,17 @@ CustomLookAndFeel::CustomLookAndFeel()
     semiBoldTypeface = juce::Typeface::createSystemTypefaceFor(ArsNovaUIFonts::GeistSemiBold_ttf, ArsNovaUIFonts::GeistSemiBold_ttfSize);
     monoTypeface     = juce::Typeface::createSystemTypefaceFor(ArsNovaUIFonts::GeistMonoRegular_ttf, ArsNovaUIFonts::GeistMonoRegular_ttfSize);
 
-    glyphs.add           = loadGlyph(ArsNovaUIIcons::Add_svg, ArsNovaUIIcons::Add_svgSize);
-    glyphs.arrow         = loadGlyph(ArsNovaUIIcons::Arrow_svg, ArsNovaUIIcons::Arrow_svgSize);
-    glyphs.boxDash       = loadGlyph(ArsNovaUIIcons::BoxDash_svg, ArsNovaUIIcons::BoxDash_svgSize);
-    glyphs.boxDots       = loadGlyph(ArsNovaUIIcons::BoxDots_svg, ArsNovaUIIcons::BoxDots_svgSize);
-    glyphs.brushHandle   = loadGlyph(ArsNovaUIIcons::BrushHandle_svg, ArsNovaUIIcons::BrushHandle_svgSize);
-    glyphs.brushTip      = loadGlyph(ArsNovaUIIcons::BrushTip_svg, ArsNovaUIIcons::BrushTip_svgSize);
-    glyphs.chevronDown   = loadGlyph(ArsNovaUIIcons::ChevronDown_svg, ArsNovaUIIcons::ChevronDown_svgSize);
-    glyphs.chevronRight  = loadGlyph(ArsNovaUIIcons::ChevronRight_svg, ArsNovaUIIcons::ChevronRight_svgSize);
-    glyphs.chevronUp     = loadGlyph(ArsNovaUIIcons::ChevronUp_svg, ArsNovaUIIcons::ChevronUp_svgSize);
-    glyphs.circle        = loadGlyph(ArsNovaUIIcons::Circle_svg, ArsNovaUIIcons::Circle_svgSize);
-    glyphs.circledH      = loadGlyph(ArsNovaUIIcons::CircledH_svg, ArsNovaUIIcons::CircledH_svgSize);
-    glyphs.close         = loadGlyph(ArsNovaUIIcons::Close_svg, ArsNovaUIIcons::Close_svgSize);
-    glyphs.code          = loadGlyph(ArsNovaUIIcons::Code_svg, ArsNovaUIIcons::Code_svgSize);
-    glyphs.dashedBox     = loadGlyph(ArsNovaUIIcons::DashedBox_svg, ArsNovaUIIcons::DashedBox_svgSize);
-    glyphs.dot           = loadGlyph(ArsNovaUIIcons::Dot_svg, ArsNovaUIIcons::Dot_svgSize);
-    glyphs.eraser        = loadGlyph(ArsNovaUIIcons::Eraser_svg, ArsNovaUIIcons::Eraser_svgSize);
-    glyphs.eye           = loadGlyph(ArsNovaUIIcons::Eye_svg, ArsNovaUIIcons::Eye_svgSize);
-    glyphs.fork          = loadGlyph(ArsNovaUIIcons::Fork_svg, ArsNovaUIIcons::Fork_svgSize);
-    glyphs.import        = loadGlyph(ArsNovaUIIcons::Import_svg, ArsNovaUIIcons::Import_svgSize);
-    glyphs.link          = loadGlyph(ArsNovaUIIcons::Link_svg, ArsNovaUIIcons::Link_svgSize);
-    glyphs.metronome     = loadGlyph(ArsNovaUIIcons::Metronome_svg, ArsNovaUIIcons::Metronome_svgSize);
-    glyphs.more          = loadGlyph(ArsNovaUIIcons::More_svg, ArsNovaUIIcons::More_svgSize);
-    glyphs.outline       = loadGlyph(ArsNovaUIIcons::Outline_svg, ArsNovaUIIcons::Outline_svgSize);
-    glyphs.pause         = loadGlyph(ArsNovaUIIcons::Pause_svg, ArsNovaUIIcons::Pause_svgSize);
-    glyphs.pencil        = loadGlyph(ArsNovaUIIcons::Pencil_svg, ArsNovaUIIcons::Pencil_svgSize);
-    glyphs.play          = loadGlyph(ArsNovaUIIcons::Play_svg, ArsNovaUIIcons::Play_svgSize);
-    glyphs.quaverHead    = loadGlyph(ArsNovaUIIcons::QuaverHead_svg, ArsNovaUIIcons::QuaverHead_svgSize);
-    glyphs.quaverStem    = loadGlyph(ArsNovaUIIcons::QuaverStem_svg, ArsNovaUIIcons::QuaverStem_svgSize);
-    glyphs.redo          = loadGlyph(ArsNovaUIIcons::Redo_svg, ArsNovaUIIcons::Redo_svgSize);
-    glyphs.reload        = loadGlyph(ArsNovaUIIcons::Reload_svg, ArsNovaUIIcons::Reload_svgSize);
-    glyphs.remove        = loadGlyph(ArsNovaUIIcons::Remove_svg, ArsNovaUIIcons::Remove_svgSize);
-    glyphs.ring          = loadGlyph(ArsNovaUIIcons::Ring_svg, ArsNovaUIIcons::Ring_svgSize);
-    glyphs.roundedSquare = loadGlyph(ArsNovaUIIcons::RoundedSquare_svg, ArsNovaUIIcons::RoundedSquare_svgSize);
-    glyphs.route         = loadGlyph(ArsNovaUIIcons::Route_svg, ArsNovaUIIcons::Route_svgSize);
-    glyphs.search        = loadGlyph(ArsNovaUIIcons::Search_svg, ArsNovaUIIcons::Search_svgSize);
-    glyphs.settings      = loadGlyph(ArsNovaUIIcons::Settings_svg, ArsNovaUIIcons::Settings_svgSize);
-    glyphs.sidebar       = loadGlyph(ArsNovaUIIcons::Sidebar_svg, ArsNovaUIIcons::Sidebar_svgSize);
-    glyphs.skipBar       = loadGlyph(ArsNovaUIIcons::SkipBar_svg, ArsNovaUIIcons::SkipBar_svgSize);
-    glyphs.skipTriangle  = loadGlyph(ArsNovaUIIcons::SkipTriangle_svg, ArsNovaUIIcons::SkipTriangle_svgSize);
-    glyphs.triangle      = loadGlyph(ArsNovaUIIcons::Triangle_svg, ArsNovaUIIcons::Triangle_svgSize);
-    glyphs.undo          = loadGlyph(ArsNovaUIIcons::Undo_svg, ArsNovaUIIcons::Undo_svgSize);
-    glyphs.upload        = loadGlyph(ArsNovaUIIcons::Upload_svg, ArsNovaUIIcons::Upload_svgSize);
-    glyphs.wave          = loadGlyph(ArsNovaUIIcons::Wave_svg, ArsNovaUIIcons::Wave_svgSize);
-
     pencilGraphics.addTransform(juce::AffineTransform::scale(cursorScale));
     pencilGraphics.setColour(windowColour);
-    pencilGraphics.strokePath(glyphs.pencil, cursorHalo);
+    pencilGraphics.strokePath(pencilGlyph, cursorHalo);
     pencilGraphics.setColour(textColour);
-    pencilGraphics.strokePath(glyphs.pencil, cursorInk);
+    pencilGraphics.strokePath(pencilGlyph, cursorInk);
 
     eraserGraphics.addTransform(juce::AffineTransform::scale(cursorScale));
     eraserGraphics.setColour(windowColour);
-    eraserGraphics.strokePath(glyphs.eraser, cursorHalo);
+    eraserGraphics.strokePath(eraserGlyph, cursorHalo);
     eraserGraphics.setColour(textColour);
-    eraserGraphics.strokePath(glyphs.eraser, cursorInk);
+    eraserGraphics.strokePath(eraserGlyph, cursorInk);
 
     pencilCursor = juce::MouseCursor(pencilImage, pencilHotSpotX, pencilHotSpotY, cursorScale);
     eraserCursor = juce::MouseCursor(eraserImage, eraserHotSpotX, eraserHotSpotY, cursorScale);

@@ -77,10 +77,12 @@ target_sources(ArsNovaUI INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Theme/CustomLookAndFeelButtons.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Theme/CustomLookAndFeelOrnaments.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Theme/CustomLookAndFeelMenus.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Theme/IconLibrary.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Theme/CustomTextCaret.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Theme/InterfaceIdentifiers.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Buttons/IconButton.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Buttons/ButtonPane.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Buttons/ToggleSwitch.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Buttons/ValueSlider.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Menus/ContextMenu.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Menus/Dialog.cpp
@@ -93,6 +95,7 @@ target_sources(ArsNovaUI INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/PanelResizer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/LabelPanel.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/RowList.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Editors/CaptionLabel.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Editors/ValueEditor.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Editors/FileLabel.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Editors/FilePage.cpp
@@ -102,7 +105,9 @@ target_sources(ArsNovaUI INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Editors/Formats/PitchFormat.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Editors/Formats/GreekLetterFormat.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Bars/Bar.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Bars/PathBar.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Bars/TabBar.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/PanZoom.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/DynamicPort.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasIdentifiers.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/ArrowAnimation.cpp
@@ -116,6 +121,7 @@ target_sources(ArsNovaUI INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasTreeListener.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/NodeGestures.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/ArrowGestures.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/BoxSelectionGestures.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasController.cpp
 )
 

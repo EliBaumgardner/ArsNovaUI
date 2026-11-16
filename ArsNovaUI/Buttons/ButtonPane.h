@@ -14,7 +14,7 @@ public:
     void paint(juce::Graphics& graphics) override;
     void resized() override;
 
-    IconButton& addButton(IconButton::Icon icon, const juce::String& tooltip, std::function<void()> onClick = nullptr);
+    IconButton& addButton(const Icon& icon, const juce::String& tooltip, std::function<void()> onClick = nullptr);
 
     void setSelectedButton(const IconButton* selected);
 

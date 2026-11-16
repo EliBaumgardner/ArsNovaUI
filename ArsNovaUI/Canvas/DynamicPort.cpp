@@ -20,9 +20,10 @@ void DynamicPort::resized()
     }
 
     if (!centeredOnce) {
-        centeredOnce = true;
-        translateX   = static_cast<float>(getWidth())  * 0.5f - initialViewCentre.x * zoom;
-        translateY   = static_cast<float>(getHeight()) * 0.5f - initialViewCentre.y * zoom;
+        const juce::Point<float> portCentre { static_cast<float>(getWidth()) * 0.5f, static_cast<float>(getHeight()) * 0.5f };
+
+        centeredOnce     = true;
+        view.translation = portCentre - initialViewCentre * view.zoom;
     }
 
     applyTransform();
@@ -39,61 +40,48 @@ void DynamicPort::mouseDrag(const juce::MouseEvent& event)
         return;
     }
 
-    const auto delta = event.getPosition() - lastMousePosition;
+    const juce::Point<int> delta = event.getPosition() - lastMousePosition;
 
     lastMousePosition = event.getPosition();
 
-    translateX += static_cast<float>(delta.x);
-    translateY += static_cast<float>(delta.y);
+    view.translation += delta.toFloat();
 
     applyTransform();
 }
 
 void DynamicPort::mouseWheelMove(const juce::MouseEvent& event, const juce::MouseWheelDetails& wheel)
 {
-    float scrollX = wheel.deltaX;
-    float scrollY = wheel.deltaY;
+    const juce::Point<float> pivot = event.getEventRelativeTo(this).getPosition().toFloat();
 
-    if (wheel.isReversed) {
-        scrollX = -wheel.deltaX;
-        scrollY = -wheel.deltaY;
-    }
-
-    if (event.mods.isShiftDown()) {
-        setZoom(std::clamp(zoom * (1.0f + scrollY * wheelZoomStep), minimumZoom, maximumZoom), event.getEventRelativeTo(this).getPosition().toFloat());
-
-        return;
-    }
-
-    translateX -= scrollX * wheelScrollDistance;
-    translateY -= scrollY * wheelScrollDistance;
+    view.scroll(wheel, event.mods.isShiftDown(), pivot);
 
     applyTransform();
 }
 
 void DynamicPort::mouseMagnify(const juce::MouseEvent& event, float scaleFactor)
 {
-    setZoom(std::clamp(zoom * scaleFactor, minimumZoom, maximumZoom), event.getEventRelativeTo(this).getPosition().toFloat());
+    const juce::Point<float> pivot = event.getEventRelativeTo(this).getPosition().toFloat();
+
+    view.zoomBy(scaleFactor, pivot);
+
+    applyTransform();
 }
 
 void DynamicPort::setZoom(float newZoom, juce::Point<float> pivot)
 {
-    const float canvasPivotX = (pivot.x - translateX) / zoom;
-    const float canvasPivotY = (pivot.y - translateY) / zoom;
+    const float zoomFactor = newZoom / view.zoom;
 
-    zoom       = newZoom;
-    translateX = pivot.x - canvasPivotX * zoom;
-    translateY = pivot.y - canvasPivotY * zoom;
+    view.zoomBy(zoomFactor, pivot);
 
     applyTransform();
 }
 
 void DynamicPort::applyTransform()
 {
-    const juce::AffineTransform viewTransform = juce::AffineTransform::scale(zoom).translated(translateX, translateY);
+    const juce::AffineTransform viewTransform = view.transform();
 
     if (onTransformChanged) {
-        onTransformChanged(viewTransform, zoom);
+        onTransformChanged(viewTransform, view.zoom);
     }
 
     for (juce::Component* child : content.getChildren()) {

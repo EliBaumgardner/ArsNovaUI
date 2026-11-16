@@ -7,8 +7,7 @@ PopupWindow::PopupWindow(const juce::String& title, std::unique_ptr<juce::Compon
                          juce::Colour backgroundColour)
     : juce::DocumentWindow(title, backgroundColour, juce::DocumentWindow::closeButton, true),
       content(std::move(content)),
-      scaledView(*this->content, origin.findParentComponentOfClass<ScaledView>()->interfaceSettings),
-      tooltipWindow(this->content.get(), tooltipDelayMs)
+      scaledView(*this->content, origin.findParentComponentOfClass<ScaledView>()->interfaceSettings)
 {
     const int                minimumWidth  = this->content->getWidth();
     const int                minimumHeight = this->content->getHeight();
@@ -21,8 +20,7 @@ PopupWindow::PopupWindow(const juce::String& title, std::unique_ptr<juce::Compon
     scaledView.minimumContentSize = { minimumWidth, minimumHeight };
 
     scaledView.onZoomChanged = [this]() {
-        const float                          zoom        = scaledView.zoom;
-        const juce::Point<int>               minimumSize = scaledView.minimumContentSize;
+        const juce::Point<int>               minimumSize = scaledView.scaledMinimumSize();
         const juce::Displays::Display* const display     = juce::Desktop::getInstance().getDisplays().getDisplayForRect(getScreenBounds());
         juce::ComponentPeer* const           peer        = getPeer();
         juce::BorderSize<int>                frame;
@@ -31,8 +29,10 @@ PopupWindow::PopupWindow(const juce::String& title, std::unique_ptr<juce::Compon
             frame = peer->getFrameSize();
         }
 
-        setResizeLimits(juce::roundToInt(minimumSize.x * zoom) + frame.getLeftAndRight(), juce::roundToInt(minimumSize.y * zoom) + frame.getTopAndBottom(),
-                        maximumWindowSide, maximumWindowSide);
+        const int minimumWindowWidth  = minimumSize.x + frame.getLeftAndRight();
+        const int minimumWindowHeight = minimumSize.y + frame.getTopAndBottom();
+
+        setResizeLimits(minimumWindowWidth, minimumWindowHeight, maximumWindowSide, maximumWindowSide);
 
         if (display != nullptr) {
             setBounds(getBounds().constrainedWithin(display->userArea));

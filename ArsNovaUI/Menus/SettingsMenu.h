@@ -1,8 +1,11 @@
 #pragma once
 
 #include <juce_gui_basics/juce_gui_basics.h>
-#include "../Editors/LabeledEditor.h"
-#include "ColourSelector.h"
+#include "../Editors/CaptionLabel.h"
+#include "../Editors/ValueEditor.h"
+
+#include <memory>
+#include <vector>
 
 namespace ArsNovaUI
 {
@@ -19,11 +22,26 @@ public:
     void paint(juce::Graphics& graphics) override;
     void resized() override;
 
+    void addRow(const juce::String& caption, std::unique_ptr<juce::Component> control, float controlWidthRatio);
+
+    ValueEditor& addEditorRow(const juce::String& caption, std::unique_ptr<ValueFormat> format);
+
     juce::Point<int> narrowestSize() const;
 
-    static constexpr float selectorWidthRatio   = 1.6f;
-    static constexpr float zoomEditorWidthRatio = 3.0f;
-    static constexpr float selectorInsetRatio   = 0.15f;
+    struct Row
+    {
+        CaptionLabel caption;
+
+        std::unique_ptr<juce::Component> control;
+
+        float controlWidthRatio = 1.0f;
+    };
+
+    static constexpr int horizontalPaddingCount = 3;
+
+    static constexpr float selectorWidthRatio = 1.6f;
+    static constexpr float editorWidthRatio   = 3.0f;
+    static constexpr float selectorInsetRatio = 0.15f;
 
     static constexpr juce::Point<float> openingScale { 1.3f, 1.3f };
 
@@ -31,11 +49,9 @@ private:
 
     CustomLookAndFeel& lookAndFeel;
     ScaledView&        scaledView;
+    juce::UndoManager& undoManager;
 
-    CaptionLabel   themeColourLabel;
-    ColourSelector themeColourSelector;
-    CaptionLabel   zoomLabel;
-    ValueEditor    zoomEditor;
+    std::vector<std::unique_ptr<Row>> rows;
 };
 
 }

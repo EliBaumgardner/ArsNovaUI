@@ -24,11 +24,9 @@ public:
 
 private:
 
-    ScaledView          scaledView;
-    juce::TooltipWindow tooltipWindow;
+    ScaledView scaledView;
 
     static constexpr int maximumWindowSide = 8192;
-    static constexpr int tooltipDelayMs    = 400;
 };
 
 class PopupWindowLauncher

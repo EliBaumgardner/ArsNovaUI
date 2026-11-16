@@ -83,6 +83,7 @@ target_sources(ArsNovaUI INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Buttons/ButtonPane.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Buttons/ValueSlider.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Menus/ContextMenu.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Menus/Dialog.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Menus/ItemSelector.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Menus/ColourSelector.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Menus/SettingsMenu.cpp
@@ -105,6 +106,7 @@ target_sources(ArsNovaUI INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/DynamicPort.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasIdentifiers.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/ArrowAnimation.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/FrameClock.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasNode.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/CanvasArrow.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ArsNovaUI/Canvas/EditCanvas.cpp

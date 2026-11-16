@@ -15,22 +15,10 @@ static void strokeArrowShaft(juce::Graphics& graphics, const juce::Path& shaft, 
     graphics.strokePath(shaft, juce::PathStrokeType(strokeWidth, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 }
 
-static juce::Path trimPathToFraction(const juce::Path& source, float fraction)
+static float measurePathLength(const juce::Path& source)
 {
-    if (fraction <= 0.0f || source.isEmpty()) {
-        return {};
-    }
-
-    if (fraction >= 1.0f) {
-        return source;
-    }
-
     juce::PathFlatteningIterator measuring(source);
-    juce::PathFlatteningIterator tracing(source);
-    juce::Path                   trimmed;
     float                        totalLength = 0.0f;
-    float                        accumulated = 0.0f;
-    bool                         started     = false;
 
     while (measuring.next()) {
         const float segmentX = measuring.x2 - measuring.x1;
@@ -39,11 +27,15 @@ static juce::Path trimPathToFraction(const juce::Path& source, float fraction)
         totalLength += std::sqrt(segmentX * segmentX + segmentY * segmentY);
     }
 
-    if (totalLength <= 0.0f) {
-        return {};
-    }
+    return totalLength;
+}
 
-    const float targetLength = totalLength * fraction;
+static juce::Path trimPathToLength(const juce::Path& source, const juce::AffineTransform& offset, float targetLength)
+{
+    juce::PathFlatteningIterator tracing(source, offset);
+    juce::Path                   trimmed;
+    float                        accumulated = 0.0f;
+    bool                         started     = false;
 
     while (tracing.next()) {
         const float segmentX      = tracing.x2 - tracing.x1;
@@ -81,6 +73,12 @@ static void drawArrowProgress(juce::Graphics& graphics, const std::vector<ArrowT
     static constexpr float baseOffset   = 0.0f;
     static constexpr float trailSpacing = Theme::arrowTrailThickness;
 
+    if (trails.empty()) {
+        return;
+    }
+
+    const float shaftLength = measurePathLength(shaft);
+
     int drawnCount = 0;
 
     for (const ArrowTrail& trail : trails) {
@@ -90,10 +88,18 @@ static void drawArrowProgress(juce::Graphics& graphics, const std::vector<ArrowT
 
         const float offsetDistance = baseOffset + static_cast<float>(drawnCount) * trailSpacing;
 
-        juce::Path offsetLine = shaft;
-        offsetLine.applyTransform(juce::AffineTransform::translation(-chord.y * offsetDistance, chord.x * offsetDistance));
+        const juce::AffineTransform offsetTransform = juce::AffineTransform::translation(-chord.y * offsetDistance, chord.x * offsetDistance);
 
-        juce::Path progressPath = trimPathToFraction(offsetLine, trail.progress);
+        juce::Path progressPath;
+
+        if (trail.progress >= 1.0f) {
+            progressPath = shaft;
+            progressPath.applyTransform(offsetTransform);
+        }
+        else if (shaftLength > 0.0f) {
+            progressPath = trimPathToLength(shaft, offsetTransform, shaftLength * trail.progress);
+        }
+
         if (! progressPath.isEmpty()) {
             const juce::PathStrokeType progressStroke(Theme::arrowTrailThickness, juce::PathStrokeType::curved, juce::PathStrokeType::rounded);
 

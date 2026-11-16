@@ -118,6 +118,8 @@ struct Theme
     juce::Colour popupMenuHighlightColour     = selectedColour;
     juce::Colour popupMenuHighlightTextColour = textColour;
 
+    juce::Colour dialogScrimColour = juce::Colours::black.withAlpha(0.4f);
+
     juce::Colour scrollBarTrackColour      = surfaceColour;
     juce::Colour scrollBarThumbColour      = borderStrongColour;
     juce::Colour scrollBarThumbHoverColour = mutedTextColour.withAlpha(0.6f);
@@ -245,6 +247,14 @@ struct Theme
 
     static constexpr float callOutShadowAlpha  = 0.6f;
     static constexpr int   callOutShadowRadius = 8;
+
+    static constexpr int dialogWidth           = 240;
+    static constexpr int dialogPadding         = 12;
+    static constexpr int dialogTextGap         = 6;
+    static constexpr int dialogButtonHeight    = 20;
+    static constexpr int dialogButtonTextInset = 12;
+
+    static constexpr float dialogTitleHeight = 11.0f;
 };
 
 }

@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "ArrowAnimation.h"
+#include "FrameClock.h"
 #include "../Editors/ValueEditor.h"
 #include "../Theme/Visuals.h"
 
@@ -87,6 +88,8 @@ public:
     CanvasNode* const startNode = nullptr;
     CanvasNode* const endNode   = nullptr;
 
+    FrameClock* frameClock = nullptr;
+
     juce::Point<int> tipOffset;
 
     int danglingIndex = -1;
@@ -95,8 +98,8 @@ public:
 
     juce::ValueTree arrowTree;
 
-    ArrowAnimation         animation;
-    juce::VBlankAttachment animationFrames;
+    ArrowAnimation           animation;
+    FrameClock::Subscription animationFrames;
 
     bool editingDuration = false;
     bool isGhost         = false;

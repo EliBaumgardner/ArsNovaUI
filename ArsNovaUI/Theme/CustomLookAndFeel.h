@@ -42,6 +42,7 @@ public:
 
     void drawCanvas      (juce::Graphics& graphics, const CanvasGrid& grid);
     void drawPane        (juce::Graphics& graphics, juce::Rectangle<float> bounds);
+    void drawDialog      (juce::Graphics& graphics, juce::Rectangle<float> area, juce::Rectangle<float> box);
 
     void drawFrostedGlass   (juce::Graphics& graphics, juce::Component& surface, juce::Component& backdrop, juce::Rectangle<int> area);
     void blurFrostedImage   (juce::Image& frosted);

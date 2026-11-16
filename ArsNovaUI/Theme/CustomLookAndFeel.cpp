@@ -76,6 +76,28 @@ void CustomLookAndFeel::drawPane(juce::Graphics& graphics, juce::Rectangle<float
     graphics.drawRoundedRectangle(area, groupCornerRadius, borderThickness);
 }
 
+void CustomLookAndFeel::drawDialog(juce::Graphics& graphics, juce::Rectangle<float> area, juce::Rectangle<float> box)
+{
+    const juce::Colour shadowColour = dropShadowColour.withAlpha(callOutShadowAlpha);
+
+    const juce::DropShadow shadow(shadowColour, callOutShadowRadius, {});
+
+    juce::Path outline;
+
+    outline.addRoundedRectangle(box, paneCornerRadius);
+
+    graphics.setColour(dialogScrimColour);
+    graphics.fillRect(area);
+
+    shadow.drawForPath(graphics, outline);
+
+    graphics.setColour(popupMenuColour);
+    graphics.fillPath(outline);
+
+    graphics.setColour(popupMenuBorderColour);
+    graphics.strokePath(outline, juce::PathStrokeType(popupMenuBorderThickness));
+}
+
 void CustomLookAndFeel::drawFrostedGlass(juce::Graphics& graphics, juce::Component& surface, juce::Component& backdrop, juce::Rectangle<int> area)
 {
     const int  margin         = juce::roundToInt(frostKernelSize / frostScale);

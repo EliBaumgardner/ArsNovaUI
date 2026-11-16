@@ -6,6 +6,7 @@
 #include "NodeManager.h"
 #include "ArrowManager.h"
 #include "CanvasHitTester.h"
+#include "FrameClock.h"
 
 /*
     A component that shows a CanvasDocument's tree of nodes as CanvasNode and CanvasArrow
@@ -120,6 +121,8 @@ public:
     std::vector<AsyncUpdate> asyncUpdates;
 
     CanvasTreeListener treeListener { *this };
+
+    FrameClock frameClock { *this };
 
     NodeManager  nodeManager;
     ArrowManager arrowManager;

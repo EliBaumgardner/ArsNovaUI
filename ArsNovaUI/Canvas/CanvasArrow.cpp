@@ -79,9 +79,7 @@ void CanvasArrow::endDrag()
     dragging            = false;
     animation.rulerFade = 1.0f;
 
-    if (animationFrames.isEmpty()) {
-        animationFrames = juce::VBlankAttachment(this, [this](double frameSec) { advanceAnimation(frameSec); });
-    }
+    animationFrames.start(frameClock, [this](double frameSec) { advanceAnimation(frameSec); });
 }
 
 void CanvasArrow::triggerSnapAnimation()
@@ -93,9 +91,7 @@ void CanvasArrow::triggerSnapAnimation()
         animation.rulerFade = 1.0f;
     }
 
-    if (animationFrames.isEmpty()) {
-        animationFrames = juce::VBlankAttachment(this, [this](double frameSec) { advanceAnimation(frameSec); });
-    }
+    animationFrames.start(frameClock, [this](double frameSec) { advanceAnimation(frameSec); });
 }
 
 void CanvasArrow::advanceAnimation(double frameSec)
@@ -112,7 +108,7 @@ void CanvasArrow::advanceAnimation(double frameSec)
     repaint();
 
     if (! stillAnimating) {
-        animationFrames = {};
+        animationFrames.stop();
     }
 }
 
@@ -128,9 +124,7 @@ void CanvasArrow::setHoverFade(bool shouldBeVisible)
         setVisible(true);
     }
 
-    if (animationFrames.isEmpty()) {
-        animationFrames = juce::VBlankAttachment(this, [this](double frameSec) { advanceAnimation(frameSec); });
-    }
+    animationFrames.start(frameClock, [this](double frameSec) { advanceAnimation(frameSec); });
 }
 
 void CanvasArrow::initHoverState(bool visibleNow)

@@ -4,6 +4,7 @@
 #include <functional>
 #include <unordered_map>
 
+#include "FrameClock.h"
 #include "../Editors/ValueEditor.h"
 
 /*
@@ -58,6 +59,8 @@ public:
 
     juce::ValueTree nodeValueTree;
     ValueEditor     nodeValueEditor;
+
+    FrameClock* frameClock = nullptr;
 
     int nodeId = -1;
 

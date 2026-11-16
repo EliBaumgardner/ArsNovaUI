@@ -40,7 +40,8 @@ CanvasArrow* ArrowManager::connect(CanvasNode* parentNode, CanvasNode* childNode
     std::unique_ptr<CanvasArrow> arrow        = canvas.makeArrow(parentNode, childNode);
     CanvasArrow* const           createdArrow = arrow.get();
 
-    createdArrow->arrowTree = connectionTreeFor(parentNode->nodeId, childNode->nodeId);
+    createdArrow->arrowTree  = connectionTreeFor(parentNode->nodeId, childNode->nodeId);
+    createdArrow->frameClock = &canvas.frameClock;
 
     canvas.connectionCreated(*createdArrow);
 
@@ -136,6 +137,7 @@ void ArrowManager::rebuildDanglingForNode(int nodeId)
 
         arrow->arrowTree     = arrowTree;
         arrow->danglingIndex = danglingIndex;
+        arrow->frameClock    = &canvas.frameClock;
 
         canvas.prepareArrow(*arrow);
 
@@ -259,7 +261,8 @@ void ArrowManager::updatePreview(CanvasNode* node, juce::Point<int> tipOffset)
     if (preview == nullptr || preview->startNode != node) {
         preview = canvas.makeDanglingArrow(node, tipOffset);
 
-        preview->dragging = true;
+        preview->dragging   = true;
+        preview->frameClock = &canvas.frameClock;
 
         canvas.addAndMakeVisible(*preview);
 
@@ -298,7 +301,8 @@ void ArrowManager::showSnapGhost(CanvasNode* from, CanvasNode* to)
 
     snapGhostArrow = canvas.makeArrow(from, to);
 
-    snapGhostArrow->isGhost = true;
+    snapGhostArrow->isGhost    = true;
+    snapGhostArrow->frameClock = &canvas.frameClock;
 
     canvas.addAndMakeVisible(*snapGhostArrow);
 

@@ -40,6 +40,7 @@ IconLibrary::IconLibrary()
     add          .layers = { { loadGlyph(ArsNovaUIIcons::Add_svg, ArsNovaUIIcons::Add_svgSize), GlyphPaint::Stroked } };
     arrow        .layers = { { loadGlyph(ArsNovaUIIcons::Arrow_svg, ArsNovaUIIcons::Arrow_svgSize), GlyphPaint::Stroked } };
     chevronDown  .layers = { { loadGlyph(ArsNovaUIIcons::ChevronDown_svg, ArsNovaUIIcons::ChevronDown_svgSize), GlyphPaint::Stroked } };
+    chevronLeft  .layers = { { loadGlyph(ArsNovaUIIcons::ChevronLeft_svg, ArsNovaUIIcons::ChevronLeft_svgSize), GlyphPaint::Stroked } };
     chevronRight .layers = { { loadGlyph(ArsNovaUIIcons::ChevronRight_svg, ArsNovaUIIcons::ChevronRight_svgSize), GlyphPaint::Stroked } };
     chevronUp    .layers = { { loadGlyph(ArsNovaUIIcons::ChevronUp_svg, ArsNovaUIIcons::ChevronUp_svgSize), GlyphPaint::Stroked } };
     close        .layers = { { loadGlyph(ArsNovaUIIcons::Close_svg, ArsNovaUIIcons::Close_svgSize), GlyphPaint::Stroked } };

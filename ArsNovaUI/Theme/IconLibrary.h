@@ -26,6 +26,7 @@ public:
     Icon arrow;
     Icon brush;
     Icon chevronDown;
+    Icon chevronLeft;
     Icon chevronRight;
     Icon chevronUp;
     Icon circle;

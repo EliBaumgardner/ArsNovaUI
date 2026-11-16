@@ -30,6 +30,7 @@ juce_add_binary_data(ArsNovaUIIcons
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/BrushHandle.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/BrushTip.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/ChevronDown.svg
+        ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/ChevronLeft.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/ChevronRight.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/ChevronUp.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Circle.svg

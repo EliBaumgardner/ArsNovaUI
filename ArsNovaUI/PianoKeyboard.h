@@ -103,6 +103,16 @@ private:
 
     std::vector<KeyGeometry> whiteKeys;
     std::vector<KeyGeometry> blackKeys;
+
+    static constexpr int notesPerOctave           = 12;
+    static constexpr int smallGroupFirstBlackNote = 1;
+    static constexpr int smallGroupFirstWhiteKey  = 0;
+    static constexpr int smallGroupWhiteCount     = 3;
+    static constexpr int smallGroupBlackCount     = 2;
+    static constexpr int largeGroupFirstBlackNote = 6;
+    static constexpr int largeGroupFirstWhiteKey  = 3;
+    static constexpr int largeGroupWhiteCount     = 4;
+    static constexpr int largeGroupBlackCount     = 3;
 };
 
 }

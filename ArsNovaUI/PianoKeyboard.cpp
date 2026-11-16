@@ -145,6 +145,8 @@ void PianoKeyboard::calculateGeometry()
     }
 
     int whiteCount = 0;
+    int whiteIndex = 0;
+
     for (int note = lowestNote; note <= highestNote; ++note) {
         if (! isBlackKey(note)) {
             ++whiteCount;
@@ -160,55 +162,44 @@ void PianoKeyboard::calculateGeometry()
     const float blackWidth  = whiteWidth * blackKeyWidthRatio;
     const float blackHeight = whiteHeight * blackKeyHeightRatio;
 
-    int whiteIndex = 0;
     for (int note = lowestNote; note <= highestNote; ++note) {
+        const int   noteInOctave = note % notesPerOctave;
+        const float whiteX       = bounds.getX() + whiteIndex * whiteWidth;
+
+        int groupStartWhite = 0;
+        int groupWhiteCount = 0;
+        int groupBlackCount = 0;
+        int firstBlackNote  = 0;
+
         if (! isBlackKey(note)) {
-            const float x = bounds.getX() + whiteIndex * whiteWidth;
-            whiteKeys.push_back({ note, false, juce::Rectangle<float>(x, bounds.getY(), whiteWidth, whiteHeight) });
+            whiteKeys.push_back({ note, false, juce::Rectangle<float>(whiteX, bounds.getY(), whiteWidth, whiteHeight) });
             ++whiteIndex;
+
+            continue;
         }
-    }
 
-    for (int note = lowestNote; note <= highestNote; ++note) {
-        if (isBlackKey(note)) {
-            float prevWhiteX = bounds.getX();
-            bool foundPrev = false;
-
-            for (const auto& wk : whiteKeys) {
-                if (wk.noteNumber == note - 1) {
-                    prevWhiteX = wk.bounds.getX();
-                    foundPrev = true;
-                    break;
-                }
-            }
-
-            if (! foundPrev) {
-                for (const auto& wk : whiteKeys) {
-                    if (wk.noteNumber == note + 1) {
-                        prevWhiteX = wk.bounds.getX() - whiteWidth;
-                        break;
-                    }
-                }
-            }
-
-            float offset = whiteWidth * 0.58f;
-            const int noteInOctave = note % 12;
-
-            if (noteInOctave == 1) {        // C#
-                offset = whiteWidth * (7.0f / 12.0f);
-            } else if (noteInOctave == 3) {  // D#
-                offset = whiteWidth * (8.5f / 12.0f);
-            } else if (noteInOctave == 6) {  // F#
-                offset = whiteWidth * (7.0f / 12.0f);
-            } else if (noteInOctave == 8) {  // G#
-                offset = whiteWidth * (6.0f / 12.0f);
-            } else if (noteInOctave == 10) { // A#
-                offset = whiteWidth * (8.5f / 12.0f);
-            }
-
-            const float centerX = prevWhiteX + offset;
-            blackKeys.push_back({ note, true, juce::Rectangle<float>(centerX - blackWidth * 0.5f, bounds.getY(), blackWidth, blackHeight) });
+        if (noteInOctave < largeGroupFirstBlackNote) {
+            groupStartWhite = smallGroupFirstWhiteKey;
+            groupWhiteCount = smallGroupWhiteCount;
+            groupBlackCount = smallGroupBlackCount;
+            firstBlackNote  = smallGroupFirstBlackNote;
+        } else {
+            groupStartWhite = largeGroupFirstWhiteKey;
+            groupWhiteCount = largeGroupWhiteCount;
+            groupBlackCount = largeGroupBlackCount;
+            firstBlackNote  = largeGroupFirstBlackNote;
         }
+
+        const int semitonesBetweenBlackKeys = 2;
+        const int placeInGroup              = (noteInOctave - firstBlackNote) / semitonesBetweenBlackKeys;
+        const int whitesBelowInOctave       = groupStartWhite + placeInGroup + 1;
+        const int octaveFirstWhite          = whiteIndex - whitesBelowInOctave;
+
+        const float stripWidth = (groupWhiteCount * whiteWidth - groupBlackCount * blackWidth) / groupWhiteCount;
+        const float octaveLeft = bounds.getX() + octaveFirstWhite * whiteWidth;
+        const float blackX     = octaveLeft + groupStartWhite * whiteWidth + (placeInGroup + 1) * stripWidth + placeInGroup * blackWidth;
+
+        blackKeys.push_back({ note, true, juce::Rectangle<float>(blackX, bounds.getY(), blackWidth, blackHeight) });
     }
 }
 

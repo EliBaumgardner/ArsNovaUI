@@ -6,7 +6,9 @@ namespace ArsNovaUI
 
 void ButtonPane::paint(juce::Graphics& graphics)
 {
-    CustomLookAndFeel::get(*this).drawPane(graphics, getLocalBounds().toFloat());
+    if (look == Look::Pane) {
+        CustomLookAndFeel::get(*this).drawPane(graphics, getLocalBounds().toFloat());
+    }
 }
 
 void ButtonPane::resized()
@@ -41,7 +43,7 @@ void ButtonPane::resized()
     }
 
     const int   buttonCount = buttons.size();
-    const auto  bounds      = getLocalBounds().reduced(juce::roundToInt(getHeight() * Theme::contentInsetRatio));
+    const auto  bounds      = getLocalBounds().reduced(juce::roundToInt(getHeight() * insetRatio));
     const float buttonWidth = juce::jmax(0.0f, (bounds.getWidth() - Theme::buttonGap * (buttonCount - 1)) / static_cast<float>(buttonCount));
     float       buttonX     = static_cast<float>(bounds.getX());
 
@@ -115,7 +117,7 @@ void ButtonPane::setSelectedButton(const IconButton* selected)
 
 int ButtonPane::idealWidth(int height) const
 {
-    const int inset       = juce::roundToInt(height * Theme::contentInsetRatio);
+    const int inset       = juce::roundToInt(height * insetRatio);
     const int buttonWidth = juce::roundToInt((height - inset * 2) * Theme::buttonAspectRatio);
 
     return inset * 2 + buttons.size() * buttonWidth + juce::jmax(0, buttons.size() - 1) * Theme::buttonGap;

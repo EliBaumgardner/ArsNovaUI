@@ -27,7 +27,7 @@ public:
 
     void setSelectedItem(int itemId);
 
-    enum class Look { Pane, Header };
+    enum class Look { Pane, Header, Flat };
 
     std::function<void(int)> onItemSelected;
 

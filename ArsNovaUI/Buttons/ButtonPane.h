@@ -30,11 +30,15 @@ public:
     };
 
     enum class Selection { Momentary, Exclusive, ExclusiveOrNone };
+    enum class Look      { Pane, Flat };
 
     std::function<void(const IconButton*)> onSelectionChanged;
 
     Selection           selection = Selection::Momentary;
+    Look                look      = Look::Pane;
     std::optional<Grid> gridLayout;
+
+    float insetRatio = Theme::contentInsetRatio;
 
 private:
 

@@ -117,8 +117,9 @@ void LabelPanel::addFileLabel(juce::String fileName)
 
 void LabelPanel::removeFileLabel(const FileLabel* label)
 {
-    const auto match = std::ranges::find_if(labels,
-                                            [label](const auto& candidate) { return candidate.get() == label; });
+    const auto match = std::ranges::find_if(labels, [label](const auto& candidate) {
+        return candidate.get() == label;
+    });
 
     if (match == labels.end()) {
         return;

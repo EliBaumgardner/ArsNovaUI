@@ -52,6 +52,7 @@ public:
     Icon ringDot;
     Icon roundedSquare;
     Icon route;
+    Icon save;
     Icon search;
     Icon settings;
     Icon sidebar;

@@ -58,6 +58,7 @@ juce_add_binary_data(ArsNovaUIIcons
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Ring.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/RoundedSquare.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Route.svg
+        ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Save.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Search.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Settings.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Sidebar.svg

@@ -58,6 +58,7 @@ IconLibrary::IconLibrary()
     reload       .layers = { { loadGlyph(ArsNovaUIIcons::Reload_svg, ArsNovaUIIcons::Reload_svgSize), GlyphPaint::Stroked } };
     remove       .layers = { { loadGlyph(ArsNovaUIIcons::Remove_svg, ArsNovaUIIcons::Remove_svgSize), GlyphPaint::Stroked } };
     route        .layers = { { loadGlyph(ArsNovaUIIcons::Route_svg, ArsNovaUIIcons::Route_svgSize), GlyphPaint::Stroked } };
+    save         .layers = { { loadGlyph(ArsNovaUIIcons::Save_svg, ArsNovaUIIcons::Save_svgSize), GlyphPaint::Stroked } };
     search       .layers = { { loadGlyph(ArsNovaUIIcons::Search_svg, ArsNovaUIIcons::Search_svgSize), GlyphPaint::Stroked } };
     settings     .layers = { { loadGlyph(ArsNovaUIIcons::Settings_svg, ArsNovaUIIcons::Settings_svgSize), GlyphPaint::Stroked } };
     sidebar      .layers = { { loadGlyph(ArsNovaUIIcons::Sidebar_svg, ArsNovaUIIcons::Sidebar_svgSize), GlyphPaint::Stroked } };

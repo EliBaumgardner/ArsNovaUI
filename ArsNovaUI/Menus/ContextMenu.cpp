@@ -51,8 +51,15 @@ void ContextMenu::show(juce::Component& target)
         ++itemId;
     }
 
-    menu.showMenuAsync(juce::PopupMenu::Options().withTargetComponent(target).withMousePosition(),
-                       [safeTarget, chosenItems = items, dismissed = onDismissed](int result) {
+    juce::PopupMenu::Options options = juce::PopupMenu::Options().withTargetComponent(target).withMousePosition();
+
+    if (placement == Placement::BelowAnchorRightAligned) {
+        const juce::Rectangle<int> screenArea = screenAreaBelowAnchor(target, options);
+
+        options = options.withTargetScreenArea(screenArea);
+    }
+
+    menu.showMenuAsync(options, [safeTarget, chosenItems = items, dismissed = onDismissed](int result) {
         if (safeTarget == nullptr) {
             return;
         }
@@ -71,6 +78,37 @@ void ContextMenu::show(juce::Component& target)
             chosen.action();
         }
     });
+}
+
+juce::Rectangle<int> ContextMenu::screenAreaBelowAnchor(juce::Component& target, const juce::PopupMenu::Options& options) const
+{
+    juce::LookAndFeel& lookAndFeel = target.getLookAndFeel();
+
+    const juce::Rectangle<int> anchorOnScreen = target.localAreaToGlobal(anchor);
+
+    const float scale = juce::Component::getApproximateScaleFactorForComponent(&target);
+
+    int widestItem = 0;
+
+    for (const Item& item : items) {
+        const bool isSeparator = item.kind == ItemKind::Separator;
+
+        int itemWidth  = item.idealWidth;
+        int itemHeight = item.idealHeight;
+
+        if (item.kind != ItemKind::Component) {
+            lookAndFeel.getIdealPopupMenuItemSizeWithOptions(item.label, isSeparator, options.getStandardItemHeight(), itemWidth, itemHeight, options);
+        }
+
+        widestItem = std::max(widestItem, itemWidth);
+    }
+
+    const int border      = lookAndFeel.getPopupMenuBorderSizeWithOptions(options);
+    const int menuWidth   = widestItem + border * 2;
+    const int screenWidth = juce::roundToInt(menuWidth * scale);
+    const int screenLeft  = anchorOnScreen.getRight() - screenWidth;
+
+    return anchorOnScreen.withLeft(screenLeft);
 }
 
 }

@@ -26,9 +26,20 @@ public:
         Separator
     };
 
+    enum class Placement {
+        AtMouse,
+        BelowAnchorRightAligned
+    };
+
     std::function<void()> onDismissed;
 
+    Placement placement = Placement::AtMouse;
+
+    juce::Rectangle<int> anchor;
+
 private:
+
+    juce::Rectangle<int> screenAreaBelowAnchor(juce::Component& target, const juce::PopupMenu::Options& options) const;
 
     struct Item
     {

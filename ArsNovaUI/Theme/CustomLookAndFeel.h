@@ -30,6 +30,7 @@ public:
     }
 
     void drawPopupMenuBackgroundWithOptions(juce::Graphics& graphics, int width, int height, const juce::PopupMenu::Options& options) override;
+    void drawResizableFrame                (juce::Graphics& graphics, int width, int height, const juce::BorderSize<int>& border) override;
     void getIdealPopupMenuItemSize         (const juce::String& text, bool isSeparator, int standardMenuItemHeight, int& idealWidth, int& idealHeight) override;
 
     void drawPopupMenuItem(juce::Graphics& graphics, const juce::Rectangle<int>& area, bool isSeparator, bool isActive, bool isHighlighted, bool isTicked,

@@ -218,9 +218,10 @@ struct Theme
 
     static constexpr float labelFontHeight = 9.0f;
 
-    static constexpr int menuEdgeInset    = 6;
-    static constexpr int menuContentWidth = 160;
-    static constexpr int windowGutter     = 8;
+    static constexpr int menuEdgeInset      = 6;
+    static constexpr int menuContentWidth   = 160;
+    static constexpr int separatorThickness = 1;
+    static constexpr int windowGutter       = 8;
 
     static constexpr float frostScale      = 0.2f;
     static constexpr float frostBlurRadius = 1.5f;
@@ -244,8 +245,11 @@ struct Theme
     static constexpr float popupMenuItemInset       = 2.0f;
     static constexpr float popupMenuItemGap         = 1.0f;
     static constexpr float popupMenuTextInset       = 6.0f;
-    static constexpr int   popupMenuItemHeight      = 18;
+
+    static constexpr int   popupMenuItemHeight      = static_cast<int>(barHeight * menuRowHeightRatio);
     static constexpr int   popupMenuPadding         = 4;
+    static constexpr int   popupMenuShadowRadius    = 8;
+    static constexpr int   popupMenuBorderSize      = popupMenuPadding + popupMenuShadowRadius;
 
     static constexpr int   scrollBarThickness    = 8;
     static constexpr float scrollBarThumbInset   = 1.5f;
@@ -255,7 +259,7 @@ struct Theme
     static constexpr float codeSelectionAlpha          = 0.35f;
 
     static constexpr float callOutShadowAlpha  = 0.6f;
-    static constexpr int   callOutShadowRadius = 8;
+    static constexpr int   callOutShadowRadius = popupMenuShadowRadius;
 
     static constexpr int dialogWidth           = 240;
     static constexpr int dialogPadding         = 12;

@@ -39,7 +39,7 @@ public:
 
     Look look = Look::Pane;
 
-    static constexpr float selectorInsetRatio = 0.14f;
+    static constexpr float selectorInsetRatio = Theme::contentInsetRatio;
     static constexpr float dividerInsetRatio  = 0.2f;
 
 private:

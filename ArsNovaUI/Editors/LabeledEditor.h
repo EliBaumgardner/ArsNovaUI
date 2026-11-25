@@ -25,6 +25,8 @@ public:
     {
         auto bounds = getLocalBounds();
 
+        bounds.removeFromLeft(leftInset);
+
         label.setBounds(bounds.removeFromLeft(labelWidth));
 
         bounds.removeFromLeft(gap);
@@ -35,6 +37,7 @@ public:
     CaptionLabel label;
     ValueEditor  editor;
 
+    int leftInset  = 0;
     int labelWidth = 0;
     int gap        = 0;
 };

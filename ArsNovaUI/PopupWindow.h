@@ -22,6 +22,8 @@ public:
 
     std::unique_ptr<juce::Component> content;
 
+    std::function<void()> onClosed;
+
 private:
 
     ScaledView scaledView;
@@ -56,6 +58,8 @@ public:
     std::unique_ptr<PopupWindow> window;
 
     juce::Point<float> openingScale { 1.0f, 1.0f };
+
+    std::function<void()> onClosed;
 
 private:
 

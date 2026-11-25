@@ -57,6 +57,7 @@ public:
     Icon settings;
     Icon sidebar;
     Icon skipBack;
+    Icon terminal;
     Icon triangle;
     Icon undo;
     Icon upload;

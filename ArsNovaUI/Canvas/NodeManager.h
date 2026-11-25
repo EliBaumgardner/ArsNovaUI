@@ -17,7 +17,7 @@
     EditCanvas::nodeAdded; remove calls EditCanvas::nodeRemoving and undoes it. setPosition moves
     a component to the bounds its getBoundsAt gives for EditCanvas::drawnPosition. selectAll,
     clearAll and deselectAllExcept change which nodes are selected, and every selection change is
-    reported to nodeSelectedListeners.
+    reported to its listeners, which remove themselves before they are destroyed.
 
     EditCanvas::handleAsyncUpdate calls it for NodeAdded, NodeRemoved and NodeMoved updates.
     ArrowManager is its partner for arrows; each calls into the other.
@@ -54,7 +54,16 @@ public:
     void clearAll () const;
     void deselectAllExcept(const CanvasNode& keptNode) const;
 
-    std::vector<std::function<void(CanvasNode*, bool)>> nodeSelectedListeners;
+    class Listener
+    {
+    public:
+
+        virtual ~Listener() = default;
+
+        virtual void nodeSelectionChanged(CanvasNode* node, bool selected) = 0;
+    };
+
+    juce::ListenerList<Listener> nodeSelectedListeners;
 
 private:
 

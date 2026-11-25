@@ -68,9 +68,24 @@ void CustomLookAndFeel::drawPopupMenuBackgroundWithOptions(juce::Graphics& graph
                                                            const juce::PopupMenu::Options&)
 {
     const auto bounds = juce::Rectangle<float>(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height));
+    const auto box    = bounds.reduced(static_cast<float>(popupMenuShadowRadius));
+
+    const juce::Colour shadowColour = dropShadowColour.withAlpha(callOutShadowAlpha);
+
+    const juce::DropShadow shadow(shadowColour, popupMenuShadowRadius, {});
+
+    juce::Path outline;
+
+    outline.addRoundedRectangle(box, paneCornerRadius);
+
+    shadow.drawForPath(graphics, outline);
 
     graphics.setColour(popupMenuColour);
-    graphics.fillRoundedRectangle(bounds, paneCornerRadius);
+    graphics.fillPath(outline);
+}
+
+void CustomLookAndFeel::drawResizableFrame(juce::Graphics&, int, int, const juce::BorderSize<int>&)
+{
 }
 
 void CustomLookAndFeel::getIdealPopupMenuItemSize(const juce::String& text, bool isSeparator,
@@ -85,14 +100,17 @@ void CustomLookAndFeel::getIdealPopupMenuItemSize(const juce::String& text, bool
 
     if (isSeparator) {
         idealWidth  = 50;
-        idealHeight = itemHeight / 2;
+        idealHeight = separatorThickness;
+
         return;
     }
 
+    const int textWidth = juce::GlyphArrangement::getStringWidthInt(getPopupMenuFont(), text)
+                            + itemHeight
+                            + static_cast<int>(popupMenuTextInset * 4.0f);
+
     idealHeight = itemHeight;
-    idealWidth  = juce::GlyphArrangement::getStringWidthInt(getPopupMenuFont(), text)
-                    + idealHeight
-                    + static_cast<int>(popupMenuTextInset * 4.0f);
+    idealWidth  = juce::jmax(textWidth, menuContentWidth);
 }
 
 void CustomLookAndFeel::drawPopupMenuItem(juce::Graphics& graphics, const juce::Rectangle<int>& area,
@@ -101,16 +119,19 @@ void CustomLookAndFeel::drawPopupMenuItem(juce::Graphics& graphics, const juce::
                                           const juce::String& shortcutKeyText,
                                           const juce::Drawable* icon, const juce::Colour* textColourToUse)
 {
+    const float shadowWidth = static_cast<float>(popupMenuShadowRadius);
+
+    const auto boxArea = area.toFloat().reduced(shadowWidth, 0.0f);
+
     if (isSeparator) {
-        auto line = area.toFloat().reduced(menuEdgeInset, 0.0f).withHeight(1.0f);
-        line.setY(area.toFloat().getCentreY());
+        const auto line = boxArea.reduced(menuEdgeInset, 0.0f).withHeight(static_cast<float>(separatorThickness));
 
         graphics.setColour(popupMenuTextColour.withAlpha(0.25f));
         graphics.fillRect(line);
         return;
     }
 
-    const auto itemBounds = area.toFloat().reduced(popupMenuItemInset, popupMenuItemGap);
+    const auto itemBounds = boxArea.reduced(popupMenuItemInset, popupMenuItemGap);
 
     juce::Colour itemTextColour = popupMenuTextColour;
 
@@ -190,7 +211,7 @@ void CustomLookAndFeel::drawCallOutBoxBackground(juce::CallOutBox& box, juce::Gr
 
 int CustomLookAndFeel::getPopupMenuBorderSize()
 {
-    return popupMenuPadding;
+    return popupMenuBorderSize;
 }
 
 juce::Font CustomLookAndFeel::getPopupMenuFont()

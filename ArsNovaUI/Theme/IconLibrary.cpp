@@ -62,7 +62,8 @@ IconLibrary::IconLibrary()
     search       .layers = { { loadGlyph(ArsNovaUIIcons::Search_svg, ArsNovaUIIcons::Search_svgSize), GlyphPaint::Stroked } };
     settings     .layers = { { loadGlyph(ArsNovaUIIcons::Settings_svg, ArsNovaUIIcons::Settings_svgSize), GlyphPaint::Stroked } };
     sidebar      .layers = { { loadGlyph(ArsNovaUIIcons::Sidebar_svg, ArsNovaUIIcons::Sidebar_svgSize), GlyphPaint::Stroked } };
-    undo         .layers = { { loadGlyph(ArsNovaUIIcons::Undo_svg, ArsNovaUIIcons::Undo_svgSize), GlyphPaint::Stroked } };
+    terminal     .layers = { { loadGlyph(ArsNovaUIIcons::Terminal_svg, ArsNovaUIIcons::Terminal_svgSize), GlyphPaint::Stroked } };
+    undo         .layers ={ { loadGlyph(ArsNovaUIIcons::Undo_svg, ArsNovaUIIcons::Undo_svgSize), GlyphPaint::Stroked } };
     upload       .layers = { { loadGlyph(ArsNovaUIIcons::Upload_svg, ArsNovaUIIcons::Upload_svgSize), GlyphPaint::Stroked } };
     wave         .layers = { { loadGlyph(ArsNovaUIIcons::Wave_svg, ArsNovaUIIcons::Wave_svgSize), GlyphPaint::Stroked } };
 

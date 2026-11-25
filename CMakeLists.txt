@@ -64,6 +64,7 @@ juce_add_binary_data(ArsNovaUIIcons
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Sidebar.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/SkipBar.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/SkipTriangle.svg
+        ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Terminal.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Triangle.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Undo.svg
         ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Icons/Upload.svg

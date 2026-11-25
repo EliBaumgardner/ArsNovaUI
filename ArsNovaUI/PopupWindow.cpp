@@ -52,6 +52,10 @@ PopupWindow::PopupWindow(const juce::String& title, std::unique_ptr<juce::Compon
 void PopupWindow::closeButtonPressed()
 {
     setVisible(false);
+
+    if (onClosed != nullptr) {
+        onClosed();
+    }
 }
 
 PopupWindowLauncher::PopupWindowLauncher(juce::String title, ContentFactory factory,
@@ -93,6 +97,8 @@ void PopupWindowLauncher::toFront()
 
 void PopupWindowLauncher::presentWindow()
 {
+    window->onClosed = onClosed;
+
     window->centreWithSize(window->getWidth(), window->getHeight());
     window->setVisible(true);
     window->toFront(true);

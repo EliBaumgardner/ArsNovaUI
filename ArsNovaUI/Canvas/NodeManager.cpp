@@ -47,9 +47,7 @@ CanvasNode* NodeManager::instantiateFromTree(const juce::ValueTree& nodeValueTre
     createdNode->frameClock    = &canvas.frameClock;
 
     createdNode->onSelected = [this](CanvasNode* selectedNode, bool isSelected) {
-        for (auto& listener : nodeSelectedListeners) {
-            listener(selectedNode, isSelected);
-        }
+        nodeSelectedListeners.call([selectedNode, isSelected](Listener& listener) { listener.nodeSelectionChanged(selectedNode, isSelected); });
     };
 
     canvas.nodeCreated(*createdNode);

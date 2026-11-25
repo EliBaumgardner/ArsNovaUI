@@ -26,6 +26,8 @@ void ContextMenu::show(juce::Component& target)
     juce::Component::SafePointer<juce::Component> safeTarget(&target);
     int                                           itemId = 1;
 
+    const juce::Colour toggleTextColour = CustomLookAndFeel::get(target).captionColour;
+
     menu.setLookAndFeel(&target.getLookAndFeel());
 
     for (const Item& item : items) {
@@ -35,7 +37,11 @@ void ContextMenu::show(juce::Component& target)
                 break;
             }
             case ItemKind::Toggle: {
-                menu.addItem(itemId, item.label, item.isEnabled, item.isOn);
+                juce::PopupMenu::Item toggleItem(item.label);
+
+                toggleItem.setID(itemId).setEnabled(item.isEnabled).setTicked(item.isOn).setColour(toggleTextColour);
+
+                menu.addItem(toggleItem);
                 break;
             }
             case ItemKind::Component: {
@@ -59,6 +65,10 @@ void ContextMenu::show(juce::Component& target)
         options = options.withTargetScreenArea(screenArea);
     }
 
+    if (hosting == Hosting::InsideWindow) {
+        options = options.withParentComponent(insideHost(target));
+    }
+
     menu.showMenuAsync(options, [safeTarget, chosenItems = items, dismissed = onDismissed](int result) {
         if (safeTarget == nullptr) {
             return;
@@ -78,6 +88,19 @@ void ContextMenu::show(juce::Component& target)
             chosen.action();
         }
     });
+}
+
+juce::Component* ContextMenu::insideHost(juce::Component& target)
+{
+    juce::Component* host = target.getTopLevelComponent();
+
+    for (juce::Component* ancestor = target.getParentComponent(); ancestor != nullptr; ancestor = ancestor->getParentComponent()) {
+        if (ancestor->isTransformed()) {
+            host = ancestor;
+        }
+    }
+
+    return host;
 }
 
 juce::Rectangle<int> ContextMenu::screenAreaBelowAnchor(juce::Component& target, const juce::PopupMenu::Options& options) const
@@ -106,9 +129,12 @@ juce::Rectangle<int> ContextMenu::screenAreaBelowAnchor(juce::Component& target,
     const int border      = lookAndFeel.getPopupMenuBorderSizeWithOptions(options);
     const int menuWidth   = widestItem + border * 2;
     const int screenWidth = juce::roundToInt(menuWidth * scale);
-    const int screenLeft  = anchorOnScreen.getRight() - screenWidth;
+    const int shadowWidth = juce::roundToInt(Theme::popupMenuShadowRadius * scale);
+    const int screenLeft  = anchorOnScreen.getRight() + shadowWidth - screenWidth;
 
-    return anchorOnScreen.withLeft(screenLeft);
+    const juce::Rectangle<int> alignedArea = anchorOnScreen.withLeft(screenLeft);
+
+    return alignedArea.translated(0, -shadowWidth);
 }
 
 }

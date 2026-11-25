@@ -19,6 +19,8 @@ public:
 
     void show(juce::Component& target);
 
+    static juce::Component* insideHost(juce::Component& target);
+
     enum class ItemKind {
         Action,
         Toggle,
@@ -31,9 +33,16 @@ public:
         BelowAnchorRightAligned
     };
 
+    enum class Hosting {
+        Desktop,
+        InsideWindow
+    };
+
     std::function<void()> onDismissed;
 
     Placement placement = Placement::AtMouse;
+
+    Hosting hosting = Hosting::InsideWindow;
 
     juce::Rectangle<int> anchor;
 
